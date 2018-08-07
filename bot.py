@@ -17,7 +17,7 @@ async def on_ready():
 
 @client.command(pass_context=True)
 async def me(ctx):
-    await client.say(ctx.author)
+    await client.say("HI")
 
 @client.command(pass_context=True)
 async def join(ctx):
@@ -28,7 +28,9 @@ async def join(ctx):
 @client.command(pass_context=True)
 async def leave(ctx):
     server = ctx.message.server
+    print(server)
     voice_client = client.voice_client_in(server)
+    print(voice_client)
     await voice_client.disconnect()
 
 client.run(TOKEN)
