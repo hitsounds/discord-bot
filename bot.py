@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
-#from boto.s3.connection import S3Connection
+from boto.s3.connection import S3Connection
 
-TOKEN = "NDc2MzgzMzQ4OTY5OTYzNTMx.Dkt7rw.eMH6XrCqL2ygku9XMcxw-x45ZDo"  #S3Connection(os.environ['TOKEN'])
+TOKEN = S3Connection(os.environ['TOKEN'])
 
 client = commands.Bot(command_prefix = ";hs;")
 
