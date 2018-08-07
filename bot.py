@@ -22,7 +22,7 @@ async def me(ctx):
 @client.command(pass_context=True)
 async def join(ctx):
     channel = ctx.message.author.voice.voice_channel
-    print channel
+    print (channel)
     await client.join_voice_channel(channel)
 
 @client.command(pass_context=True)
