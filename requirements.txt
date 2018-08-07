@@ -5,3 +5,4 @@ chardet==3.0.4
 discord.py==0.16.12
 multidict==4.3.1
 websockets==3.4
+boto==2.49.0
