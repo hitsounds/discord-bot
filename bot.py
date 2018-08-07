@@ -12,7 +12,7 @@ async def on_ready():
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
-    print(clent.user.id)
+    print(client.user.id)
     print('------')
 
 
