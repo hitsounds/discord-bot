@@ -15,7 +15,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-@client.command()
+@client.command(pass_context=True)
 async def me(ctx):
     await client.say(str(ctx))
 
