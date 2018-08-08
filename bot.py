@@ -6,7 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-discord.opus.load_opus("ffmpefg")
+discord.opus.load_opus("ffmpeg")
 
 @client.event
 async def on_ready():
