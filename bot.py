@@ -35,5 +35,6 @@ for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.
             print ("{} module loaded!".format(extension))
         except Exception as e:
             print(f'Failed to load extension {extension}.') 
+            print e
 
 client.run(TOKEN)
