@@ -4,9 +4,9 @@ import os
 
 #The import os and token are setup for Heroku if you want to host locally you can just remove the import os and set "TOKEN" to your bot's token
 TOKEN = os.environ.get('TOKEN')
+cogs_dir = "ext"
 
 client = commands.Bot(command_prefix = ";")
-extensions = os.fsencode("ext/")
 
 
 """Opus was a pain to install on heroku but the following line is probs not needed if running on windows
@@ -43,11 +43,12 @@ async def me(ctx):
 #    voice_client = client.voice_client_in(server)
 #    await voice_client.disconnect()
 
-for file in os.listdir(extensions):
-    try:
-        client.load_extension(os.fsdecode(file).replace(".py",""))
-    except Exception as error:
-        print(error)   
+for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.isfile(os.path.join(cogs_dir, f))]:
+        try:
+            bot.load_extension(cogs_dir + "." + extension)
+        except Exception as e:
+            print(f'Failed to load extension {extension}.')
+            traceback.print_exc()   
 
 
 client.run(TOKEN)
