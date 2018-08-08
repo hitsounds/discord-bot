@@ -13,7 +13,7 @@ class voice:
     @commands.command(pass_context=True)
     async def leave(self, ctx):
         self.server = ctx.message.server
-        self.voice_client = self.client.voice_client_in(server)
+        self.voice_client = self.client.voice_client_in(self.server)
         await self.voice_client.disconnect()    
 
 def setup(client):#
