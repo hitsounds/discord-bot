@@ -6,7 +6,13 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
+
+
+"""Opus was a pain to install on heroku but the following line is probs not needed if running on windows
+   Opus is a must for the join and leave commands as well as if you intend to add music to the bot"""
 discord.opus.load_opus("vendor/lib/libopus.so.0")
+
+
 if discord.opus.is_loaded():
     print("opus")
 else:
