@@ -45,7 +45,7 @@ async def me(ctx):
 
 for file in os.listdir(extensions):
     try:
-        client.load_extension("ext/{}".format(os.fsdecode(file).replace(".py","")))
+        client.load_extension(os.fsdecode(file).replace(".py",""))
     except Exception as error:
         print(error)   
 
