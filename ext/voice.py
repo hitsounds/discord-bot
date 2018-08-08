@@ -8,7 +8,7 @@ class voice:
     @commands.command(pass_context=True)
     async def join(self, ctx):
         self.channel = ctx.message.author.voice.voice_channel
-        await client.join_voice_channel(self.channel)
+        await self.client.join_voice_channel(self.channel)
 
     @commands.command(pass_context=True)
     async def leave(self, ctx):
