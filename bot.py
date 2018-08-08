@@ -20,6 +20,7 @@ else:
 
 @client.event
 async def on_ready():
+    await client.change_presence(game=discord.Game(name="Nothing",type = 1))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
