@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import praw
+import os
 
 class fun:
     def __init__(self, client):
