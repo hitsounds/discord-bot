@@ -5,7 +5,7 @@ import random
 class fun:
     def __init__(self, client):
         self.client = client
-        self.bw = await self.client.logs_from("320320664085069824", limit=10)
+        self.bw = self.client.logs_from("320320664085069824", limit=10)
 
     @commands.command(pass_context=True)
     async def bws(self, ctx):
