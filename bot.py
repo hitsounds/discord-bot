@@ -43,11 +43,11 @@ async def me(ctx):
 #    voice_client = client.voice_client_in(server)
 #    await voice_client.disconnect()
 
-for file in os.listdir(extensions):
-    try:
-        client.load_extension("voice")
-    except Exception as error:
-        print("{} | {}".format(os.fsdecode(file), error))        
+#for file in os.listdir(extensions):
+try:
+    client.load_extension("voice")
+except Exception as error:
+    print(error)   
 
 
 client.run(TOKEN)
