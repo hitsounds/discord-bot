@@ -16,5 +16,10 @@ class voice:
         self.voice_client = self.client.voice_client_in(server)
         await self.voice_client.disconnect()    
 
-def setup(client):
-    client.add_cog(voice(client))
+def setup(client):#
+discord.opus.load_opus("vendor/lib/libopus.so.0")
+if discord.opus.is_loaded():
+    print("opus")
+else:
+    print("no opus")
+client.add_cog(voice(client))
