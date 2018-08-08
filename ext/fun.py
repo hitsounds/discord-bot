@@ -8,7 +8,7 @@ class fun:
     
     @commands.command(pass_context=True)
     async def bws(self, ctx):
-        async for self.message in self.client.logs_from(self.client.get_channel(320320664085069824), limit=10):
+        async for self.message in self.client.logs_from(self.client.get_channel("320320664085069824"), limit=10):
             print(self.message.clean_content)
             
 #        await self.client.send_message(ctx.message.channel, self.bw(random.randint(1,5500)))
