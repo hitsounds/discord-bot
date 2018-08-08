@@ -6,6 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
+discord.opus.load_opus()
 
 @client.event
 async def on_ready():
