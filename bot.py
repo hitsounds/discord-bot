@@ -6,7 +6,6 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-discord.opus.load_opus("libopus0_1.1.2-1ubuntu1_amd64")
 
 @client.event
 async def on_ready():
