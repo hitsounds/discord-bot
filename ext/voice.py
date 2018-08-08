@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Voice:
+class voice:
     def __init__(self, client):
         self.client = client
 
@@ -17,4 +17,4 @@ class Voice:
         await self.voice_client.disconnect()    
 
 def setup(client):
-    client.add_cog(Voice(client))
+    client.add_cog(voice(client))
