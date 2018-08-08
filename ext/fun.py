@@ -9,7 +9,7 @@ class fun:
 
     @commands.command(pass_context=True)
     async def bws(self, ctx):
-        await self.client.send_message(ctx.message.channel, self.bw)
+        await self.client.send_message(ctx.message.channel, self.bw(random.int(10,10000)))
 
     @commands.command()
     async def ping():
