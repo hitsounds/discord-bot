@@ -9,7 +9,7 @@ class fun:
 
     @commands.command(pass_context=True)
     async def bws(self, ctx):
-        await self.client.send_message(ctx.message.channel,random.choice(self.bws))
+        await self.client.send_message(ctx.message.channel, random.choice(self.bws))
 
 def setup(client):
     client.add_cog(fun(client))
