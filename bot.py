@@ -6,7 +6,10 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-discord.opus.load_opus("opus")
+if discord.opus.is_loaded():
+    print("opus")
+else:
+    print("no opus")
 
 @client.event
 async def on_ready():
