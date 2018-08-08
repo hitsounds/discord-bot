@@ -6,6 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
+discord.opus.load_opus("/vendor/lib/libopus.so.0")
 if discord.opus.is_loaded():
     print("opus")
 else:
