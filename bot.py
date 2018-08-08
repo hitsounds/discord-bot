@@ -45,7 +45,7 @@ async def me(ctx):
 
 for file in os.listdir(extensions):
     try:
-        client.load_extension(os.fsdecode(file))
+        client.load_extension("ext/{}".format(os.fsdecode(file)))
     except Exception as error:
         print("{} | {}".format(os.fsdecode(file), error))        
 
