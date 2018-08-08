@@ -6,7 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-#extensions = os.fsencode("ext/")
+extensions = os.fsencode("ext/")
 
 
 """Opus was a pain to install on heroku but the following line is probs not needed if running on windows
@@ -43,11 +43,11 @@ async def me(ctx):
 #    voice_client = client.voice_client_in(server)
 #    await voice_client.disconnect()
 
-#for file in os.listdir(extensions):
-try:
-    client.load_extension("voice")
-except Exception as error:
-    print(error)   
+for file in os.listdir(extensions):
+    try:
+        client.load_extension("ext/{}".format(os.fsdecode(file).replace(".py","")))
+    except Exception as error:
+        print(error)   
 
 
 client.run(TOKEN)
