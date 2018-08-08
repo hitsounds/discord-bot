@@ -5,11 +5,10 @@ import random
 class fun:
     def __init__(self, client):
         self.client = client
-        self.bw = self.client.logs_from("320320664085069824", limit=10)
 
     @commands.command(pass_context=True)
     async def bws(self, ctx):
-        for self.message in self.bw:
+        for self.message in self.client.logs_from("320320664085069824", limit=10):
             await self.client.send_message(ctx.message.channel, self.message.content)
 #        await self.client.send_message(ctx.message.channel, self.bw(random.randint(1,5500)))
 
