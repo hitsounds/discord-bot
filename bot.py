@@ -6,7 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-extensions = os.fsencode("ext/")
+#extensions = os.fsencode("ext/")
 
 
 """Opus was a pain to install on heroku but the following line is probs not needed if running on windows
