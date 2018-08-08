@@ -6,6 +6,7 @@ import os
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
+extensions = os.fsencode("ext/")
 
 
 """Opus was a pain to install on heroku but the following line is probs not needed if running on windows
@@ -31,15 +32,22 @@ async def on_ready():
 async def me(ctx):
     await client.say("HI")
 
-@client.command(pass_context=True)
-async def join(ctx):
-    channel = ctx.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
+#@client.command(pass_context=True)
+#async def join(ctx):
+#    channel = ctx.message.author.voice.voice_channel
+#    await client.join_voice_channel(channel)
 
-@client.command(pass_context=True)
-async def leave(ctx):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    await voice_client.disconnect()
+#@client.command(pass_context=True)
+#async def leave(ctx):
+#    server = ctx.message.server
+#    voice_client = client.voice_client_in(server)
+#    await voice_client.disconnect()
+
+for file in os.listdir(extensions):
+    try:
+        client.load_extension(os.fsdecode(file))
+    except Exception as error:
+        print("{} | {}".format(os.fsdecode(file), error))        
+
 
 client.run(TOKEN)
