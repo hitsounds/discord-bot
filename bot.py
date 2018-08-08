@@ -22,7 +22,7 @@ async def on_ready():
 async def me(ctx):
     await client.say("HI")
 
-@commands.group(pass_context=True)
+@client.group(pass_context=True)
 async def help(ctx):
     if ctx.invoked_subcommand is None:
         await client.send_message(ctx.message.author, "Proper usage: \";help {module}\""  )
