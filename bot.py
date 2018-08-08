@@ -1,13 +1,12 @@
 import discord
 from discord.ext import commands
 import os
-import opuslib
 
 #The import os and token are setup for Heroku if you want to host locally you can just remove the import os and set "TOKEN" to your bot's token
 TOKEN = os.environ.get('TOKEN')
 
 client = commands.Bot(command_prefix = ";")
-discord.opus.load_opus(opuslib)
+discord.opus.load_opus(libopus0)
 
 @client.event
 async def on_ready():
