@@ -1,18 +1,26 @@
 import discord
 from discord.ext import commands
 import random
+import praw
 
 class fun:
     def __init__(self, client):
         self.client = client
-#        self.bwl = []
+        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'),
+                     client_secret=os.environ.get('C_S'),
+                     user_agent='bot.py A discord bot')
+
 
     
     @commands.command(pass_context=True)
     async def bws(self, ctx):
-#        async for self.message in self.client.logs_from(self.client.get_channel("320320664085069824"), limit=5500):
-#            self.bwl.append(self.message.clean_content)
-        await self.client.send_message(ctx.message.channel, random.choice(list(self.client.logs_from(self.client.get_channel("320320664085069824"), limit=5500))))
+        self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
+        self.post_to_pick = random.randint(1, 10)
+        for i in range(0, self.post_to_pick):
+            self.submission = next(x for x in self.bwl if not x.stickied)
+        await bot.send_message(ctx.message.channel ,self.submission.url)
+
+
 
             
 #        await self.client.send_message(ctx.message.channel, self.bw(random.randint(1,5500)))

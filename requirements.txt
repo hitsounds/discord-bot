@@ -12,3 +12,6 @@ six==1.11.0
 websockets==3.4
 opuslib==3.0.1
 youtube-dl==2018.8.4
+update-checker==0.16
+prawcore==1.0.0
+praw==6.0.0
