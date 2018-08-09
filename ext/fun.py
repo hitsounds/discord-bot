@@ -25,7 +25,7 @@ class fun:
     async def ping(self):
         await self.client.say("Pong!")
 
-    @hlp.command(pass_context=True)
+    @help.command(pass_context=True)
     async def fun(self, ctx):
         await self.client.send_message(ctx.message.channel, "Available commands: \n 1. bws \n 2. ping ")
 
