@@ -10,9 +10,12 @@ class database:
         self.cur = self.conn.cursor()
 
     @commands.command()
-    async def version(self):
-        self.cur.execute("SELECT version()")
-        self.client.say(self.cur.fetchone())
+    async def tablec(self):
+        self.cur.execute("""CREATE TABLE users(
+ user_id bigint PRIMARY KEY,
+ user_name varchar(35) 
+);""")
+
 
 
 
