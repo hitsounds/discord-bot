@@ -12,8 +12,8 @@ class database:
     async def scan(self, ctx):
         await self.load()
         self.cur = self.conn.cursor()
-        for self.member in ctx.message.server.members:
-            self.client.send_message(ctx.message.channel , self.member)    
+        for member in ctx.message.guild.members:
+            print(member)
         self.cur.close()
         self.unload.invoke(ctx)
 
