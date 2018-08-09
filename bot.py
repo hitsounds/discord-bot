@@ -11,7 +11,7 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name="up",type = 1))
+    await client.change_presence(game=discord.Game(name="up",type = 1,url="https://www.twitch.tv/fuzzyness"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
@@ -28,6 +28,8 @@ async def help(ctx):
         await client.send_message(ctx.message.author, "Proper usage: `;help {module}`"  )
         await client.send_message(ctx.message.author, i_cogs)
 
+
+#loading the extensions from ext/ folder
 for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.isfile(os.path.join(cogs_dir, f))]:
         try:
             client.load_extension(cogs_dir + "." + extension)
