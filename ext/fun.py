@@ -28,9 +28,7 @@ class fun:
         for i in range(0, 10):
             await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
 
-    @hp.command(pass_context=True)
-    async def fun(self,ctx):
-        self.client.send_message(ctx.message.channel, "Insert help")
+
 
 
 

@@ -23,9 +23,9 @@ async def me(ctx):
     await client.say("HI")
 
 @client.group(pass_context=True)
-async def hp(ctx):
+async def help(ctx):
     if ctx.invoked_subcommand is None:
-        await client.send_message(ctx.message.author, "Proper usage: `;help {module}`"  )
+        await client.send_message(ctx.message.author, "Proper usage: `;help {module}    NOT IMPLEMENTED`"  )
         await client.send_message(ctx.message.author, i_cogs)
 
 
