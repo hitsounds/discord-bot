@@ -10,7 +10,7 @@ class database:
 
     @commands.command(pass_context=True)
     async def scan(self):
-        self.load()
+        await self.load()
         self.cur = self.conn.cursor()
         for self.member in ctx.message.server.members:
             self.client.send_message(ctx.message.channel , self.member)    
