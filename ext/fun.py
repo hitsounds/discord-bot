@@ -21,11 +21,6 @@ class fun:
             self.submission = next(x for x in self.bwl if not x.stickied)
         await self.client.send_message(ctx.message.channel ,self.submission.url)
 
-
-
-            
-#        await self.client.send_message(ctx.message.channel, self.bw(random.randint(1,5500)))
-
     @commands.command()
     async def ping():
         await self.client.say("Pong!")
