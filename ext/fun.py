@@ -13,13 +13,20 @@ class fun:
 
 
     
-    @commands.command(pass_context=True)
+    @commands.group(pass_context=True)
     async def bws(self, ctx):
+        if ctx.invoked_subcommand is None:
+            self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
+            self.post_to_pick = random.randint(1, 10)
+            for i in range(0, self.post_to_pick):
+                self.submission = next(x for x in self.bwl if not x.stickied)
+            await self.client.send_message(ctx.message.channel ,self.submission.url)
+    
+    @bws.command(pass_context)
+    async def dump(self, ctx):
         self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
-        self.post_to_pick = random.randint(1, 10)
-        for i in range(0, self.post_to_pick):
-            self.submission = next(x for x in self.bwl if not x.stickied)
-        await self.client.send_message(ctx.message.channel ,self.submission.url)
+        for i in range(0, 10):
+            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
 
     @commands.command()
     async def ping(self):

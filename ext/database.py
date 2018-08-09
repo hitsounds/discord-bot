@@ -18,6 +18,7 @@ class database:
             except:
                 pass
             self.conn.commit()
+        print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
         self.unload.invoke(ctx)
 
