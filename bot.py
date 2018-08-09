@@ -22,12 +22,11 @@ async def on_ready():
 async def me(ctx):
     await client.say("HI")
 
-@client.group(pass_context=True)
-async def help(ctx):
+@client.group(pass_context=True, name='help')
+async def hlp(ctx):
     if ctx.invoked_subcommand is None:
         await client.send_message(ctx.message.author, "Proper usage: `;help {module}`"  )
         await client.send_message(ctx.message.author, i_cogs)
-
 
 for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.isfile(os.path.join(cogs_dir, f))]:
         try:
