@@ -19,7 +19,7 @@ class fun:
         self.post_to_pick = random.randint(1, 10)
         for i in range(0, self.post_to_pick):
             self.submission = next(x for x in self.bwl if not x.stickied)
-        await bot.send_message(ctx.message.channel ,self.submission.url)
+        await self.client.send_message(ctx.message.channel ,self.submission.url)
 
 
 
