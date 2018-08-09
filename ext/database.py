@@ -6,15 +6,35 @@ from discord.ext import commands
 class database:
     def __init__(self, client):
         self.client = client
-        self.conn = psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+        self.conn = None
 
     @commands.command()
     async def tablec(self):
+        self.load()
         self.cur = self.conn.cursor()
-        self.cur.execute("CREATE TABLE users(user_id bigint PRIMARY KEY, user_name varchar(35));")
-        self.conn.commit()
-        print ("Users table created :D")
         self.cur.close()
+        self.unload()
+
+    @commands.group(pass_context=True)
+    async def db(self):
+        if ctx.invoked_subcommand is None:
+            self.client.say("incorrect subcommand")
+    
+    @db.command()
+    async def load(self):
+        if self.conn is None:
+            self.conn = psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+            self.client.say("Database connection established")
+        else:
+            self.client.say("Already connected")
+
+    @db.command()
+    async def unload(self):
+        if self.conn is not None:
+            self.conn.close()
+            self.client.say("Disconnected")
+
+
 
 
 
