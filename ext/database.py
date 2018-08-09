@@ -12,8 +12,10 @@ class database:
     async def scan(self, ctx):
         await self.load()
         self.cur = self.conn.cursor()
-        for member in ctx.message.server.members:
-            print(member)
+        print (ctx.message.server)
+        print (ctx)
+#        for member in ctx.message.server.members:
+#           print(member)
         self.cur.close()
         self.unload.invoke(ctx)
 
