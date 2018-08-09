@@ -9,7 +9,7 @@ class database:
         self.conn = None
 
     @commands.command(pass_context=True)
-    async def scan(self):
+    async def scan(self, ctx):
         await self.load()
         self.cur = self.conn.cursor()
         for self.member in ctx.message.server.members:
