@@ -16,7 +16,7 @@ class database:
         self.unload()
 
     @commands.group(pass_context=True)
-    async def db(self):
+    async def db(self, ctx):
         if ctx.invoked_subcommand is None:
             self.client.say("incorrect subcommand")
     

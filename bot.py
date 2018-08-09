@@ -29,7 +29,6 @@ async def help(ctx):
         await client.send_message(ctx.message.author, str(client.cogs))
 
 
-
 for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.isfile(os.path.join(cogs_dir, f))]:
         try:
             client.load_extension(cogs_dir + "." + extension)
