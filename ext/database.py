@@ -14,9 +14,8 @@ class database:
         self.cur = self.conn.cursor()
         for self.member in ctx.message.server.members:
             self.client.send_message(ctx.message.channel , self.member)    
-
         self.cur.close()
-        self.unload()
+        self.unload.invoke()
 
     @commands.group(pass_context=True)
     async def db(self, ctx):
@@ -24,20 +23,16 @@ class database:
         if ctx.invoked_subcommand is None:
             await self.client.say("incorrect subcommand")
     
-    @db.command(pass_context=True)
-    async def load(self, ctx):
+
+    async def load(self):
         if self.conn is None:
             self.conn = psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
-            await self.client.send_message(ctx.message.channel ,"Connected")
-        else:
-            await self.client.say("Already connected")
 
     @db.command()
     async def unload(self):
         if self.conn is not None:
             self.conn.close()
             self.conn = None
-            await self.client.say("Disconnected")
 
 
 
