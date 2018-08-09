@@ -22,7 +22,7 @@ class fun:
                 self.submission = next(x for x in self.bwl if not x.stickied)
             await self.client.send_message(ctx.message.channel ,self.submission.url)
     
-    @bws.command(pass_context)
+    @bws.command(pass_context=True)
     async def dump(self, ctx):
         self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
         for i in range(0, 10):
