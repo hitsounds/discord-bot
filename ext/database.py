@@ -17,22 +17,25 @@ class database:
 
     @commands.group(pass_context=True)
     async def db(self, ctx):
+        await self.client.send_message(ctx.message.channel ,"database command recieved")
         if ctx.invoked_subcommand is None:
-            self.client.say("incorrect subcommand")
+            await self.client.say("incorrect subcommand")
     
-    @db.command()
-    async def load(self):
+    @db.command(pass_context=True)
+    async def load(self, ctx):
         if self.conn is None:
             self.conn = psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
-            self.client.say("Database connection established")
+            await self.client.send_message(ctx.message.channel ,"Connected")
         else:
-            self.client.say("Already connected")
+            await self.client.say("Already connected")
 
     @db.command()
     async def unload(self):
         if self.conn is not None:
             self.conn.close()
-            self.client.say("Disconnected")
+            self.conn = None
+            await self.client.say("Disconnected")
+
 
 
 
