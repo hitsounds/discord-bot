@@ -13,7 +13,8 @@ class database:
         await self.load()
         self.cur = self.conn.cursor()
         for member in ctx.message.server.members:
-           self.cur.execute("INSERT INTO users (user_id) VALUES ('{}')".format(member.id))
+            self.cur.execute("INSERT INTO users (user_id) VALUES ({}) DUPLICATE KEY UPDATE user_id ={}".format(member.id))
+            self.cur.commit()
         self.cur.close()
         self.unload.invoke(ctx)
 
