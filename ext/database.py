@@ -14,7 +14,7 @@ class database:
         self.cur = self.conn.cursor()
         for member in ctx.message.server.members:
             self.cur.execute("INSERT INTO users (user_id) VALUES ({userID})".format(userID = member.id))
-            self.cur.commit()
+            self.nn.commit()
         self.cur.close()
         self.unload.invoke(ctx)
 
