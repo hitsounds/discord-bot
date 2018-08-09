@@ -15,7 +15,7 @@ class database:
         for self.member in ctx.message.server.members:
             self.client.send_message(ctx.message.channel , self.member)    
         self.cur.close()
-        self.unload.invoke()
+        self.unload.invoke(ctx)
 
     @commands.group(pass_context=True)
     async def db(self, ctx):
