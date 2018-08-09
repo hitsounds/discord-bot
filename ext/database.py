@@ -8,10 +8,13 @@ class database:
         self.client = client
         self.conn = None
 
-    @commands.command()
-    async def tablec(self):
+    @commands.command(pass_context=True)
+    async def scan(self):
         self.load()
         self.cur = self.conn.cursor()
+        for self.member in ctx.message.server.members:
+            self.client.send_message(ctx.message.channel , self.member)    
+
         self.cur.close()
         self.unload()
 
