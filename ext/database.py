@@ -14,9 +14,9 @@ class database:
         self.cur = self.conn.cursor()
         for member in ctx.message.server.members:
             try:
-                self.cur.execute("INSERT INTO users (user_id, name) VALUES ({userID},{nme})".format(userID = member.id, nme = member.name))
+                self.cur.execute("INSERT INTO users (user_id, name) VALUES ({userID}, \"{nme}\")".format(userID = member.id, nme = member.name))
             except:
-                self.cur.execute("UPDATE users SET name = {nme} WHERE user_id = {userID} AND name != {nme} ".format(userID = member.id, nme = member.name))
+                self.cur.execute("UPDATE users SET name = \"{nme}\" WHERE user_id = {userID} AND name != \"{nme}\" ".format(userID = member.id, nme = member.name))
             self.conn.commit()
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
