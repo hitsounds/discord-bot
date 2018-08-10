@@ -14,9 +14,9 @@ class database:
         self.cur = self.conn.cursor()
         for member in ctx.message.server.members:
             try:
-                self.cur.execute("INSERT INTO users (user_id) VALUES ({userID})".format(userID = member.id))
+                self.cur.execute("INSERT INTO users (user_id, name) VALUES ({userID},{name})".format(userID = member.id, name = member.name))
             except:
-                pass
+                self.cur.execute("UPDATE users SET name = {name} WHERE user_id = {userID}".format(userID = member.id, name = member.name))
             self.conn.commit()
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
@@ -38,10 +38,6 @@ class database:
         if self.conn is not None:
             self.conn.close()
             self.conn = None
-
-
-
-
 
 
 
