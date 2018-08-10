@@ -16,7 +16,7 @@ class fun:
     @commands.group(pass_context=True)
     async def bws(self, ctx):
         if ctx.invoked_subcommand is None:
-            self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
+            self.bwl = self.reddit.subreddit('awwnime').hot()
             self.post_to_pick = random.randint(1, 10)
             for i in range(0, self.post_to_pick):
                 self.submission = next(x for x in self.bwl if not x.stickied)
@@ -24,9 +24,15 @@ class fun:
     
     @bws.command(pass_context=True)
     async def dump(self, ctx):
-        self.bwl = memes_submissions = self.reddit.subreddit('awwnime').hot()
+        self.sreddit = self.reddit.subreddit('awwnime')
+        self.bwl = self.reddit.subreddit('awwnime').hot()
+        embed=discord.Embed(title="Current bws selection", url="https://www.reddit.com/r/awwnime/hot/")
+        embed.set_thumbnail(url=self.sreddit.icon_img)
         for i in range(0, 10):
-            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
+            embed.add_field(name="#{i}".format(i), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=false)
+        await client.say(embed=embed)
+#            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
+        
 
 
 
