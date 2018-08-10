@@ -2,6 +2,7 @@ import os
 import psycopg2
 import discord
 from discord.ext import commands
+import re
 
 class database:
     def __init__(self, client):
@@ -16,7 +17,7 @@ class database:
 #            try:
 #                self.cur.execute("INSERT INTO users (user_id, name) VALUES ({userID}, \"{nme}\")".format(userID = member.id, nme = member.name))
 #            except:
-            self.cur.execute("UPDATE users SET u_name=\'{name}\' WHERE user_id={userID}".format(userID = member.id, name = member.name))
+            self.cur.execute("UPDATE users SET u_name='{name}' WHERE user_id={userID}".format(userID = member.id, name = re.escape(member.name)))
             self.conn.commit()
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
