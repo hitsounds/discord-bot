@@ -16,7 +16,7 @@ class database:
 #            try:
 #                self.cur.execute("INSERT INTO users (user_id, name) VALUES ({userID}, \"{nme}\")".format(userID = member.id, nme = member.name))
 #            except:
-            self.cur.execute("UPDATE users SET \"{name}\"=u_name  WHERE user_id={userID}".format(userID = member.id, name = member.name))
+            self.cur.execute("UPDATE users SET u_name=\'{name}\' WHERE user_id={userID}".format(userID = member.id, name = member.name))
             self.conn.commit()
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
