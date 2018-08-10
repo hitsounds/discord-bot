@@ -27,10 +27,10 @@ class fun:
         self.sreddit = self.reddit.subreddit('awwnime')
         self.bwl = self.reddit.subreddit('awwnime').hot()
         self.embed=discord.Embed(title="Current bws selection", url="https://www.reddit.com/r/awwnime/hot/")
-        self.embed.set_author(name="Current bws selection", url="https://www.reddit.com/r/awwnime/", icon_url=self.sreddit.icon_img)
+        self.embed.set_author(name="Source", url="https://www.reddit.com/r/awwnime/", icon_url=self.sreddit.icon_img)
         self.embed.set_thumbnail(url="https://cdn.awwni.me/13dgm.png")
         for i in range(0, 10):
-            self.embed.add_field(name="#{}".format(i), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=False)
+            self.embed.add_field(name="#{}".format(i+1), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=False)
         await self.client.say(embed=self.embed)
 #            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
         
