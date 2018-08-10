@@ -26,11 +26,11 @@ class fun:
     async def dump(self, ctx):
         self.sreddit = self.reddit.subreddit('awwnime')
         self.bwl = self.reddit.subreddit('awwnime').hot()
-        embed=discord.Embed(title="Current bws selection", url="https://www.reddit.com/r/awwnime/hot/")
-        embed.set_thumbnail(url=self.sreddit.icon_img)
+        self.embed=discord.Embed(title="Current bws selection", url="https://www.reddit.com/r/awwnime/hot/")
+        self.embed.set_thumbnail(url=self.sreddit.icon_img)
         for i in range(0, 10):
-            embed.add_field(name="#{i}".format(i), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=false)
-        await client.say(embed=embed)
+            self.embed.add_field(name="#{i}".format(i), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=false)
+        await client.say(embed=self.embed)
 #            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
         
 
