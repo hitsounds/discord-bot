@@ -30,7 +30,7 @@ class fun:
         self.embed.set_thumbnail(url=self.sreddit.icon_img)
         for i in range(0, 10):
             self.embed.add_field(name="#{}".format(i), value="[{url}]({url})".format(url = next(x for x in self.bwl if not x.stickied).url), inline=False)
-        await client.say(embed=self.embed)
+        await self.client.say(embed=self.embed)
 #            await self.client.send_message(ctx.message.channel ,next(x for x in self.bwl if not x.stickied).url)
         
 
