@@ -45,7 +45,7 @@ class voice:
 
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
-        await asyncio.create_subprocess_exec("youtube-dl --extract-audio --audio-format mp3 -o output.%(ext)s {}".format(url))
+        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
         files = {'file' : open("output.mp3", "rb")}
         resp = await session.post('https://file.io/?expires=1d', data=files)
