@@ -41,8 +41,8 @@ class fun:
     async def osu(self, ctx, arg):
         if ctx.invoked_subcommand is None:
             session = aiohttp.ClientSession()
-            resp = await session.get("https://osu.ppy.sh/api/get_user?k={self.osuAPIkey}&u={arg}&m=0").json()
-            await client.say(resp)    
+            resp = await session.get("https://osu.ppy.sh/api/get_user?k={self.osuAPIkey}&u={arg}&m=0")
+            await client.say(resp.json())    
 
             
 
