@@ -1,7 +1,7 @@
 import discord
 import youtube_dl
 from discord.ext import commands
-import subprocess
+import asyncio
 import aiohttp
 
 class voice:
@@ -45,8 +45,8 @@ class voice:
 
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
+        await syncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s" , url])
         session = aiohttp.ClientSession()
-        await subprocess.Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s" , url] ,shell=False)
         files = {'file' : open("output.mp3", "rb")}
         resp = await session.post('https://file.io/?expires=1d', data=files)
         session.close()
