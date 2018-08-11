@@ -51,7 +51,7 @@ class voice:
         'preferredcodec': 'mp3',
         'preferredquality': '192',}]}
         yt = youtube_dl.YoutubeDL(ydl_opts)
-        test = yt.download([f'{url}'])
+        test = await yt.download([f'{url}'])
         print(test)
 
 
