@@ -11,10 +11,9 @@ class fun:
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'),
                      client_secret=os.environ.get('C_S'),
                      user_agent='bot.py A discord bot')
-        
+        self.osuAPIkey = os.environ.get('OSU_KEY')
 
 
-    
     @commands.group(pass_context=True)
     async def bws(self, ctx):
         if ctx.invoked_subcommand is None:
@@ -41,7 +40,10 @@ class fun:
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg):
         if ctx.invoked_subcommand is None:
-            
+            session = aiohttp.ClientSession()
+            resp = await session.get("https://osu.ppy.sh/api/get_user?k={self.osuAPIkey}&u={arg}&m=0").json()
+            await client.say(resp)    
+
             
 
 
