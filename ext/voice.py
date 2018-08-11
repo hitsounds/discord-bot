@@ -42,7 +42,7 @@ class voice:
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
-    async def ytdl(ctx, url):
+    async def ytdl(self, ctx, url):
         ydl_opts = {
     'format': 'bestaudio/best',
     'forcefilename': True,
