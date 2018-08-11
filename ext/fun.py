@@ -43,7 +43,8 @@ class fun:
             session = aiohttp.ClientSession()
             resp = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
-            await self.client.say(await resp.json()[0])
+            dtls = await resp.json()
+            await self.client.say(dtls["pp_raw"])
             session, resp = None, None
 
             
