@@ -46,6 +46,8 @@ class voice:
         ydl_opts = {
     'format': 'bestaudio/best',
     'forcefilename': True,
+    'outtmpl': 'output.%(ext)s',
+    'verbose' : True,
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
