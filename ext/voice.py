@@ -1,6 +1,7 @@
 import discord
 import youtube_dl
 from discord.ext import commands
+import subprocess
 
 class voice:
     def __init__(self, client):
@@ -43,18 +44,10 @@ class voice:
 
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
-        ydl_opts = {
-    'format': 'bestaudio/best',
-    'forcefilename': True,
-    'outtmpl': 'output.%(ext)s',
-    'verbose' : True,
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',}]}
-        yt = youtube_dl.YoutubeDL(ydl_opts)
-        test = await yt.download([f'{url}'])
-        print(test)
+        yt = await subprocess.Popen("youtube-dl --extract-audio --audio-format mp3 {}".format(url) ,shell=False)
+        s = await yt.communicate()
+        print(s)
+        print(yt.returncode)
 
 
 
