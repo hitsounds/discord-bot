@@ -44,7 +44,7 @@ class fun:
             resp = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
             dtls = await resp.json()
-            await self.client.say(dtls[0]["pp_raw"])
+            await self.client.say(dtls[0])
             session, resp = None, None
 
             
