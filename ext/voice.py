@@ -41,6 +41,20 @@ class voice:
     async def stop(ctx):
         self.players[ctx.message.server.id].stop()
 
+    @commands.command(pass_context=True)
+    async def ytdl(ctx, url):
+        ydl_opts = {
+    'format': 'bestaudio/best',
+    'forcefilename': True,
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',}]}
+        yt = youtube_dl.YoutubeDL(ydl_opts)
+        await yt.download([f'{url}'])
+
+
+
 def setup(client):
     discord.opus.load_opus("vendor/lib/libopus.so.0")
     if discord.opus.is_loaded():
