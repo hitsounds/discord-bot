@@ -42,7 +42,7 @@ class fun:
         if ctx.invoked_subcommand is None:
             session = aiohttp.ClientSession()
             resp = await session.get("https://osu.ppy.sh/api/get_user?k={self.osuAPIkey}&u={arg}&m=0")
-            await self.client.say(resp.json())    
+            await self.client.say(await resp.json())    
 
             
 
