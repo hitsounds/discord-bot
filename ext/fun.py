@@ -39,7 +39,7 @@ class fun:
     @commands.command(pass_context=True)
     async def yomama(self, ctx):
         session = aiohttp.ClientSession()
-        resp = await session.get("api.yomomma.info")
+        resp = await session.get("http://api.yomomma.info/")
         session.close()
         data = resp.json()
         await self.client.say(data["joke"])
