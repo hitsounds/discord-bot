@@ -44,12 +44,12 @@ class voice:
     @commands.command(pass_context=True)
     async def stop(ctx):
         self.players[ctx.message.server.id].stop()
-#
+
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
-        process.wait()
+        process = await asyncio.create_subprocess_shell("youtube-dl --extract-audio --audio-format mp3 -o output.%(ext)s url".format(url), stdout=asyncio.subprocess.PIPE)
+        stdout, stderr = await process.communicate()
         session = aiohttp.ClientSession()
         upload = open("output.mp3", "rb")
         files = {'filedata': upload}
