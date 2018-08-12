@@ -52,7 +52,7 @@ class voice:
         process.wait()
 #        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
-        files = {'filedata': open("bot.py", "rb")}
+        files = {'filedata': open("output.mp3", "rb")}
         resp = await session.post('https://transfer.sh/', data=files)
         data = await resp.text()
         print(data)
