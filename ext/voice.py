@@ -54,10 +54,10 @@ class voice:
         session = aiohttp.ClientSession()
         files = {'file' : open("output.mp3", "rb")}
         async with session.post('https://file.io/?expires=1d', data=files) as resp:
-            print(resp.json())
+            data = await resp.json()
         os.remove("output.mp3")
         session.close()
-        await self.client.edit_message(msg, "resp")
+        await self.client.edit_message(msg, data["link"])
 
 
 
