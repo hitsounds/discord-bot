@@ -36,7 +36,7 @@ class fun:
         await self.client.say(embed=embed)
         embed, sreddit, bwl = None, None, None
     
-    @commands.command
+    @commands.command(pass_context=True)
     async def yomama(self, ctx):
         session = aiohttp.ClientSession()
         resp = await session.get("api.yomomma.info")
