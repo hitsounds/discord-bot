@@ -67,7 +67,7 @@ class fun:
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value=dtls["pp_rank"], inline=True)
             embed.add_field(name="GB Rank", value=dtls["pp_country_rank"], inline=True)
-            await self.client.edit_message(embed=embed)
+            await self.client.edit_message(msg, embed=embed)
             embed, dtls, session, msg = None,None,None,None
 
             
