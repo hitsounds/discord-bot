@@ -49,7 +49,7 @@ class voice:
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
-        await process.wait()
+        process.wait()
         session = aiohttp.ClientSession()
         upload = open("output.mp3", "rb")
         files = {'filedata': upload}
