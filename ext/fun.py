@@ -38,6 +38,7 @@ class fun:
     
     @commands.command(pass_context=True)
     async def yomama(self, ctx):
+        await self.client.delete_message(ctx.message)
         session = aiohttp.ClientSession()
         resp = await session.get("http://api.yomomma.info/")
         session.close()
