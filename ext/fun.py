@@ -42,7 +42,7 @@ class fun:
         session = aiohttp.ClientSession()
         resp = await session.get("http://api.yomomma.info/")
         session.close()
-        data = await resp.text()
+        data = await resp.json()
         await self.client.say(data["joke"])
         session, resp, data = None, None, None
 
