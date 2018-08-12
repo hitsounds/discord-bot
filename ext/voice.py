@@ -49,7 +49,10 @@ class voice:
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Please wait")
         process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
-        await process.wait()
+        try:
+            await process.wait()
+        except:
+            pass
 #        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
         files = {'file' : open("output.mp3", "rb")}
