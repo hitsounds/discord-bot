@@ -48,21 +48,17 @@ class voice:
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        try:
-            process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
-            process.wait()
-            session = aiohttp.ClientSession()
-            upload = open("output.mp3", "rb")
-            files = {'filedata': upload}
-            resp = await session.post('https://transfer.sh/', data=files)
-            upload.close()
-            os.remove("output.mp3")
-            session.close()
-            await self.client.edit_message(msg, await resp.text())
-            msg, process, session, upload, files, resp = None, None,None,None,None,None
-        except:
-            await self.client.edit_message(msg, "https://images-cdn.9gag.com/photo/anybVW5_460swp.webp")
-            msg, process, session, upload, files, resp = None, None,None,None,None,None  
+        process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
+        await process.wait()
+        session = aiohttp.ClientSession()
+        upload = open("output.mp3", "rb")
+        files = {'filedata': upload}
+        resp = await session.post('https://transfer.sh/', data=files)
+        upload.close()
+        os.remove("output.mp3")
+        session.close()
+        await self.client.edit_message(msg, await resp.text())
+        msg, process, session, upload, files, resp = None, None,None,None,None,None
 
 
 
