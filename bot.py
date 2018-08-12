@@ -20,14 +20,13 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-#example commands
 @client.command(pass_context=True)
 async def me(ctx):
     await client.say("HI")
 
 @client.command(pass_context=True)
 async def help(ctx):
-    client.send_message(ctx.message.author, "https://goo.gl/vya4Sp"  )
+    await client.send_message(ctx.message.author, "https://goo.gl/vya4Sp"  )
 
 
 #loading the extensions from ext/ folder
