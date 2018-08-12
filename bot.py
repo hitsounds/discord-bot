@@ -5,22 +5,15 @@ import os
 #The import os and token are setup for Heroku if you want to host locally you can just remove the import os and set "TOKEN" to your bot's token
 TOKEN = os.environ.get('TOKEN')
 
-#set you own command prefix
+cogs_dir = "ext"
+i_cogs = []
+
 client = commands.Bot(command_prefix = ";")
-
-
-"""Opus was a pain to install on heroku but the following line is probs not needed if running on windows
-   Opus is a must for the join and leave commands as well as if you intend to add music to the bot"""
-discord.opus.load_opus("vendor/lib/libopus.so.0")
-
-
-if discord.opus.is_loaded():
-    print("opus")
-else:
-    print("no opus")
+client.remove_command("help")
 
 @client.event
 async def on_ready():
+    await client.change_presence(game=discord.Game(name="up",type = 1,url="https://www.twitch.tv/fuzzyness"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
@@ -32,15 +25,21 @@ async def on_ready():
 async def me(ctx):
     await client.say("HI")
 
-@client.command(pass_context=True)
-async def join(ctx):
-    channel = ctx.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
+@client.group(pass_context=True)
+async def help(ctx):
+    if ctx.invoked_subcommand is None:
+        await client.send_message(ctx.message.author, "Proper usage: `;help {module}    NOT IMPLEMENTED`"  )
+        await client.send_message(ctx.message.author, i_cogs)
 
-@client.command(pass_context=True)
-async def leave(ctx):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    await voice_client.disconnect()
+
+#loading the extensions from ext/ folder
+for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.isfile(os.path.join(cogs_dir, f))]:
+        try:
+            client.load_extension(cogs_dir + "." + extension)
+            print ("{} module loaded!".format(extension))
+            i_cogs.append(extension)
+        except Exception as e:
+            print(f'Failed to load extension {extension}.') 
+            print (e)
 
 client.run(TOKEN)
