@@ -33,15 +33,15 @@ class voice:
         self.player.start()
     
     @commands.command(pass_context=True)
-    async def pause(ctx):
+    async def pause(self, ctx):
         self.players[ctx.message.server.id].pause()
 
     @commands.command(pass_context=True)
-    async def resume(ctx):
+    async def resume(self, ctx):
         self.players[ctx.message.server.id].resume()
 
     @commands.command(pass_context=True)
-    async def stop(ctx):
+    async def stop(self, ctx):
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
