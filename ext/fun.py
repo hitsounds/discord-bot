@@ -61,12 +61,12 @@ class fun:
             embed=discord.Embed(title="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]), color=0xdc98a4)
             embed.set_author(name="{} [{}}]".format(dtls["username"], dtls["country"] ), url="https://osu.ppy.sh/u/{}".format(dtls["user_id"]), icon_url=f"https://a.ppy.sh/{}".format(dtls["user_id"]))
             embed.set_thumbnail(url=r"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Osu%21Logo_%282015%29.png/220px-Osu%21Logo_%282015%29.png")
-            embed.add_field(name=PP, value=dtls["pp_raw"], inline=True)
-            embed.add_field(name=Accuracy, value=dtls["accuracy"]+"%", inline=True)
-            embed.add_field(name=Level, value=dtls["level"], inline=True)
-            embed.add_field(name=Playcount, value=dtls["playcount"], inline=True)
-            embed.add_field(name=Global Rank, value=dtls["pp_rank"], inline=True)
-            embed.add_field(name=GB Rank, value=dtls["pp_country_rank"], inline=True)
+            embed.add_field(name="PP", value=dtls["pp_raw"], inline=True)
+            embed.add_field(name="Accuracy", value=dtls["accuracy"]+"%", inline=True)
+            embed.add_field(name="Level", value=dtls["level"], inline=True)
+            embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
+            embed.add_field(name="Global Rank", value=dtls["pp_rank"], inline=True)
+            embed.add_field(name="GB Rank", value=dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(embed=embed)
             embed, dtls, session, msg = None,None,None,None
 
