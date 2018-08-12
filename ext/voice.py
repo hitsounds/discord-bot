@@ -51,10 +51,23 @@ class voice:
 #        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
         files = {'file' : open("output.mp3", "rb")}
-        resp = await session.post('https://file.io/?expires=1d', data=files)
+        async with session.post('https://file.io/?expires=1d', data=files) as resp:
+            reader = aiohttp.MultipartReader.from_response(resp)
+            data = None
+            while True:
+                part = await reader.next()
+                if part is None:
+                    break
+                data = await part.json()
+                try:
+                    url = data["link"]
+                    break
+                except:
+                    pass
+
         os.remove("output.mp3")
         session.close()
-        await self.client.say(resp)
+        await self.client.say(url)
 
 
 
