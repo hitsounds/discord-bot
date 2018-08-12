@@ -58,7 +58,7 @@ class voice:
         os.remove("output.mp3")
         session.close()
         await self.client.edit_message(msg, await resp.text())
-        msg, process, session, upload, files, resp = None, None,None,None,None,None
+        msg, process, session, upload, files, resp, stdout, stderr = None, None,None,None,None,None,None,None
 
 
 
