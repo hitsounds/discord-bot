@@ -44,7 +44,7 @@ class voice:
     @commands.command(pass_context=True)
     async def stop(ctx):
         self.players[ctx.message.server.id].stop()
-
+#
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
