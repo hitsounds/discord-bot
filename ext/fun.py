@@ -35,6 +35,17 @@ class fun:
             embed.add_field(name="#{}".format(i+1), value="[{url}]({url})".format(url = next(x for x in bwl if not x.stickied).url), inline=False)
         await self.client.say(embed=embed)
         embed, sreddit, bwl = None, None, None
+    
+    @command.command
+    async def yomama(self, ctx):
+        session = aiohttp.ClientSession()
+        resp = await session.get("api.yomomma.info")
+        session.close()
+        data = resp.json()
+        await self.client.say(data["joke"])
+        session, resp, data = None, None, None
+
+
 
 
     @commands.group(pass_context=True)
@@ -50,9 +61,6 @@ class fun:
             
 
 
-
-
-        
 
 
 

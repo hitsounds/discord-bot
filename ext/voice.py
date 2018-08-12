@@ -1,7 +1,6 @@
 import discord
 import youtube_dl
 from discord.ext import commands
-from subprocess import Popen
 import aiohttp
 import os
 import asyncio
