@@ -47,17 +47,18 @@ class voice:
 
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
-        msg = await self.client.say("Please wait")
+        msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
         process.wait()
-#        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
-        files = {'filedata': open("output.mp3", "rb")}
+        upload = open("output.mp3", "rb")
+        files = {'filedata': upload}
         resp = await session.post('https://transfer.sh/', data=files)
-        data = await resp.text()
-        print(data)
+        upload.close()
+        os.remove("output.mp3")
         session.close()
-        await self.client.edit_message(msg, data)
+        await self.client.edit_message(msg, await resp.text())
+        msg, process, session, upload, files, resp = None, None,None,None,None,None
 
 
 
