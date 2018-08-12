@@ -52,12 +52,23 @@ class fun:
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg):
         if ctx.invoked_subcommand is None:
+            msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
             resp = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
             dtls = await resp.json()
-            await self.client.say(dtls[0])
+            dtls = dtls[0]
             session, resp = None, None
+            embed=discord.Embed(title="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]))
+            embed.set_author(name=f"{dtls["username"]} [{dtls["country"]}]", url=f"https://osu.ppy.sh/u/{dtls["user_id"]}",, icon_url=f"https://a.ppy.sh/{dtls["user_id"]}")
+            embed.set_thumbnail(url=r"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Osu%21Logo_%282015%29.png/220px-Osu%21Logo_%282015%29.png")
+            embed.add_field(name=PP, value=dtls["pp_raw"], inline=True)
+            embed.add_field(name=Accuracy, value=dtls["accuracy"]+"%", inline=True)
+            embed.add_field(name=Level, value=dtls["level"], inline=True)
+            embed.add_field(name=Playcount, value=dtls["playcount"], inline=True)
+            embed.add_field(name=Global Rank, value=dtls["pp_rank"], inline=True)
+            embed.add_field(name=GB Rank, value=dtls["pp_country_rank"], inline=True)
+            await self.client.edit_message(embed=embed)
 
             
 
