@@ -32,4 +32,5 @@ A help page because it's easier to do it this way.
  - ytdl {yt url}
 
 ***DATABASE***
-No commands
+
+ - No commands
