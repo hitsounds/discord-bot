@@ -4,6 +4,7 @@ from discord.ext import commands
 from subprocess import Popen
 import aiohttp
 import os
+import asyncio
 
 class voice:
     def __init__(self, client):
@@ -46,28 +47,17 @@ class voice:
 
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
+        msg = await self.client.say("Please wait")
         process = Popen(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url], shell=False)
         process.wait()
 #        await asyncio.create_subprocess_exec(["youtube-dl", "--extract-audio", "--audio-format", "mp3", "-o", "output.%(ext)s", url])
         session = aiohttp.ClientSession()
         files = {'file' : open("output.mp3", "rb")}
         async with session.post('https://file.io/?expires=1d', data=files) as resp:
-            reader = aiohttp.MultipartReader.from_response(resp)
-            data = None
-            while True:
-                part = await reader.next()
-                if part is None:
-                    break
-                data = await part.json()
-                try:
-                    url = data["link"]
-                    break
-                except:
-                    pass
-
+            print(resp)
         os.remove("output.mp3")
         session.close()
-        await self.client.say(url)
+        await self.client.edit_message(msg, "resp")
 
 
 
