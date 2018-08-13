@@ -42,7 +42,6 @@ class voice:
 
     @commands.command(pass_context=True)
     async def stop(self, ctx):
-
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
