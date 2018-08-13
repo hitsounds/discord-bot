@@ -66,7 +66,7 @@ class fun:
             embed.add_field(name="Level", value=dtls["level"], inline=True)
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
-            embed.add_field(name="GB Rank", value="#"+ dtls["pp_country_rank"], inline=True)
+            embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
             embed, dtls, session, msg = None,None,None,None
 
