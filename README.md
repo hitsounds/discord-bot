@@ -14,8 +14,7 @@ A help page because it's easier to do it this way.
 
 ***FUN***
 
- - bws  {subcommand}
-	 - -no subcommand-
+ - bws {optional subcommand}
 	 - dump
  - yomama
  - osu {osu username}
