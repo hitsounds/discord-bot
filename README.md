@@ -1,6 +1,6 @@
 
 ## Hitcircles BOT
-A help page because it's easier to do it this way.
+A help page because it's easier to do it this way. If u want to see me doing stuff with the bot: discord.gg/mpKTVCW
 
 
 **Commands**
