@@ -42,6 +42,7 @@ class voice:
 
     @commands.command(pass_context=True)
     async def stop(self, ctx):
+
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
@@ -58,6 +59,7 @@ class voice:
         session.close()
         await self.client.edit_message(msg, await resp.text())
         msg, process, session, upload, files, resp, stdout, stderr = None, None,None,None,None,None,None,None
+
 
 
 

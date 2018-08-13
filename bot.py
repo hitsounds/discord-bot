@@ -24,10 +24,12 @@ async def on_ready():
 async def me(ctx):
     await client.say("HI")
 
+    
 @client.command(pass_context=True)
 async def help(ctx):
     await client.delete_message(ctx.message)
     await client.send_message(ctx.message.author, "https://goo.gl/vya4Sp"  )
+
 
 
 #loading the extensions from ext/ folder

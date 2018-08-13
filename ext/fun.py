@@ -49,6 +49,7 @@ class fun:
 
 
 
+
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg):
         if ctx.invoked_subcommand is None:
@@ -71,6 +72,7 @@ class fun:
             embed, dtls, session, msg = None,None,None,None
 
             
+
 
 
 
