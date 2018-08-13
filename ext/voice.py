@@ -26,7 +26,7 @@ class voice:
     async def play(self, ctx, url):
         self.server = ctx.message.server
         self.voice_client = self.client.voice_client_in(self.server)
-        if self.voice_client == None:
+        if self.voice_client is None:
             self.voice_client = await self.client.join_voice_channel(ctx.message.author.voice.voice_channel)    
         self.player = await self.voice_client.create_ytdl_player(url)
         self.players[self.server.id] = self.player
@@ -70,5 +70,5 @@ def setup(client):
     discord.opus.load_opus("vendor/lib/libopus.so.0")
     if discord.opus.is_loaded():
         print("Opus loaded!")
-
     client.add_cog(voice(client))
+
