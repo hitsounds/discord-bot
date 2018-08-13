@@ -35,24 +35,46 @@ class fun:
             embed.add_field(name="#{}".format(i+1), value="[{url}]({url})".format(url = next(x for x in bwl if not x.stickied).url), inline=False)
         await self.client.say(embed=embed)
         embed, sreddit, bwl = None, None, None
+    
+    @commands.command(pass_context=True)
+    async def yomama(self, ctx):
+        await self.client.delete_message(ctx.message)
+        session = aiohttp.ClientSession()
+        resp = await session.get("http://api.yomomma.info/")
+        session.close()
+        data = await resp.json()
+        await self.client.say(data["joke"])
+        session, resp, data = None, None, None
+
+
+
 
 
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg):
         if ctx.invoked_subcommand is None:
+            msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
-            resp = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+            dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
-            dtls = await resp.json()
-            await self.client.say(dtls[0])
-            session, resp = None, None
+            dtls = await dtls.json()
+            dtls = dtls[0]
+            embed=discord.Embed(title="Osu Stats" ,description="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]), color=0xdc98a4)
+            embed.set_author(name="{} [{}]".format(dtls["username"], dtls["country"] ), url="https://osu.ppy.sh/u/{}".format(dtls["user_id"]), icon_url="https://a.ppy.sh/{}".format(dtls["user_id"]))
+            embed.set_thumbnail(url=r"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Osu%21Logo_%282015%29.png/220px-Osu%21Logo_%282015%29.png")
+            embed.add_field(name="PP", value=dtls["pp_raw"], inline=True)#
+            embed.add_field(name="Accuracy", value=dtls["accuracy"]+"%", inline=True)
+            embed.add_field(name="Level", value=dtls["level"], inline=True)
+            embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
+            embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
+            embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
+            await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
+            embed, dtls, session, msg = None,None,None,None
 
             
 
 
 
-
-        
 
 
 

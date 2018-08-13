@@ -1,7 +1,6 @@
 import discord
 import youtube_dl
 from discord.ext import commands
-from subprocess import Popen
 import aiohttp
 import os
 import asyncio
@@ -34,15 +33,16 @@ class voice:
         self.player.start()
     
     @commands.command(pass_context=True)
-    async def pause(ctx):
+    async def pause(self, ctx):
         self.players[ctx.message.server.id].pause()
 
     @commands.command(pass_context=True)
-    async def resume(ctx):
+    async def resume(self, ctx):
         self.players[ctx.message.server.id].resume()
 
     @commands.command(pass_context=True)
-    async def stop(ctx):
+    async def stop(self, ctx):
+
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
@@ -58,7 +58,8 @@ class voice:
         os.remove("output.mp3")
         session.close()
         await self.client.edit_message(msg, await resp.text())
-        msg, process, session, upload, files, resp = None, None,None,None,None,None
+        msg, process, session, upload, files, resp, stdout, stderr = None, None,None,None,None,None,None,None
+
 
 
 

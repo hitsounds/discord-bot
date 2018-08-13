@@ -13,23 +13,23 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name="up",type = 1,url="https://www.twitch.tv/fuzzyness"))
+    await client.change_presence(game=discord.Game(name=";help",type = 1,url="https://www.twitch.tv/fuzzyness"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
 
-#example commands
 @client.command(pass_context=True)
 async def me(ctx):
     await client.say("HI")
 
-@client.group(pass_context=True)
+    
+@client.command(pass_context=True)
 async def help(ctx):
-    if ctx.invoked_subcommand is None:
-        await client.send_message(ctx.message.author, "Proper usage: `;help {module}    NOT IMPLEMENTED`"  )
-        await client.send_message(ctx.message.author, i_cogs)
+    await client.delete_message(ctx.message)
+    await client.send_message(ctx.message.author, "https://goo.gl/vya4Sp"  )
+
 
 
 #loading the extensions from ext/ folder
