@@ -17,7 +17,6 @@ A help page because it's easier to do it this way.
  - bws  {subcommand}
 	 - -no subcommand-
 	 - dump
- - dump
  - yomama
  - osu {osu username}
  - ping
