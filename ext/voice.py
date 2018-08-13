@@ -71,4 +71,3 @@ def setup(client):
     if discord.opus.is_loaded():
         print("Opus loaded!")
     client.add_cog(voice(client))
-
