@@ -55,6 +55,7 @@ class fun:
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg=None):
         if ctx.invoked_subcommand is None:
+            msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
             if arg == None:
                 conn = await database.load()
@@ -67,7 +68,6 @@ class fun:
             else: 
                 dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
-            msg = await self.client.say("Processing")
             dtls = await dtls.json()
             dtls = dtls[0]
             embed=discord.Embed(title="Osu Stats" ,description="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]), color=0xdc98a4)
