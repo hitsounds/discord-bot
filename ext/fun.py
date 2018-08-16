@@ -53,7 +53,7 @@ class fun:
 
 
     @commands.group(pass_context=True)
-    async def osu(self, ctx, arg):
+    async def osu(self, ctx, arg=None):
         if ctx.invoked_subcommand is None:
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
