@@ -5,6 +5,7 @@ import praw
 import os
 import aiohttp
 import psycopg2
+from ext.database import database
 
 class fun:
     def __init__(self, client):
@@ -57,7 +58,7 @@ class fun:
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
             if arg == None:
-                conn = psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+                conn = await database.load()
                 cur = conn.cursor()
                 cur.execute(f"SELECT osu_id FROM users WHERE user_id = {ctx.message.author.id}")
                 arg = cur.fetchone()
