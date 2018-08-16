@@ -4,6 +4,8 @@ import random
 import praw
 import os
 import aiohttp
+import psycopg2
+from database import database
 
 class fun:
     def __init__(self, client):
@@ -55,7 +57,16 @@ class fun:
         if ctx.invoked_subcommand is None:
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
-            dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+            if arg == None:
+                conn = database.load()
+                cur = conn.cursor()
+                cur.execute(f"SELECT osu_id FROM users WHERE user_id = {ctx.message.author.id}")
+                arg = cur.fetchone()
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+                cur.close()
+                conn.close()
+            else: 
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
             session.close()
             dtls = await dtls.json()
             dtls = dtls[0]
