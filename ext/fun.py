@@ -58,7 +58,7 @@ class fun:
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
             if arg == None:
-                conn = database.load()
+                conn = await database.load()
                 cur = conn.cursor()
                 cur.execute(f"SELECT osu_id FROM users WHERE user_id = {ctx.message.author.id}")
                 arg = cur.fetchone()
