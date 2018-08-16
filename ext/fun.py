@@ -5,7 +5,7 @@ import praw
 import os
 import aiohttp
 import psycopg2
-from database import database
+from ext.database import database
 
 class fun:
     def __init__(self, client):
