@@ -58,11 +58,12 @@ class fun:
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
             if arg == None:
-                conn = database.load()
+                conn = await database.load()
                 cur = conn.cursor()
-                cur.execute(f"SELECT osu_id FROM users WHERE user_id = {ctx.message.author.id}")
+                cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
                 arg = cur.fetchone()
-                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+                print(arg)
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
                 cur.close()
                 conn.close()
             else: 
