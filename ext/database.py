@@ -27,7 +27,8 @@ class database:
             await self.client.say("incorrect subcommand")
     
 
-    async def load(self):
+
+    async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
 

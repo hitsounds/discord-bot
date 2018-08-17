@@ -4,13 +4,14 @@ import random
 import praw
 import os
 import aiohttp
+import psycopg2
+from ext.database import database
+import asyncio
 
 class fun:
     def __init__(self, client):
         self.client = client
-        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'),
-                     client_secret=os.environ.get('C_S'),
-                     user_agent='bot.py A discord bot')
+        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
 
 
@@ -48,14 +49,49 @@ class fun:
 
 
 
-
-
-    @commands.group(pass_context=True)
-    async def osu(self, ctx, arg):
-        if ctx.invoked_subcommand is None:
+    @commands.command(pass_context=True)
+    async def osu(self, ctx, *args):
+        if args[0] == "set":
+            """
+            Set osu name
+            
+            """
+            if len(args) < 2:
+                msg = await self.client.say("Pass a osu! user name or id with the command")
+                asyncio.sleep(2)
+            else:
+                session = aiohttp.ClientSession()
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
+                session.close()
+                dtls = await dtls.json()
+                conn = await database.load()
+                cur = conn.cursor()
+                cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+                conn.commit()
+                cur.close()
+                conn.close()
+                msg = await self.client.say("Osu! registered")
+                asyncio.sleep(2)
+                await self.client.delete_message(msg)
+                await self.client.delete_message(ctx.message)      
+        else:
+            """
+            
+            Get osu stats
+            
+            """
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
-            dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+            if len(args) == 0:
+                conn = await database.load()
+                cur = conn.cursor()
+                cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
+                arg = cur.fetchone()
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
+                cur.close()
+                conn.close()
+            else: 
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             session.close()
             dtls = await dtls.json()
             dtls = dtls[0]
@@ -63,13 +99,15 @@ class fun:
             embed.set_author(name="{} [{}]".format(dtls["username"], dtls["country"] ), url="https://osu.ppy.sh/u/{}".format(dtls["user_id"]), icon_url="https://a.ppy.sh/{}".format(dtls["user_id"]))
             embed.set_thumbnail(url=r"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Osu%21Logo_%282015%29.png/220px-Osu%21Logo_%282015%29.png")
             embed.add_field(name="PP", value=dtls["pp_raw"], inline=True)#
-            embed.add_field(name="Accuracy", value=dtls["accuracy"]+"%", inline=True)
+            embed.add_field(name="Accuracy", value=str(round(float(dtls["accuracy"]),2))+"%", inline=True)
             embed.add_field(name="Level", value=dtls["level"], inline=True)
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
             embed, dtls, session, msg = None,None,None,None
+
+
 
             
 

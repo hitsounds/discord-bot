@@ -47,7 +47,7 @@ class voice:
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        process = await asyncio.create_subprocess_shell("youtube-dl --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
+        process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
         stdout, stderr = await process.communicate()
         if os.path.getsize("output.mp3")/1048576 < 7:
             await self.client.send_file(ctx.message.channel,"output.mp3",content="Tada")
