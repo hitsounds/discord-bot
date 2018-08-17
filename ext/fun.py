@@ -80,7 +80,7 @@ class fun:
             embed, dtls, session, msg = None,None,None,None
 
     @osu.command(pass_context=True)
-    async def set(self, ctx, arg=None):
+    async def s(self, ctx, arg=None):
         if arg == None:
             msg = self.client.say("Pass a osu! user name or id with the command")
             asyncio.sleep(10)
