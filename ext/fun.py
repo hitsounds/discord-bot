@@ -59,7 +59,6 @@ class fun:
             if len(args) < 2:
                 msg = await self.client.say("Pass a osu! user name or id with the command")
                 asyncio.sleep(2)
-                self.client.delete_message(msg)
             else:
                 session = aiohttp.ClientSession()
                 dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
@@ -73,7 +72,8 @@ class fun:
                 conn.close()
                 msg = await self.client.say("Osu! registered")
                 asyncio.sleep(2)
-                await self.client.delete_message(msg)    
+                await self.client.delete_message(msg)
+                await self.client.delete_message(ctx.message)      
         else:
             """
             
