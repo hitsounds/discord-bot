@@ -57,8 +57,8 @@ class fun:
             
             """
             if len(args) < 2:
-                msg = self.client.say("Pass a osu! user name or id with the command")
-                asyncio.sleep(10)
+                msg = await self.client.say("Pass a osu! user name or id with the command")
+                asyncio.sleep(2)
                 self.client.delete_message(msg)
             else:
                 session = aiohttp.ClientSession()
@@ -71,9 +71,9 @@ class fun:
                 conn.commit()
                 cur.close()
                 conn.close()
-                msg = self.client.say("Osu! registered")
-                asyncio.sleep(10)
-                self.client.delete_message(msg)    
+                msg = await self.client.say("Osu! registered")
+                asyncio.sleep(2)
+                await self.client.delete_message(msg)    
         else:
             """
             
