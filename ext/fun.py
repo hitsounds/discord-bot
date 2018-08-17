@@ -49,12 +49,40 @@ class fun:
 
 
 
-    @commands.group(pass_context=True)
-    async def osu(self, ctx, arg=None):
-        if ctx.invoked_subcommand is None:
+    @commands.command(pass_context=True)
+    async def osu(self, ctx, *args):
+        if args[0] == "set":
+            """
+            Set osu name
+            
+            """
+            if len(args) < 2:
+                msg = self.client.say("Pass a osu! user name or id with the command")
+                asyncio.sleep(10)
+                self.client.delete_message(msg)
+            else:
+                session = aiohttp.ClientSession()
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
+                session.close()
+                dtls = await dtls.json()
+                conn = await database.load()
+                cur = conn.cursor()
+                cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+                conn.commit()
+                cur.close()
+                conn.close()
+                msg = self.client.say("Osu! registered")
+                asyncio.sleep(10)
+                self.client.delete_message(msg)    
+        else:
+            """
+            
+            Get osu stats
+            
+            """
             msg = await self.client.say("Processing")
             session = aiohttp.ClientSession()
-            if arg == None:
+            if len(args) == 0:
                 conn = await database.load()
                 cur = conn.cursor()
                 cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
@@ -63,7 +91,7 @@ class fun:
                 cur.close()
                 conn.close()
             else: 
-                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             session.close()
             dtls = await dtls.json()
             dtls = dtls[0]
@@ -78,28 +106,6 @@ class fun:
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
             embed, dtls, session, msg = None,None,None,None
-
-    @osu.command(pass_context=True)
-    async def s(self, ctx, arg=None):
-        if arg == None:
-            msg = self.client.say("Pass a osu! user name or id with the command")
-            asyncio.sleep(10)
-            self.client.delete_message(msg)
-        else:
-            session = aiohttp.ClientSession()
-            dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
-            session.close()
-            dtls = await dtls.json()
-            conn = await database.load()
-            cur = conn.cursor()
-            cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
-            cur.commit()
-            cur.close()
-            conn.close()
-            msg = self.client.say("Osu! registered")
-            asyncio.sleep(10)
-            self.client.delete_message(msg)
-
 
 
 
