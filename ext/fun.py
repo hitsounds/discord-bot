@@ -6,13 +6,12 @@ import os
 import aiohttp
 import psycopg2
 from ext.database import database
+import asyncio
 
 class fun:
     def __init__(self, client):
         self.client = client
-        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'),
-                     client_secret=os.environ.get('C_S'),
-                     user_agent='bot.py A discord bot')
+        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
 
 
@@ -50,8 +49,6 @@ class fun:
 
 
 
-
-
     @commands.group(pass_context=True)
     async def osu(self, ctx, arg=None):
         if ctx.invoked_subcommand is None:
@@ -81,6 +78,30 @@ class fun:
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
             embed, dtls, session, msg = None,None,None,None
+
+    @osu.command(pass_context=True)
+    async def set(self, ctx, arg=None):
+        if arg == None:
+            msg = self.client.say("Pass a osu! user name or id with the command")
+            asyncio.sleep(10)
+            self.client.delete_message(msg)
+        else:
+            session = aiohttp.ClientSession()
+            dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg))
+            session.close()
+            dtls = await dtls.json()
+            conn = await database.load()
+            cur = conn.cursor()
+            cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+            cur.commit()
+            cur.close()
+            conn.close()
+            msg = self.client.say("Osu! registered")
+            asyncio.sleep(10)
+            self.client.delete_message(msg)
+
+
+
 
             
 
