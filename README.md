@@ -2,7 +2,7 @@
 ## Hitcircles BOT [![CodeFactor](https://www.codefactor.io/repository/github/hitsounds/discord-bot/badge)](https://www.codefactor.io/repository/github/hitsounds/discord-bot)
 
 
-A help page because it's easier to do it this way.
+A help page because it's easier to do it this way. If u want to see me doing stuff with the bot: discord.gg/mpKTVCW
 
 
 **Commands**
