@@ -51,7 +51,7 @@ class fun:
 
     @commands.command(pass_context=True)
     async def osu(self, ctx, *args):
-        if args[0] == "set":
+        if len(args)>0 and args[0] == "set":
             """
             Set osu name
             
