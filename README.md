@@ -19,7 +19,8 @@ A help page because it's easier to do it this way. If u want to see me doing stu
  - bws {optional subcommand}
 	 - dump
  - yomama
- - osu {osu username}
+ - osu {osu username OR subcommand OR blank}
+	 - set {osu username}
  - ping
 
 ***AUDIO***
