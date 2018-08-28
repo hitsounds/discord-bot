@@ -32,7 +32,7 @@ class database:
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
-    async def sendFile(self, ctx, filename, extension):
+    async def sendFile(ctx, filename, extension):
         file = "{}.{}".format(filename, extension)
         if os.path.getsize("{}.{}".format(filename, extension))/1048576 < 7:
             await self.client.send_file(ctx.message.channel,"{}.{}".format(filename, extension)  
@@ -41,6 +41,7 @@ class database:
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await session.post('https://transfer.sh/', data=files)
+            print(resp)
             upload.close()
             session.close()
 
