@@ -36,15 +36,16 @@ class database:
         file = "{}.{}".format(filename, extension)
         if os.path.getsize(file)/1048576 < 7:
             await self.client.send_file(ctx.message.channel,file)
-            os.remove(file) 
+            os.remove(file)
+            return "SENT"
         else:
             session = aiohttp.ClientSession()
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await session.post('https://transfer.sh/', data=files)
-            await self.client.send_message(ctx.message.channel ,await resp.text())
             upload.close()
             session.close()
+            return await resp.text()
 
 
 
