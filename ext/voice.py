@@ -51,6 +51,7 @@ class voice:
         process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
         await process.communicate()
         await database.sendFile(ctx,"output", "mp3")
+        os.remove("output.mp3")
 
 
 
