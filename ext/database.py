@@ -43,6 +43,7 @@ class database:
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await session.post('https://transfer.sh/', data=files)
+            os.remove(file)
             upload.close()
             session.close()
             return await resp.text()
