@@ -3,6 +3,7 @@ import psycopg2
 import discord
 from discord.ext import commands
 import re
+import aiohttp
 
 
 class database:
