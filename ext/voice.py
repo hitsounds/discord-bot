@@ -50,7 +50,7 @@ class voice:
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
         await process.communicate()
-        await database.sendFile(ctx, "output", "mp3")
+        await database.sendFile(ctx,"output", "mp3")
 
 
 
