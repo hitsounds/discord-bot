@@ -32,16 +32,17 @@ class database:
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
-    async def sendFile(ctx, filename, extension):
+    async def sendFile(self ,ctx ,filename ,extension):
         file = "{}.{}".format(filename, extension)
         if os.path.getsize(file)/1048576 < 7:
-            await self.client.send_file(ctx.message.channel,"{}.{}".format(filename, extension)  
+            await self.client.send_file(ctx.message.channel,file)
+            os.remove(file) 
         else:
             session = aiohttp.ClientSession()
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await session.post('https://transfer.sh/', data=files)
-            print(resp)
+            await client.send_message(ctx.message.channel ,await resp.text())
             upload.close()
             session.close()
 
