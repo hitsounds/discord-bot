@@ -4,6 +4,7 @@ from discord.ext import commands
 import aiohttp
 import os
 import asyncio
+from ext.database import database
 
 class voice:
     def __init__(self, client):
@@ -48,20 +49,8 @@ class voice:
     async def ytdl(self, ctx, url):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
-        stdout, stderr = await process.communicate()
-        if os.path.getsize("output.mp3")/1048576 < 7:
-            await self.client.send_file(ctx.message.channel,"output.mp3",content="Tada")
-            await self.client.delete_message(msg)
-        else:
-            session = aiohttp.ClientSession()
-            upload = open("output.mp3", "rb")
-            files = {'filedata': upload}
-            resp = await session.post('https://transfer.sh/', data=files)
-            upload.close()
-            session.close()
-            await self.client.edit_message(msg, await resp.text())
-        os.remove("output.mp3")
-        msg, process, session, upload, files, resp, stdout, stderr = None, None,None,None,None,None,None,None
+        await process.communicate()
+        await database.sendFile(ctx, "output", "mp3")
 
 
 

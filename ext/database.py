@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 import re
 
+
 class database:
     def __init__(self, client):
         self.client = client
@@ -30,6 +31,22 @@ class database:
 
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+
+    async def sendFile(self, ctx, filename, extension):
+        if os.path.getsize("{}.{}".format(filename, extension))/1048576 < 7:
+            await self.client.send_file(ctx.message.channel,"{}.{}".format(filename, extension)
+            out = True
+        else:
+            session = aiohttp.ClientSession()
+            upload = open("{}.{}".format(filename, extension), "rb")
+            files = {'filedata': upload}
+            resp = await session.post('https://transfer.sh/', data=files)
+            upload.close()
+            session.close()
+            out = await resp.text()
+        os.remove("{}.{}".format(filename, extension))     
+        return out
+
 
 
 
