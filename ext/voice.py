@@ -46,11 +46,16 @@ class voice:
         self.players[ctx.message.server.id].stop()
 
     @commands.command(pass_context=True)
-    async def ytdl(self, ctx, url):
+    async def ytdl(self, ctx, url, ext="mp3"):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
-        await process.communicate()
-        result = await database.sendFile(self, ctx, "output", "mp3")
+        if ext == "mp4":
+            process = await asyncio.create_subprocess_shell("youtube-dl -format bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best--merge-output-format mp4 -o output.mp4 {}".format(url), stdout=asyncio.subprocess.PIPE)
+            await process.communicate()
+        else:
+            ext = "mp3"
+            process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o output.mp3 {}".format(url), stdout=asyncio.subprocess.PIPE)
+            await process.communicate()
+        result = await database.sendFile(self, ctx, "output", ext)
         if result == "SENT":
             await self.client.delete_message(msg)
         else:
