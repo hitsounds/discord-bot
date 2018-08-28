@@ -34,7 +34,7 @@ class database:
 
     async def sendFile(ctx, filename, extension):
         file = "{}.{}".format(filename, extension)
-        if os.path.getsize("{}.{}".format(filename, extension))/1048576 < 7:
+        if os.path.getsize(file)/1048576 < 7:
             await self.client.send_file(ctx.message.channel,"{}.{}".format(filename, extension)  
         else:
             session = aiohttp.ClientSession()
