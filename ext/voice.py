@@ -49,7 +49,7 @@ class voice:
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url, ext="mp3"):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        name = random.getrandbits(16)
+        name = random.getrandbits(32)
         if ext == "mp4":
             process = await asyncio.create_subprocess_shell("youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 {}".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
