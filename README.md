@@ -31,7 +31,7 @@ A help page because it's easier to do it this way. If u want to see me doing stu
  - pause
  - resume
  - stop
- - ytdl {yt url}
+ - ytdl {yt url} {format: mp3 or mp4}
 
 ***DATABASE***
 
