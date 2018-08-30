@@ -13,7 +13,7 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name=";help",type = 1,url="https://www.twitch.tv/fuzzyness"))
+    await client.change_presence(game=discord.Game(name=";help",type = 0,url="https://www.twitch.tv/fuzzyness"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
