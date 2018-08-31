@@ -13,6 +13,13 @@ class fun:
         self.client = client
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
+        session = aiohttp.ClientSession()
+        resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
+        self.jokes = open(georgejokes.txt, w)
+        self.jokes.write(await resp.text())
+        session.close()
+
+
 
 
     @commands.group(pass_context=True)
@@ -46,6 +53,23 @@ class fun:
         data = await resp.json()
         await self.client.say(data["joke"])
         session, resp, data = None, None, None
+
+    @commands.group(pass_context=False)
+    async def dbb(self, ctx):
+        if ctx.invoked_subcommand is None:
+            jg = self.jokes.readlines()
+            self.client.say(random.choice(jg))
+    
+    @dbb.command()
+    async def update(self):
+        session = aiohttp.ClientSession()
+        resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
+        self.jokes.write(await resp.text())
+
+
+
+    
+
 
 
 
