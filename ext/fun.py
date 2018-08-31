@@ -57,7 +57,7 @@ class fun:
             await self.client.say(random.choice(jg))
     
     @dbb.command(pass_context=True)
-    async def update(self):
+    async def update(self, ctx):
         self.jokes = open("georgejokes.txt", "w")
         session = aiohttp.ClientSession()
         resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
@@ -65,7 +65,7 @@ class fun:
         session.close()
 
     @dbb.command(pass_context=True)
-    async def current(self):
+    async def current(self, ctx):
         await self.client.send_file(ctx.message.channel, "georgejokes.txt")
 
 
