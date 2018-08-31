@@ -9,7 +9,7 @@ from ext.database import database
 import asyncio
 
 class fun:
-    async def __init__(self, client):
+    def __init__(self, client):
         self.client = client
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
