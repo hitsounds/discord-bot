@@ -51,12 +51,14 @@ class fun:
         session, resp, data = None, None, None
 
     @commands.group(pass_context=True)
-    async def dbb(self, ctx):
+    async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
-            jg = self.jokes.readlines()
-            await self.client.say(random.choice(jg))
+            embed=discord.Embed(title="Straktic Jokes", description=random.choice(self.jokes.readlines()), color=0x0a94e7)
+            embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
+            await self.bot.say(embed=embed)
+
     
-    @dbb.command(pass_context=True)
+    @banter.command(pass_context=True)
     async def update(self, ctx):
         self.jokes = open("georgejokes.txt", "w+")
         session = aiohttp.ClientSession()
@@ -65,7 +67,7 @@ class fun:
         self.jokes.flush()
         session.close()
 
-    @dbb.command(pass_context=True)
+    @banter.command(pass_context=True)
     async def current(self, ctx):
         await self.client.send_file(ctx.message.channel, "georgejokes.txt")
 
