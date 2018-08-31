@@ -15,9 +15,6 @@ class fun:
         self.osuAPIkey = os.environ.get('OSU_KEY')
         
 
-
-
-
     @commands.group(pass_context=True)
     async def bws(self, ctx):
         if ctx.invoked_subcommand is None:
@@ -53,10 +50,12 @@ class fun:
     @commands.group(pass_context=True)
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
-            jk = self.jokes.readlines()
-            embed=discord.Embed(title="Straktic Jokes", description=random.choice(jk), color=0x0a94e7)
-            embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
-            await self.bot.say(embed=embed)
+            with open("georgejokes.txt", "r") as ED:
+                jk = ED.readlines()
+                embed=discord.Embed(title="Straktic Jokes", description=random.choice(jk), color=0x0a94e7)
+                embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
+                await self.client.say(embed=embed)
+                ED.close()
 
     
     @banter.command(pass_context=True)
