@@ -61,7 +61,9 @@ class fun:
         self.jokes = open("georgejokes.txt", "w")
         session = aiohttp.ClientSession()
         resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
-        self.jokes.write(await resp.text())
+        jk = await await resp.text()
+        print(jk)
+        self.jokes.write(jk)
         session.close()
 
     @dbb.command(pass_context=True)
