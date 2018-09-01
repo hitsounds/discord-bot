@@ -52,11 +52,12 @@ class fun:
         if ctx.invoked_subcommand is None:
             session = aiohttp.ClientSession()
             resp = await session.get("https://goo.gl/yeGfHE")
-            with await resp.text() as lol:
-                jk = lol.split("\n")[random.randint(0,len(lol)-1)]
-                embed=discord.Embed(title="Straktic Jokes", description=random.choice(jk), color=0x0a94e7)
-                embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
-                await self.client.say(embed=embed)
+            session.close()
+            lol = await resp.text()
+            jk = lol.split("\n")[random.randint(0,len(lol)-1)]
+            embed=discord.Embed(title="Straktic Jokes", description=random.choice(jk), color=0x0a94e7)
+            embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
+            await self.client.say(embed=embed)
 
     
 #    @banter.command(pass_context=True)
