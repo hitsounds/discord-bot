@@ -7,14 +7,13 @@ import aiohttp
 import psycopg2
 from ext.database import database
 import asyncio
+import bot
 
 class fun:
     def __init__(self, client):
         self.client = client
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
-        self.session = aiohttp.ClientSession()
-        
         
 
     @commands.group(pass_context=True)
@@ -40,14 +39,14 @@ class fun:
     @commands.command(pass_context=True)
     async def yomama(self, ctx):
         await self.client.delete_message(ctx.message)
-        resp = await self.session.get("http://api.yomomma.info/")
+        resp = await bot.session.get("http://api.yomomma.info/")
         data = await resp.json()
         await self.client.say(data["joke"])
 
     @commands.command(pass_context=True)
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
-            resp = await self.session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
+            resp = await bot.session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
             lol = await resp.text()
             jk = random.choice(lol.split("\n"))
             embed=discord.Embed(title="OwO", description=jk, color=0x0a94e7)
@@ -71,8 +70,10 @@ class fun:
             if len(args) < 2:
                 msg = await self.client.say("Pass a osu! user name or id with the command")
                 asyncio.sleep(2)
+                await self.client.delete_message(msg)
+                await self.client.delete_message(ctx.message)
             else:
-                dtls = await self.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
+                dtls = await bot.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
                 dtls = await dtls.json()
                 conn = await database.load()
                 cur = conn.cursor()
@@ -96,11 +97,11 @@ class fun:
                 cur = conn.cursor()
                 cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
                 arg = cur.fetchone()
-                dtls = await self.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
+                dtls = await bot.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
                 cur.close()
                 conn.close()
             else: 
-                dtls = await self.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
+                dtls = await bot.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             dtls = await dtls.json()
             dtls = dtls[0]
             embed=discord.Embed(title="Osu Stats" ,description="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]), color=0xdc98a4)

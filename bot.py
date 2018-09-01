@@ -1,8 +1,10 @@
 import discord
 from discord.ext import commands
 import os
+import aiohttp
 
 TOKEN = os.environ.get('TOKEN')
+session = aiohttp.ClientSession()
 
 cogs_dir = "ext"
 i_cogs = []
@@ -41,5 +43,6 @@ for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.
         except Exception as e:
             print(f'Failed to load extension {extension}.') 
             print (e)
+
 
 client.run(TOKEN)
