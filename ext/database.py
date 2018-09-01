@@ -36,15 +36,17 @@ class database:
     async def sendFile(self, ctx ,filename ,extension):
         file = f"{filename}.{extension}"
         if os.path.getsize(file)/1048576 < 7:
-            yield await self.client.send_file(ctx.message.channel,file)
+            res = await self.client.send_file(ctx.message.channel,file)
             os.remove(file)
+            return res
         else:
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await self.session.post('https://transfer.sh/', data=files)
             os.remove(file)
             upload.close()
-            yield await self.client.send_message(ctx.message.channel ,await resp.text())
+            res = await self.client.send_message(ctx.message.channel ,await resp.text())
+            return res
 
 
 
