@@ -18,7 +18,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    await client.send_message("426816759648092160", "Ready when you are! <@130025130100391936>")
+    await client.send_message(client.get_channel("426816759648092160"), "Ready when you are! <@130025130100391936>")
 
 @client.command(pass_context=True)
 async def me(ctx):
