@@ -88,7 +88,7 @@ class fun:
             Get osu stats
             
             """
-            msg = await self.client.say("Processing")
+            self.client.send_typing(ctx.message.channel)
             if len(args) == 0:
                 conn = await database.load()
                 cur = conn.cursor()
@@ -110,7 +110,7 @@ class fun:
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
-            await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
+            await self.client.say(embed=embed)
 
 
 
