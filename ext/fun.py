@@ -23,7 +23,6 @@ class fun:
             for i in range(0, post_to_pick):
                 submission = next(x for x in bwl if not x.stickied)
             await self.client.send_message(ctx.message.channel ,submission.url)
-            bwl, post_to_pick, submission = None, None, None
     
     @bws.command(pass_context=True)
     async def dump(self, ctx):
@@ -35,25 +34,19 @@ class fun:
         for i in range(0, 10):
             embed.add_field(name="#{}".format(i+1), value="[{url}]({url})".format(url = next(x for x in bwl if not x.stickied).url), inline=False)
         await self.client.say(embed=embed)
-        embed, sreddit, bwl = None, None, None
     
     @commands.command(pass_context=True)
     async def yomama(self, ctx):
         await self.client.delete_message(ctx.message)
-        session = aiohttp.ClientSession()
-        resp = await session.get("http://api.yomomma.info/")
-        session.close()
+        resp = await database.session.get("http://api.yomomma.info/")
         data = await resp.json()
         await self.client.say(data["joke"])
-        session, resp, data = None, None, None
 
     @commands.command(pass_context=True)
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
-            session = aiohttp.ClientSession()
-            resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
+            resp = await database.session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
             lol = await resp.text()
-            session.close()
             jk = random.choice(lol.split("\n"))
             embed=discord.Embed(title="OwO", description=jk, color=0x0a94e7)
             embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
@@ -77,9 +70,7 @@ class fun:
                 msg = await self.client.say("Pass a osu! user name or id with the command")
                 asyncio.sleep(2)
             else:
-                session = aiohttp.ClientSession()
-                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
-                session.close()
+                dtls = await database.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
                 dtls = await dtls.json()
                 conn = await database.load()
                 cur = conn.cursor()
@@ -98,18 +89,16 @@ class fun:
             
             """
             msg = await self.client.say("Processing")
-            session = aiohttp.ClientSession()
             if len(args) == 0:
                 conn = await database.load()
                 cur = conn.cursor()
                 cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
                 arg = cur.fetchone()
-                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
+                dtls = await database.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
                 cur.close()
                 conn.close()
             else: 
-                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
-            session.close()
+                dtls = await database.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             dtls = await dtls.json()
             dtls = dtls[0]
             embed=discord.Embed(title="Osu Stats" ,description="[Profile](https://osu.ppy.sh/u/{id}) | [PP+](https://syrin.me/pp+/u/{id}/) | [Skills](http://osuskills.tk/user/{name}) | [Osu!-chan](https://syrin.me/osuchan/u/{id}/?m=0) | [Osu!Track](https://ameobea.me/osutrack/user/{name})".format(name = dtls["username"],id = dtls["user_id"]), color=0xdc98a4)
@@ -122,7 +111,6 @@ class fun:
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
             await self.client.edit_message(msg,new_content="Done!" ,embed=embed)
-            embed, dtls, session, msg = None,None,None,None
 
 
 
