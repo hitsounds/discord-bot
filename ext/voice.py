@@ -11,6 +11,7 @@ class voice:
     def __init__(self, client):
         self.client = client
         self.players = {}
+        self.session = aiohttp.ClientSession()
 
     @commands.command(pass_context=True)
     async def join(self, ctx):

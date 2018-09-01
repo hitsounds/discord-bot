@@ -4,12 +4,12 @@ import discord
 from discord.ext import commands
 import re
 import aiohttp
-import bot
 
 
 class database:
     def __init__(self, client):
         self.client = client
+        self.session = aiohttp.ClientSession()
 
     @commands.command(pass_context=True)
     async def scan(self, ctx):
@@ -42,7 +42,7 @@ class database:
         else:
             upload = open(file, "rb")
             files = {'filedata': upload}
-            resp = await bot.session.post('https://transfer.sh/', data=files)
+            resp = await self.session.post('https://transfer.sh/', data=files)
             os.remove(file)
             upload.close()
             res = await self.client.send_message(ctx.message.channel ,await resp.text())
