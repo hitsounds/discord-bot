@@ -51,9 +51,9 @@ class fun:
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
             session = aiohttp.ClientSession()
-            resp = await session.get("https://goo.gl/yeGfHE")
-            session.close()
+            resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
             lol = await resp.text()
+            session.close()
             jk = lol.split("\n")[random.randint(0,len(lol)-1)]
             embed=discord.Embed(title="Straktic Jokes", description=random.choice(jk), color=0x0a94e7)
             embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
@@ -71,7 +71,7 @@ class fun:
 
     @banter.command(pass_context=True)
     async def current(self, ctx):
-        await self.client.send_file(ctx.message.channel, "https://goo.gl/yeGfHE")
+        await self.client.send_file(ctx.message.channel, "https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
 
 
 
