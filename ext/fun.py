@@ -90,7 +90,7 @@ class fun:
             Get osu stats
             
             """
-            self.client.send_typing(ctx.message.channel)
+            await self.client.send_typing(ctx.message.channel)
             if len(args) == 0:
                 conn = await database.load()
                 cur = conn.cursor()
