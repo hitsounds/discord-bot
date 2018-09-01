@@ -55,7 +55,7 @@ class fun:
             lol = await resp.text()
             session.close()
             jk = random.choice(lol.split("\n"))
-            embed=discord.Embed(title="Straktic Jokes", description=jk, color=0x0a94e7)
+            embed=discord.Embed(title="OwO", description=jk, color=0x0a94e7)
             embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
             await self.client.say(embed=embed)
 
