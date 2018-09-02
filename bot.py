@@ -12,23 +12,23 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name=";help",type = 0))
+    await client.change_presence(activity=discord.Game(name=";help"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
-    await client.send_message(client.get_channel("426816759648092160"), "Ready when you are! <@130025130100391936>")
+    await client.get_channel(426816759648092160).send("Ready when you are! <@130025130100391936>")
 
 @client.command(pass_context=True)
 async def me(ctx):
-    await client.say("HI")
+    await ctx.say("HI")
 
     
 @client.command(pass_context=True)
 async def help(ctx):
-    await client.delete_message(ctx.message)
-    await client.send_message(ctx.message.author, "https://goo.gl/vya4Sp"  )
+    await ctx.message.delete()
+    await ctx.send("https://goo.gl/vya4Sp")
 
 
 
