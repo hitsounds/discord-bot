@@ -34,7 +34,7 @@ class voice:
             process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 {}".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         await database.sendFile(self, ctx, name, ext)
-        os.remove(f"{ctx}.{ext}")
+        os.remove(f"{name}.{ext}")
         await msg.delete()
 
 
