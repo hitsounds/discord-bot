@@ -21,12 +21,6 @@ class database:
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
         self.conn.close()
-
-    @commands.group(pass_context=True)
-    async def db(self, ctx):
-        await self.client.send_message(ctx.message.channel ,"database command recieved")
-        if ctx.invoked_subcommand is None:
-            await self.client.say("incorrect subcommand")
     
 
 

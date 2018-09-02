@@ -107,7 +107,7 @@ class fun:
             embed.set_author(name="{} [{}]".format(dtls["username"], dtls["country"] ), url="https://osu.ppy.sh/u/{}".format(dtls["user_id"]), icon_url="https://a.ppy.sh/{}".format(dtls["user_id"]))
             embed.set_thumbnail(url=r"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Osu%21Logo_%282015%29.png/220px-Osu%21Logo_%282015%29.png")
             embed.add_field(name="PP", value=dtls["pp_raw"], inline=True)#
-            embed.add_field(name="Accuracy", value=dtls["accuracy"][0:4]+"%", inline=True)
+            embed.add_field(name="Accuracy", value=str(round(float(dtls["accuracy"]),2))+"%", inline=True)
             embed.add_field(name="Level", value=dtls["level"], inline=True)
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
