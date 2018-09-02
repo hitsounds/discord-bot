@@ -11,14 +11,14 @@ class database:
         self.client = client
         self.session = aiohttp.ClientSession()
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def scan(self, ctx):
         self.conn = await self.load()
         self.cur = self.conn.cursor()
-        for member in ctx.message.server.members:
+        for member in ctx.message.guild.members:
             self.cur.execute("""UPDATE users SET u_name=E'{name}' WHERE user_id={userID}""".format(userID = member.id, name = re.escape(member.name)))
             self.conn.commit()
-        print("Members in {} registered on database".format(ctx.message.server))
+        print("Members in {} registered on database".format(ctx.message.guild))
         self.cur.close()
         self.conn.close()
     
@@ -30,7 +30,7 @@ class database:
     async def sendFile(self, ctx ,filename ,extension):
         file = f"{filename}.{extension}"
         if os.path.getsize(file)/1048576 < 7:
-            res = await self.client.send_file(ctx.message.channel,file)
+            res = await ctx.send(file=file)
             os.remove(file)
             return res
         else:
@@ -39,7 +39,7 @@ class database:
             resp = await self.session.post('https://transfer.sh/', data=files)
             os.remove(file)
             upload.close()
-            res = await self.client.send_message(ctx.message.channel ,await resp.text())
+            res = await ctx.send(await resp.text())
             return res
 
 

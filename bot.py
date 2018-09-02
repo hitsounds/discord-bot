@@ -20,12 +20,12 @@ async def on_ready():
     print('------')
     await client.get_channel(426816759648092160).send("Ready when you are! <@130025130100391936>")
 
-@client.command(pass_context=True)
+@client.command()
 async def me(ctx):
     await ctx.say("HI")
 
     
-@client.command(pass_context=True)
+@client.command()
 async def help(ctx):
     await ctx.message.delete()
     await ctx.send("https://goo.gl/vya4Sp")

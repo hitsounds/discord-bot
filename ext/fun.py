@@ -17,16 +17,15 @@ class fun:
         
         
 
-    @commands.group(pass_context=True)
+    @commands.group()
     async def bws(self, ctx):
         if ctx.invoked_subcommand is None:
             bwl = self.reddit.subreddit('awwnime').hot()
-            post_to_pick = random.randint(1, 10)
-            for i in range(0, post_to_pick):
+            for i in range(0,random.randint(1, 10)):
                 submission = next(x for x in bwl if not x.stickied)
-            await self.client.send_message(ctx.message.channel ,submission.url)
+            await ctx.send(submission.url)
     
-    @bws.command(pass_context=True)
+    @bws.command()
     async def dump(self, ctx):
         sreddit = self.reddit.subreddit('awwnime')
         bwl = self.reddit.subreddit('awwnime').hot()
@@ -35,24 +34,23 @@ class fun:
         embed.set_thumbnail(url="https://cdn.awwni.me/13dgm.png")
         for i in range(0, 10):
             embed.add_field(name="#{}".format(i+1), value="[{url}]({url})".format(url = next(x for x in bwl if not x.stickied).url), inline=False)
-        await self.client.say(embed=embed)
+        await ctx.send(embed=embed)
     
-    @commands.command(pass_context=True)
+    @commands.command()
     async def yomama(self, ctx):
-        await self.client.delete_message(ctx.message)
+        await ctx.message.delete()
         resp = await self.session.get("http://api.yomomma.info/")
         data = await resp.json()
-        await self.client.say(data["joke"])
+        await ctx.send(data["joke"])
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
             resp = await self.session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
             lol = await resp.text()
-            jk = random.choice(lol.split("\n"))
-            embed=discord.Embed(title="OwO", description=jk, color=0x0a94e7)
+            embed=discord.Embed(title="OwO", description=random.choice(lol.split("\n")), color=0x0a94e7)
             embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
-            await self.client.say(embed=embed)
+            await ctx.send(embed=embed)
 
 
 
@@ -61,7 +59,7 @@ class fun:
 
 
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def osu(self, ctx, *args):
         if len(args)>0 and args[0] == "set":
             """
@@ -69,7 +67,7 @@ class fun:
             
             """
             if len(args) < 2:
-                msg = await self.client.say("Pass a osu! user name or id with the command")
+                msg = await ctx.send("Pass a osu! user name or id with the command")
                 asyncio.sleep(2)
             else:
                 dtls = await self.session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
@@ -80,17 +78,17 @@ class fun:
                 conn.commit()
                 cur.close()
                 conn.close()
-                msg = await self.client.say("Osu! registered")
+                msg = await ctx.send("Osu! registered")
                 asyncio.sleep(2)
-                await self.client.delete_message(msg)
-                await self.client.delete_message(ctx.message)      
+                await msg.delete()
+                await ctx.message.delete()     
         else:
             """
             
             Get osu stats
             
             """
-            await self.client.send_typing(ctx.message.channel)
+            await ctx.trigger_typing()
             if len(args) == 0:
                 conn = await database.load()
                 cur = conn.cursor()
@@ -112,7 +110,7 @@ class fun:
             embed.add_field(name="Playcount", value=dtls["playcount"], inline=True)
             embed.add_field(name="Global Rank", value="#" + dtls["pp_rank"], inline=True)
             embed.add_field(name=dtls["country"]+" Rank", value="#"+ dtls["pp_country_rank"], inline=True)
-            await self.client.say(embed=embed)
+            await ctx.send(embed=embed)
 
 
 
@@ -126,8 +124,8 @@ class fun:
 
 
     @commands.command()
-    async def ping(self):
-        await self.client.say("Pong!")
+    async def ping(self, ctx):
+        await ctx.send("Pong!")
 
 
 
