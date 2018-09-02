@@ -19,7 +19,7 @@ class voice:
 
     @commands.command()
     async def leave(self, ctx):
-        self.voiceCs[ctx.guild.id].disconnect()
+        await self.voiceCs[ctx.guild.id].disconnect()
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
@@ -27,13 +27,14 @@ class voice:
         msg = await ctx.send("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         name = random.getrandbits(64)
         if ext == "mp4":
-            process = await asyncio.create_subprocess_shell("youtube-dl --default-search \"ytsearch\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 {}".format(name, url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 {}".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         else:
             ext = "mp3"
-            process = await asyncio.create_subprocess_shell("youtube-dl --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 {}".format(name,url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 {}".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         await database.sendFile(self, ctx, name, ext)
+        os.remove(f"{ctx}.{ext}")
         await msg.delete()
 
 

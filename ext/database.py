@@ -31,13 +31,11 @@ class database:
         file = f"{filename}.{extension}"
         if os.path.getsize(file)/1048576 < 7:
             res = await ctx.send(file=discord.File(file))
-            os.remove(file)
             return res
         else:
             upload = open(file, "rb")
             files = {'filedata': upload}
             resp = await self.session.post('https://transfer.sh/', data=files)
-            os.remove(file)
             upload.close()
             res = await ctx.send(await resp.text())
             return res
