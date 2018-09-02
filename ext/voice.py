@@ -11,14 +11,15 @@ class voice:
     def __init__(self, client):
         self.client = client
         self.session = aiohttp.ClientSession()
+        self.voiceCs = {}
 
     @commands.command()
     async def join(self, ctx):
-        vc = await ctx.message.author.voice.voice_channel.connect()
+        self.voiceCs[ctx.guild.id] = await ctx.message.author.voice.channel.connect()
 
     @commands.command()
     async def leave(self, ctx):
-        vc.disconnect()
+        self.voiceCs[ctx.guild.id].disconnect()
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
