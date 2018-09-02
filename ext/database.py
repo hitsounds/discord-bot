@@ -9,7 +9,7 @@ import aiohttp
 class database:
     def __init__(self, client):
         self.client = client
-        self.conn = None
+        self.session = aiohttp.ClientSession()
 
     @commands.command(pass_context=True)
     async def scan(self, ctx):
@@ -21,12 +21,6 @@ class database:
         print("Members in {} registered on database".format(ctx.message.server))
         self.cur.close()
         self.conn.close()
-
-    @commands.group(pass_context=True)
-    async def db(self, ctx):
-        await self.client.send_message(ctx.message.channel ,"database command recieved")
-        if ctx.invoked_subcommand is None:
-            await self.client.say("incorrect subcommand")
     
 
 
@@ -34,20 +28,19 @@ class database:
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,filename ,extension):
-        file = "{}.{}".format(filename, extension)
+        file = f"{filename}.{extension}"
         if os.path.getsize(file)/1048576 < 7:
-            await self.client.send_file(ctx.message.channel,file)
+            res = await self.client.send_file(ctx.message.channel,file)
             os.remove(file)
-            return "SENT"
+            return res
         else:
-            session = aiohttp.ClientSession()
             upload = open(file, "rb")
             files = {'filedata': upload}
-            resp = await session.post('https://transfer.sh/', data=files)
+            resp = await self.session.post('https://transfer.sh/', data=files)
             os.remove(file)
             upload.close()
-            session.close()
-            return await resp.text()
+            res = await self.client.send_message(ctx.message.channel ,await resp.text())
+            return res
 
 
 

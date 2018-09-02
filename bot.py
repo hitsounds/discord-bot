@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import os
 
-#The import os and token are setup for Heroku if you want to host locally you can just remove the import os and set "TOKEN" to your bot's token
 TOKEN = os.environ.get('TOKEN')
 
 cogs_dir = "ext"
@@ -13,12 +12,13 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name=";help",type = 0,url="https://www.twitch.tv/fuzzyness"))
+    await client.change_presence(game=discord.Game(name=";help",type = 0))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
+    await client.send_message(client.get_channel("426816759648092160"), "Ready when you are! <@130025130100391936>")
 
 @client.command(pass_context=True)
 async def me(ctx):

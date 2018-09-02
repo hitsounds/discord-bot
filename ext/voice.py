@@ -11,6 +11,7 @@ class voice:
     def __init__(self, client):
         self.client = client
         self.players = {}
+        self.session = aiohttp.ClientSession()
 
     @commands.command(pass_context=True)
     async def join(self, ctx):
@@ -49,19 +50,16 @@ class voice:
     @commands.command(pass_context=True)
     async def ytdl(self, ctx, url, ext="mp3"):
         msg = await self.client.say("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        name = random.getrandbits(32)
+        name = random.getrandbits(64)
         if ext == "mp4":
-            process = await asyncio.create_subprocess_shell("youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 {}".format(name, url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --default-search \"ytsearch\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 {}".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         else:
             ext = "mp3"
-            process = await asyncio.create_subprocess_shell("youtube-dl --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 {}".format(name,url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 {}".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
-        result = await database.sendFile(self, ctx, name, ext)
-        if result == "SENT":
-            await self.client.delete_message(msg)
-        else:
-            await self.client.edit_message(msg,result)
+        await database.sendFile(self, ctx, name, ext)
+        await self.client.delete_message(msg)
 
 
 
