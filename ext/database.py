@@ -30,7 +30,7 @@ class database:
     async def sendFile(self, ctx ,filename ,extension):
         file = f"{filename}.{extension}"
         if os.path.getsize(file)/1048576 < 7:
-            res = await ctx.send(file=file)
+            res = await ctx.send(file=discord.File(file))
             os.remove(file)
             return res
         else:
