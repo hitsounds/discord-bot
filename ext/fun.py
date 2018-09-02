@@ -113,7 +113,6 @@ class fun:
             await ctx.send(embed=embed)
 
 
-
             
 
 
