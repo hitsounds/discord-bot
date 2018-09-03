@@ -24,7 +24,7 @@ class database:
 
 
     async def load(self):
-            return psycopg2.connect(os.environ.get["DATABASE_URL"], sslmode="require")
+            return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,filename ,extension):
         with open(f"{filename}.{extension}", "rb") as upload:
