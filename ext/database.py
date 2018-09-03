@@ -23,22 +23,17 @@ class database:
     
 
 
-    async def load():
+    async def load(self):
             return psycopg2.connect(os.environ.get["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,filename ,extension):
-        fileN = f"{filename}.{extension}"
-        if os.path.getsize(fileN)/1048576 < 7:
-            res = await ctx.send(file=discord.File(fileN))
-            return res
-        else:
-            upload = open(fileN, "rb")
-            files = {'filedata': upload}
-            async with aiohttp.ClientSession() as session:
-                resp = await session.post('https://transfer.sh/', data=files)
-            upload.close()
-            res = await ctx.send(await resp.text())
-            return res
+        with open(f"{filename}.{extension}", "rb") as upload:
+            if os.path.getsize(f"{filename}.{extension}")/1048576 < 7:
+                return await ctx.send(file=upload)
+            else:
+                async with aiohttp.ClientSession() as session:
+                    resp = await session.post('https://transfer.sh/', data={'filedata': upload})
+                return await ctx.send(await resp.text())
 
 
 
