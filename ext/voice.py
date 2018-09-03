@@ -22,18 +22,20 @@ class voice:
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
-    async def ytdl(self, ctx, url, ext="mp3"):
+    async def ytdl(self, ctx, url, Cext="mp3"):
         msg = await ctx.send("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         name = random.getrandbits(64)
-        if ext == "mp4":
+        if Cext == "mp4":
+            Cext = "mp4"
             process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 -o {}.mp4 \"{}\"".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         else:
-            ext = "mp3"
+            Cext = "mp3"
             process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 \"{}\"".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
-        await database.sendFile(self, ctx, name, ext)
-        os.remove(f"{name}.{ext}")
+        await database.sendFile(self, ctx, name, Cext)
+        print(f"{name}.{Cext}")
+        os.remove(f"{name}.{Cext}")
         await msg.delete()
 
 
