@@ -10,7 +10,6 @@ import random
 class voice:
     def __init__(self, client):
         self.client = client
-        self.session = aiohttp.ClientSession()
         self.voiceCs = {}
 
     @commands.command()

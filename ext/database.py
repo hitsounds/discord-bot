@@ -9,7 +9,6 @@ import aiohttp
 class database:
     def __init__(self, client):
         self.client = client
-        self.session = aiohttp.ClientSession()
 
     @commands.command()
     async def scan(self, ctx):
@@ -25,7 +24,7 @@ class database:
 
 
     async def load():
-            return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+            return psycopg2.connect(os.environ.get["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,filename ,extension):
         file = f"{filename}.{extension}"
@@ -35,7 +34,8 @@ class database:
         else:
             upload = open(file, "rb")
             files = {'filedata': upload}
-            resp = await self.session.post('https://transfer.sh/', data=files)
+            with aiohttp.ClientSession() as session:
+                resp = await session.post('https://transfer.sh/', data=files)
             upload.close()
             res = await ctx.send(await resp.text())
             return res
