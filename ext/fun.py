@@ -38,7 +38,7 @@ class fun:
     @commands.command()
     async def yomama(self, ctx):
         await ctx.message.delete()
-        with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session:
             resp = await session.get("http://api.yomomma.info/")
         data = await resp.json()
         await ctx.send(data["joke"])
@@ -46,7 +46,7 @@ class fun:
     @commands.command()
     async def banter(self, ctx):
         if ctx.invoked_subcommand is None:
-            with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession() as session:
                 resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
             lol = await resp.text()
             embed=discord.Embed(title="OwO", description=random.choice(lol.split("\n")), color=0x0a94e7)
@@ -71,7 +71,7 @@ class fun:
                 msg = await ctx.send("Pass a osu! user name or id with the command")
                 asyncio.sleep(2)
             else:
-                with aiohttp.ClientSession() as session:
+                async with aiohttp.ClientSession() as session:
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
                 dtls = await dtls.json()
                 conn = await database.load()
@@ -91,7 +91,7 @@ class fun:
             
             """
             await ctx.trigger_typing()
-            with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession() as session:
                 if len(args) == 0:
                     conn = await database.load()
                     cur = conn.cursor()

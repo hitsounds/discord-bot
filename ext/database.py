@@ -34,7 +34,7 @@ class database:
         else:
             upload = open(file, "rb")
             files = {'filedata': upload}
-            with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession() as session:
                 resp = await session.post('https://transfer.sh/', data=files)
             upload.close()
             res = await ctx.send(await resp.text())
