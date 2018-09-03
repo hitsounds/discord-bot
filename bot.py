@@ -12,7 +12,7 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(name=";help", type=discord.ActivityType(0),state="Tea party with Abijith",details="Drinking tea & eating biscuits",party={"size":[2,2]} ))
+    await client.change_presence(activity=discord.Activity(application_id="486278238856019978",name=";help", type=discord.ActivityType(0),state="Tea party with Abijith",details="Drinking tea & eating biscuits",party={"size":[2,2]} ))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
