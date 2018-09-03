@@ -29,7 +29,7 @@ class database:
     async def sendFile(self, ctx ,filename ,extension):
         with open(f"{filename}.{extension}", "rb") as upload:
             if os.path.getsize(f"{filename}.{extension}")/1048576 < 7:
-                return await ctx.send(file=upload)
+                return await ctx.send(file=discord.File(upload)))
             else:
                 async with aiohttp.ClientSession() as session:
                     resp = await session.post('https://transfer.sh/', data={'filedata': upload})
