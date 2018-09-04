@@ -33,7 +33,8 @@ class voice:
             Cext = "mp3"
             process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"ytsearch\" --embed-thumbnail --audio-quality 0 --extract-audio --audio-format mp3 -o {}.mp3 \"{}\"".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
-        await database.sendFile(self, ctx, name, Cext)
+        with open(f"{name}.{Cext}", "rb") as f:
+            await database.sendFile(self, ctx, f)
         os.remove(f"{name}.{Cext}")
         await msg.delete()
 

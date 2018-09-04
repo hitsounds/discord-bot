@@ -13,9 +13,10 @@ class tools:
         else:
             C = self.client.get_channel(int(chan))
         with open(f"{C.id}.txt", "w") as output:
-            async for msg in C.history:
+            async for msg in C.history():
                 output.write(f"{msg.author} : {msg.content} \n")
-        database.sendFile(ctx, C.id, "txt")
+            output.flush()
+            database.sendFile(self, ctx, output)
 
 
 
