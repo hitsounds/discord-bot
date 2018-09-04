@@ -10,7 +10,7 @@ cogs_dir = "ext"
 i_cogs = []
 status_messages = ["Tea Party with Abijith", "the piano", "UP", ";help", "Osu!", "without limits", "hard mode"]
 
-client = commands.Bot(command_prefix = [";","<@!476383348969963531>"])
+client = commands.Bot(command_prefix = [";","<@476383348969963531> "])
 client.remove_command("help")
 
 
