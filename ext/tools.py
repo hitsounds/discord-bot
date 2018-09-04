@@ -16,7 +16,7 @@ class tools:
             async for msg in C.history():
                 output.write(f"{msg.author} : {msg.content} \n")
             output.flush()
-            database.sendFile(self, ctx, output)
+            await database.sendFile(self, ctx, output)
 
 
 
