@@ -36,8 +36,7 @@ async def help(ctx):
     await ctx.send("https://goo.gl/vya4Sp")
 
 async def status_msg():
-    await client.wait_until_ready()
-    while not client.is_closed:
+    while not client.is_closed():
         await asyncio.sleep(900)
         await client.change_presence(activity=discord.Game(name=random.choice(status_messages)))
 
