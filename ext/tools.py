@@ -8,15 +8,17 @@ class tools:
 
     @commands.command()
     async def audit(self, ctx, chan=None):
-        if chan is None:
-            C = ctx.message.channel
-        else:
-            C = self.client.get_channel(int(chan))
-        with open(f"{C.id}.txt", "w") as output:
-            async for msg in C.history():
-                output.write(f"{msg.author} : {msg.content} \n")
-            output.flush()
-            await database.sendFile(self, ctx, output)
+        async with ctx.message.channel.typing():
+            if chan is None:
+                C = ctx.message.channel
+            else:
+                C = self.client.get_channel(int(chan))
+            with open(f"{C.id}.txt", "w") as output:
+                async for msg in C.history():
+                    output.write(f"{msg.author} : {msg.content} \n")
+            with open(f"{C.id}.txt", "rb") as output:
+                await database.sendFile(self, ctx, output)
+            os.remove(f"{C.id}.txt")
 
 
 
