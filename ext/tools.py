@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from ext.database import database
+import os
 
 class tools:
     def __init__(self, client):
