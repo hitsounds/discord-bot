@@ -20,6 +20,7 @@ async def on_ready():
     print('------')
     await client.get_channel(426816759648092160).send("Ready when you are! <@130025130100391936>")
 
+
 @client.command()
 async def me(ctx):
     await ctx.say("HI")
