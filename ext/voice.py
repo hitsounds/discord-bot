@@ -37,14 +37,16 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.url = data.get('url')
 
     @classmethod
-    async def from_url(cls, url):
-        loop = asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+    async def from_url(cls, url, *, loop=None, stream=False):
+        loop = loop or asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
 
-        if 'entries' in data: data = data['entries'][0]
+        if 'entries' in data:
+            # take first item from a playlist
+            data = data['entries'][0]
 
-        filename = data['url']
-        return discord.FFmpegPCMAudio(filename, **ffmpeg_options)
+        filename = data['url'] if stream else ytdl.prepare_filename(data)
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
 
@@ -65,8 +67,11 @@ class voice:
 
     @commands.command()
     async def play(self, ctx, url):
-        player = await YTDLSource.from_url(url)
-        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=self.client.loop)
+            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        await ctx.send('Now playing: {}'.format(player.title))
+
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
