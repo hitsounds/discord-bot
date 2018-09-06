@@ -21,6 +21,11 @@ ytdl_format_options = {
     'source_address': '0.0.0.0'
 }
 
+ffmpeg_options = {
+    'options': '-vn'
+}
+
+
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 class YTDLSource(discord.PCMVolumeTransformer):
@@ -40,7 +45,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries' in data: data = data['entries'][0]
 
         filename = data['url']
-        return cls(discord.FFmpegPCMAudio(filename), data=data)
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
 
@@ -51,6 +56,8 @@ class voice:
 
     @commands.command()
     async def join(self, ctx):
+        if ctx.voice_client is not None:
+            return await ctx.voice_client.move_to(ctx.message.author.voice.channel)
         self.voiceCs[ctx.guild.id] = await ctx.message.author.voice.channel.connect()
 
     @commands.command()
@@ -61,6 +68,16 @@ class voice:
     async def play(self, ctx, url):
         player = await YTDLSource.from_url(url)
         ctx.voice_client.play(player)
+
+    @play.before_invoke
+    async def ensure_voice(self, ctx):
+        if ctx.voice_client is None:
+            if ctx.author.voice:
+                await ctx.author.voice.channel.connect()
+            else:
+                await ctx.send("You are not connected to a voice channel.")
+        elif ctx.voice_client.is_playing():
+            ctx.voice_client.stop()
 
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
