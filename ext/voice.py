@@ -59,7 +59,8 @@ class voice:
 
     @commands.command()
     async def play(self, ctx, url):
-        ctx.voice_client.play(await YTDLSource.from_url(url))
+        player = await YTDLSource.from_url(url)
+        ctx.voice_client.play(player)
 
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
