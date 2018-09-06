@@ -35,7 +35,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
     @classmethod
     async def from_url(cls, url):
         loop = asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: youtube_dl.extract_info(url, download=False))
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
 
         if 'entries' in data: data = data['entries'][0]
 
