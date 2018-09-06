@@ -67,7 +67,7 @@ class voice:
     @commands.command()
     async def play(self, ctx, url):
         player = await YTDLSource.from_url(url)
-        ctx.voice_client.play(player)
+        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
