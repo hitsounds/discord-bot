@@ -17,7 +17,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.url = data.get('url')
 
     @classmethod
-    async def from_url(cls, url, *):
+    async def from_url(cls, url):
         loop = asyncio.get_event_loop()
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
 
@@ -42,7 +42,7 @@ class voice:
         await self.voiceCs[ctx.guild.id].disconnect()
 
     @commands.command()
-    async def play(self, ctx, *,url):
+    async def play(self, ctx, url):
         ctx.voice_client.play(await YTDLSource.from_url(url))
 
 
