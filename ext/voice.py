@@ -53,17 +53,16 @@ class YTDLSource(discord.PCMVolumeTransformer):
 class voice:
     def __init__(self, client):
         self.client = client
-        self.voiceCs = {}
 
     @commands.command()
     async def join(self, ctx):
         if ctx.voice_client is not None:
             return await ctx.voice_client.move_to(ctx.message.author.voice.channel)
-        self.voiceCs[ctx.guild.id] = await ctx.message.author.voice.channel.connect()
+        await ctx.message.author.voice.channel.connect()
 
     @commands.command()
     async def leave(self, ctx):
-        await self.voiceCs[ctx.guild.id].disconnect()
+        await ctx.voice_client.disconnect()
 
     @commands.command()
     async def play(self, ctx, url):
