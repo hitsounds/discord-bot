@@ -42,7 +42,7 @@ class voice:
         await self.voiceCs[ctx.guild.id].disconnect()
 
     @commands.command()
-    async def play(self, ctx, url):
+    async def play(self, ctx, *,url):
         ctx.voice_client.play(await YTDLSource.from_url(url))
 
 
