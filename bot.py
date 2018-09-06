@@ -27,7 +27,7 @@ async def on_ready():
 
 @client.command()
 async def me(ctx):
-    await ctx.say("HI")
+    await ctx.send("HI")
 
     
 @client.command()
