@@ -7,6 +7,27 @@ import asyncio
 from ext.database import database
 import random
 
+class YTDLSource(discord.PCMVolumeTransformer):
+    def __init__(self, source, *, data, volume=0.5):
+        super().__init__(source, volume)
+
+        self.data = data
+
+        self.title = data.get('title')
+        self.url = data.get('url')
+
+    @classmethod
+    async def from_url(cls, url, *):
+        loop = asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+
+        if 'entries' in data: data = data['entries'][0]
+
+        filename = data['url']
+        return cls(discord.FFmpegPCMAudio(filename), data=data)
+
+
+
 class voice:
     def __init__(self, client):
         self.client = client
@@ -19,6 +40,11 @@ class voice:
     @commands.command()
     async def leave(self, ctx):
         await self.voiceCs[ctx.guild.id].disconnect()
+
+    @commands.command()
+    async def play(self, ctx, url):
+        ctx.voice_client.play(await YTDLSource.from_url(url))
+
 
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
