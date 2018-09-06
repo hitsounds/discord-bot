@@ -18,7 +18,6 @@ ytdl_format_options = {
     'quiet': True,
     'no_warnings': True,
     'default_search': 'auto',
-    'source_address': '0.0.0.0'
 }
 
 ffmpeg_options = {
@@ -45,7 +44,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries' in data: data = data['entries'][0]
 
         filename = data['url']
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+        return discord.FFmpegPCMAudio(filename, **ffmpeg_options)
 
 
 
