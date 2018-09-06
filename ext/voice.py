@@ -68,6 +68,13 @@ class voice:
     @commands.command()
     async def play(self, ctx, url):
         async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=self.client.loop, stream=True)
+            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        await ctx.send('Now playing: {}'.format(player.title))
+
+    @commands.command()
+    async def Dplay(self, ctx, url):
+        async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.client.loop)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
