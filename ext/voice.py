@@ -8,12 +8,6 @@ from ext.database import database
 import random
 import functools
 
-
-
-class voice:
-    def __init__(self, client):
-        self.client = client
-
 """    @commands.command()
     async def join(self, ctx):
         if ctx.voice_client is not None:
@@ -40,9 +34,14 @@ class voice:
             else:
                 await ctx.send("You are not connected to a voice channel.")
         elif ctx.voice_client.is_playing():
-            ctx.voice_client.stop()"""
+            ctx.voice_client.stop()
+"""
 
 
+class voice:
+    def __init__(self, client):
+        self.client = client
+        
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
     async def ytdl(self, ctx, url, Cext="mp3"):
