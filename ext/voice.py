@@ -81,7 +81,7 @@ class voice:
     @commands.command()
     async def play(self, ctx, url):
         async with ctx.typing():
-            source = await YTDLSource.from_url(ctx, url, loop=self.client.loop)
+            source = await YTDLSource.create_source(ctx, url, loop=self.client.loop)
             player = await YTDLSource.regather_stream(source, loop=self.client.loop)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
