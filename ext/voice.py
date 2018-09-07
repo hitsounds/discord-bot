@@ -6,6 +6,7 @@ import os
 import asyncio
 from ext.database import database
 import random
+import functools
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
