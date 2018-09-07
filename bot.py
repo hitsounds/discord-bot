@@ -8,11 +8,10 @@ import random
 TOKEN = os.environ.get('TOKEN')
 cogs_dir = "ext"
 i_cogs = []
-status_messages = ["Tea Party with Abijith", "the piano", "UP", ";help", "Osu!", "without limits", "hard mode"]
+status_messages = ["Tea Party with Abijith", ";help"]
 
 client = commands.Bot(command_prefix = commands.when_mentioned_or(";"))
 client.remove_command("help")
-
 
 @client.event
 async def on_ready():
@@ -36,6 +35,7 @@ async def help(ctx):
     await ctx.send("https://goo.gl/vya4Sp")
 
 async def status_msg():
+    await client.wait_until_ready()
     while not client.is_closed():
         await asyncio.sleep(900)
         await client.change_presence(activity=discord.Game(name=random.choice(status_messages)))

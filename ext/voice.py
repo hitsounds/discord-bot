@@ -20,32 +20,47 @@ ytdl_format_options = {
     'default_search': 'auto',
 }
 
-ffmpeg_options = {
+ffmpegopts = {
+    'before_options': '-nostdin',
     'options': '-vn'
 }
-
 
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 class YTDLSource(discord.PCMVolumeTransformer):
-    def __init__(self, source, *, data, volume=0.5):
-        super().__init__(source, volume)
 
-        self.data = data
-
+    def __init__(self, source, *, data, requester):
+        super().__init__(source)
+        self.requester = requester
         self.title = data.get('title')
-        self.url = data.get('url')
+        self.web_url = data.get('webpage_url')
+
+    def __getitem__(self, item: str):
+        return self.__getattribute__(item)
 
     @classmethod
-    async def from_url(cls, url, *, loop=None, stream=False):
+    async def create_source(cls, ctx, search: str, *, loop, download=False):
         loop = loop or asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+        to_run = partial(ytdl.extract_info, url=search, download=download)
+        data = await loop.run_in_executor(None, to_run)
 
         if 'entries' in data:
             data = data['entries'][0]
+        if download:
+            source = ytdl.prepare_filename(data)
+        else:
+            return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title']}
+        return cls(discord.FFmpegPCMAudio(source), data=data, requester=ctx.author)
 
-        filename = data['url'] if stream else ytdl.prepare_filename(data)
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+    @classmethod
+    async def regather_stream(cls, data, *, loop):
+        loop = loop or asyncio.get_event_loop()
+        requester = data['requester']
+
+        to_run = partial(ytdl.extract_info, url=data['webpage_url'], download=False)
+        data = await loop.run_in_executor(None, to_run)
+
+        return cls(discord.FFmpegPCMAudio(data['url']), data=data, requester=requester)
 
 
 
@@ -66,14 +81,8 @@ class voice:
     @commands.command()
     async def play(self, ctx, url):
         async with ctx.typing():
-            player = await YTDLSource.from_url(url, loop=self.client.loop)
-            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.send('Now playing: {}'.format(player.title))
-
-    @commands.command()
-    async def Splay(self, ctx, url):
-        async with ctx.typing():
-            player = await YTDLSource.from_url(url, loop=self.client.loop, stream=True)
+            source = await YTDLSource.from_url(ctx, url, loop=self.client.loop)
+            player = await YTDLSource.regather_stream(source, loop=self.client.loop)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
 
