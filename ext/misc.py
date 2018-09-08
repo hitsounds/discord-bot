@@ -32,7 +32,7 @@ class discord_auth:
                 'scope': 'connections identify email guilds'
             }
             async with aiohttp.ClientSession() as session:
-                resp = await session.get("https://discordapp.com/api/oauth2/token", params=data)
+                resp = await session.post("https://discordapp.com/api/oauth2/token", params=data)
                 print(await resp.json())
 
 
