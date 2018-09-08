@@ -20,11 +20,11 @@ class voice:
         name = random.getrandbits(64)
         if Cext == "mp4":
             Cext = "mp4"
-            process = await asyncio.create_subprocess_shell("youtube-dl --prefer-ffmpeg --no-playlist --default-search \"ytsearch\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o \"{name}.%(ext)s\" \"{}\"".format(name, url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o \"{name}.%(ext)s\" \"{}\"".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         else:
             Cext = "mp3"
-            args = "youtube-dl --no-playlist --default-search \"ytsearch\" --audio-quality 0 --extract-audio --audio-format mp3 --add-metadata -o \"{name}.%(ext)s\" \"{url}\" ".format(name=name, url=url)
+            args = "youtube-dl --no-playlist --default-search \"auto\" --audio-quality 0 --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata -o \"{name}.%(ext)s\" \"{url}\" ".format(name=name, url=url)
             process = await asyncio.create_subprocess_shell(args, stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         with open(f"{name}.{Cext}", "rb") as f:
