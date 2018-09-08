@@ -7,7 +7,7 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 
 **Commands**
 - 
-  Command prefix : ";" 
+  Command prefix : ";" or just @ the bot
 
 ***BOT***
 
@@ -23,15 +23,18 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 	 - set {osu username}
  - ping
 
-***AUDIO***
+***MISC***
+
+ - ytdl {yt url} {format: mp3 or mp4}
+ 
+ ***MUSIC***
 
  - join
  - leave
- - play {yt url}
- - pause
- - resume
- - stop
- - ytdl {yt url} {format: mp3 or mp4}
+ - ~play {yt url}~
+ - ~pause~
+ - ~resume~
+ - ~stop~
 
 ***DATABASE***
 
