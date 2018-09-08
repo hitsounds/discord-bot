@@ -21,8 +21,9 @@ class database:
         self.cur.close()
         self.conn.close()
     
-
-
+    async def DBupdate():
+        print("lol like i have time to implement")
+        
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 

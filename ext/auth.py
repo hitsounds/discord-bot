@@ -15,7 +15,7 @@ class discord_auth:
         await ctx.message.author.send(r"https://discordapp.com/api/oauth2/authorize?client_id=476383348969963531&redirect_uri=https%3A%2F%2Fdicsordbot.herokuapp.com&response_type=code&scope=identify%20email%20connections%20guilds")
         await ctx.message.author.send("Click the above link. Authorise the bot and then send the redirect link to me! This will timeout in 30 secs.")
         def check(m):
-            return m.content.startswith("https://dicsordbot.herokuapp.com/?code=")
+            return m.content.startswith("https://dicsordbot.herokuapp.com/?code=") or m.content.startswith("dicsordbot.herokuapp.com/?code=")
         try:
             msg = await self.client.wait_for('message', check=check, timeout=60.0)
         except asyncio.TimeoutError:
@@ -33,7 +33,8 @@ class discord_auth:
             }
             async with aiohttp.ClientSession() as session:
                 resp = await session.post("https://discordapp.com/api/oauth2/token", params=data)
-                print(await resp.json())
+                resp = await resp.json()
+                
 
 
 
