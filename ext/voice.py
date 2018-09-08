@@ -24,7 +24,7 @@ class voice:
             await process.communicate()
         else:
             Cext = "mp3"
-            process = await asyncio.create_subprocess_shell("youtube-dl -v --no-playlist --default-search \"ytsearch\" --format \"bestaudio[ext=m4a]\" --extract-audio --audio-format mp3 --add-metadata -o {}.mp3 \"{}\"".format(name,url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl -v --no-playlist --default-search \"ytsearch\" --format \"bestaudio[ext=m4a]\" --extract-audio --audio-format mp3 -o {}.mp3 \"{}\"".format(name,url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         with open(f"{name}.{Cext}", "rb") as f:
             await database.sendFile(self, ctx, f)
