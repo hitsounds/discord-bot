@@ -24,8 +24,8 @@ class voice:
             await process.communicate()
         else:
             Cext = "mp3"
-            args = "youtube-dl -v --no-playlist --default-search \"ytsearch\" --format \"bestaudio[ext=m4a]\" --extract-audio --audio-format mp3 -o {name}".format(name=name)
-            args = args + ".%(ext)s" + " \"{}\"".format(url)
+            args = "youtube-dl -v --no-playlist --default-search \"ytsearch\" --format \"bestaudio[ext=m4a]\" --extract-audio --audio-format mp3 -o \"{name}".format(name=name)
+            args = args + ".%(ext)s\"" + " \"{}\"".format(url)
             process = await asyncio.create_subprocess_shell(args, stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         with open(f"{name}.{Cext}", "rb") as f:
