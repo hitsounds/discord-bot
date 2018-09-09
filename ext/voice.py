@@ -20,7 +20,7 @@ class voice:
         name = random.getrandbits(64)
         if Cext == "mp4":
             Cext = "mp4"
-            process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o \"{name}.%(ext)s\" \"{}\"".format(name, url), stdout=asyncio.subprocess.PIPE)
+            process = await asyncio.create_subprocess_shell("youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o \"{}.%(ext)s\" \"{}\"".format(name, url), stdout=asyncio.subprocess.PIPE)
             await process.communicate()
         else:
             Cext = "mp3"
