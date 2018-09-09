@@ -20,7 +20,7 @@ class fun:
             search = search.replace(" ","%20")
             async with aiohttp.ClientSession() as session:
                 resp = await session.get(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
-                resp = await resp.text()
+                resp = await resp.json()
                 resp = resp["categories"][0]["items"][0]
                 embed=discord.Embed(description="Score: {}".format(resp["payload"]["score"]), color=0x4d30d6)
                 embed.set_author(name="{} ({})".format(resp["name"],resp["payload"]["media_type"]), url=resp["url"].replace("\\",""))
