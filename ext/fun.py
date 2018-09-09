@@ -19,7 +19,7 @@ class fun:
         async with ctx.message.channel.typing():
             search = search.replace(" ","%20")
             async with aiohttp.ClientSession() as session:
-                resp = await session.post(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
+                resp = await session.get(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
                 resp = await resp.text()
                 print(resp)
                 resp = resp["categories"][0]["items"][0]
