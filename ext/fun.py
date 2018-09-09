@@ -21,6 +21,7 @@ class fun:
             async with aiohttp.ClientSession() as session:
                 resp = await session.post(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
                 resp = await resp.text()
+                print(resp)
                 resp = resp["categories"][0]["items"][0]
                 embed=discord.Embed(description="Score: {}".format(resp["payload"]["score"]), color=0x4d30d6)
                 embed.set_author(name="{} ({})".format(resp["name"],resp["payload"]["media_type"]), url=resp["url"].replace("\\",""))
