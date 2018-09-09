@@ -14,7 +14,23 @@ class fun:
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
         
-        
+    @commands.command()
+    async def anime(self, ctx, *, search: str):
+        async with ctx.message.channel.typing():
+            search = search.replace(" ","%20")
+            async with aiohttp.ClientSession() as session:
+                resp = await session.post(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
+                resp = await resp.text()
+                resp = resp["categories"][0]["items"][0]
+                embed=discord.Embed(description="Score: {}".format(resp["payload"]["score"]), color=0x4d30d6)
+                embed.set_author(name="{} ({})".format(resp["name"],resp["payload"]["media_type"]), url=resp["url"].replace("\\",""))
+                embed.set_thumbnail(url=resp["image_url"].replace("\\",""))
+                embed.set_footer(text="{} ({})".format(resp["payload"]["aired"],resp["payload"]["status"]))
+                await ctx.send(embed=embed)
+
+
+
+
 
     @commands.group()
     async def bws(self, ctx):
