@@ -8,7 +8,7 @@ import random
 TOKEN = os.environ.get('TOKEN')
 cogs_dir = "ext"
 i_cogs = []
-status_messages = ["Tea Party with Abijith", ";help"]
+status_messages = ["Tea Party with Abijith", ";help", "STOP SHOUTING ABIJITH!"]
 
 client = commands.Bot(command_prefix = commands.when_mentioned_or(";"))
 client.remove_command("help")
