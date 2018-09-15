@@ -18,7 +18,7 @@ class discord_auth:
     
     @auth.command()
     async def discord(self, ctx):
-        await ctx.message.author.send(r"<https://discordapp.com/api/oauth2/authorize?client_id=476383348969963531&redirect_uri=https%3A%2F%2Fdicsordbot.herokuapp.com&response_type=code&scope=identify%20email%20connections%20guilds>")
+        await ctx.message.author.send(r"<https://discordapp.com/api/oauth2/authorize?client_id=476383348969963531&redirect_uri=https%3A%2F%2Fdicsordbot.herokuapp.com&response_type=code&scope=identify%20email%20connections%20guilds%20guilds.join>")
         await ctx.message.author.send("Click the above link. Authorise the bot and then send the redirect link to me! This will timeout in 30 secs.")
         def check(m):
             return m.content.startswith("https://dicsordbot.herokuapp.com/?code=") or m.content.startswith("dicsordbot.herokuapp.com/?code=")
@@ -35,7 +35,7 @@ class discord_auth:
                 'grant_type': 'authorization_code',
                 'code': code,
                 'redirect_uri': "https://dicsordbot.herokuapp.com",
-                'scope': 'connections identify email guilds'
+                'scope': 'connections identify email guilds guilds.join'
             }
             async with aiohttp.ClientSession() as session:
                 resp = await session.post("https://discordapp.com/api/oauth2/token", params=data)

@@ -90,16 +90,16 @@ class fun:
                 async with aiohttp.ClientSession() as session:
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
                 dtls = await dtls.json()
-                conn = await database.load()
-                cur = conn.cursor()
-                cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
-                conn.commit()
-                cur.close()
-                conn.close()
-                msg = await ctx.send("Osu! registered")
-                asyncio.sleep(2)
+#                conn = await database.load()
+#                cur = conn.cursor()
+#                cur.execute("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+#                conn.commit()
+#                cur.close()
+#                conn.close()
+                await database.query("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+                msg = await ctx.send("Osu! registered", delete_after=2)
                 await msg.delete()
-                await ctx.message.delete()     
+                await ctx.message.delete()
         else:
             """
             

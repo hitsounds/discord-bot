@@ -21,10 +21,15 @@ class database:
         self.cur.close()
         self.conn.close()
     
-    async def DBupdate():
-        print("lol like i have time to implement")
+    async def query(self, query):
+        conn = await self.load()
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.commit()
+        cur.close()
+        conn.close()
         
-    async def load():
+    async def load(self):
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,file):
