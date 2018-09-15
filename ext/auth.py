@@ -41,6 +41,8 @@ class discord_auth:
                 resp = await session.post("https://discordapp.com/api/oauth2/token", params=data)
                 resp = await resp.json()
                 print(resp)
+                
+
 
 
 
