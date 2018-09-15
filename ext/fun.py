@@ -19,14 +19,18 @@ class fun:
         async with ctx.message.channel.typing():
             search = search.replace(" ","%20")
             async with aiohttp.ClientSession() as session:
-                resp = await session.get(f"https://myanimelist.net/search/prefix.json?type=anime&keyword={search}")
+                resp = await session.get(f"https://kitsu.io/api/edge/anime?filter[text]={search}&page[limit]=1")
                 resp = await resp.json()
-                resp = resp["categories"][0]["items"][0]
-                embed=discord.Embed(description="Score: {}".format(resp["payload"]["score"]), color=0x4d30d6)
-                embed.set_author(name="{} ({})".format(resp["name"],resp["payload"]["media_type"]), url=resp["url"].replace("\\",""))
-                embed.set_thumbnail(url=resp["image_url"].replace("\\",""))
-                embed.set_footer(text="{} ({})".format(resp["payload"]["aired"],resp["payload"]["status"]))
-                await ctx.send(embed=embed)
+                resp = resp["data"][0]["attributes"]
+            embed=discord.Embed(description="Rating: {}%".format(resp["averageRating"]))
+            embed.set_author(name="{} ({})".format(resp["canonicalTitle"],resp["subtype"]), url="https://kitsu.io/anime/{}".format(resp["slug"]))
+            embed.set_thumbnail(url=resp["posterImage"]["original"])
+            embed.add_field(name="Start", value=resp["startDate"], inline=True)
+            embed.add_field(name="End", value=resp["endDate"], inline=True)
+            embed.add_field(name="Status", value=resp["status"], inline=True)
+            embed.add_field(name="Description", value=resp["synopsis"], inline=False)
+            embed.set_footer(text=resp["ageRatingGuide"])
+            await ctx.send(embed=embed)
 
 
 
