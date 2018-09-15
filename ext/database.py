@@ -30,7 +30,7 @@ class database:
         cur.close()
         conn.close()
         
-    async def load(self):
+    async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,file):
