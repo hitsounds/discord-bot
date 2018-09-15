@@ -7,7 +7,7 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 
 **Commands**
 - 
-  Command prefix : ";" 
+  Command prefix : ";" or @hitcircles#9386
 
 ***BOT***
 
@@ -18,9 +18,11 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 
  - bws {optional subcommand}
 	 - dump
+ - anime {search term}
+ - manga {search term}
  - yomama
  - osu {osu username OR subcommand OR blank}
-	 - set {osu username}
+	 - set {osu username}   (Saves the osu! ID on my database so u can use the osu command without having to provide a name.)
  - ping
 
 ***AUDIO***
@@ -31,8 +33,10 @@ A help page because it's easier to do it this way. If u want to see me doing stu
  - pause
  - resume
  - stop
- - ytdl {yt url} {format: mp3 or mp4}
+ - ytdl {yt url} {format: mp3 or mp4}   (Response may be slow depending on file size as it needs to be downloaded, re-encoded and then uploaded!)
 
-***DATABASE***
+ ***AUTH*** (Nothing useful right now but may use this later)
 
- - No commands
+  - auth {service to authenticate}
+	Available services:
+	 - discord
