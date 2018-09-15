@@ -22,13 +22,12 @@ class fun:
                 resp = await session.get(f"https://kitsu.io/api/edge/anime?filter[text]={search}&page[limit]=1")
                 resp = await resp.json()
                 resp = resp["data"][0]["attributes"]
-            embed=discord.Embed(description="Rating: {}%".format(resp["averageRating"]))
+            embed=discord.Embed(title="Rating: {}%".format(resp["averageRating"]), description=resp["synopsis"])
             embed.set_author(name="{} ({})".format(resp["canonicalTitle"],resp["subtype"]), url="https://kitsu.io/anime/{}".format(resp["slug"]))
             embed.set_thumbnail(url=resp["posterImage"]["original"])
             embed.add_field(name="Start", value=resp["startDate"], inline=True)
             embed.add_field(name="End", value=resp["endDate"], inline=True)
             embed.add_field(name="Status", value=resp["status"], inline=True)
-            embed.add_field(name="Description", value=resp["synopsis"], inline=False)
             embed.set_footer(text=resp["ageRatingGuide"])
             await ctx.send(embed=embed)
 
