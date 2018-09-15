@@ -21,8 +21,9 @@ class database:
         self.cur.close()
         self.conn.close()
     
-    async def query(self, query):
-        conn = await self.load()
+    @classmethod
+    async def query(cls, query):
+        conn = await cls.load()
         cur = conn.cursor()
         cur.execute(query)
         conn.commit()
