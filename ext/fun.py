@@ -114,7 +114,7 @@ class fun:
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
                     cur.close()
                     conn.close()
-                else: 
+                else:
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             dtls = await dtls.json()
             dtls = dtls[0]

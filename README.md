@@ -25,7 +25,11 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 	 - set {osu username}   (Saves the osu! ID on my database so u can use the osu command without having to provide a name.)
  - ping
 
-***AUDIO***
+***MISC***
+
+ - ytdl {yt url} {format: mp3 or mp4}
+ 
+ ***MUSIC***
 
  - join
  - leave
