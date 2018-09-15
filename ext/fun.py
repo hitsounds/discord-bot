@@ -14,16 +14,16 @@ class fun:
         self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
         self.osuAPIkey = os.environ.get('OSU_KEY')
         
-    @commands.command()
-    async def anime(self, ctx, *, search: str):
+    @commands.command(name='anime', aliases=['manga'])
+    async def anime_(self, ctx, *, search: str):
         async with ctx.message.channel.typing():
             search = search.replace(" ","%20")
             async with aiohttp.ClientSession() as session:
-                resp = await session.get(f"https://kitsu.io/api/edge/anime?filter[text]={search}&page[limit]=1")
+                resp = await session.get(f"https://kitsu.io/api/edge/{ctx.invoked_with}?filter[text]={search}&page[limit]=1")
                 resp = await resp.json()
                 resp = resp["data"][0]["attributes"]
             embed=discord.Embed(title="Rating: {}%".format(resp["averageRating"]), description=resp["synopsis"], color=0x4d30d6)
-            embed.set_author(name="{} ({})".format(resp["canonicalTitle"],resp["subtype"]), url="https://kitsu.io/anime/{}".format(resp["slug"]))
+            embed.set_author(name="{} ({}) | {}".format(resp["canonicalTitle"],resp["subtype"],ctx.invoked_with), url="https://kitsu.io/anime/{}".format(resp["slug"]))
             embed.set_thumbnail(url=resp["posterImage"]["original"])
             embed.add_field(name="Start", value=resp["startDate"], inline=True)
             embed.add_field(name="End", value=resp["endDate"], inline=True)
