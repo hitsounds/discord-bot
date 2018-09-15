@@ -26,9 +26,11 @@ class database:
         conn = await cls.load()
         cur = conn.cursor()
         cur.execute(query)
+        resp = cur.fetchall()
         conn.commit()
         cur.close()
         conn.close()
+        return resp
         
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
