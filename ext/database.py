@@ -32,6 +32,7 @@ class database:
         conn.close()
         return resp
         
+    @staticmethod
     async def load():
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
