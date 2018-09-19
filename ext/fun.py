@@ -145,6 +145,7 @@ class fun:
         tempdDetails = ping_formats[template]
         async with aiohttp.ClientSession() as session:
             resp = await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
+            resp = await resp.read()
             uimg = Image.open(resp)
         background = Image.open(f"assets/{template}")
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
