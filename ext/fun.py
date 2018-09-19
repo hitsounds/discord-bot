@@ -7,6 +7,7 @@ import aiohttp
 import psycopg2
 from ext.database import database
 import asyncio
+import io
 from PIL import Image, ImageFont, ImageDraw
 
 ping_formats = {
@@ -145,8 +146,9 @@ class fun:
         tempdDetails = ping_formats[template]
         async with aiohttp.ClientSession() as session:
             resp = await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
-            resp = await resp.read()
-            uimg = Image.open(resp)
+            uimg = io.BytesIO()
+            uimg.write(await resp.read())
+            uimg = Image.open(uimg)
         background = Image.open(f"assets/{template}")
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
         background.save(f"{ctx.message.author.name}.jpg")
