@@ -149,7 +149,7 @@ class fun:
             uimg = io.BytesIO()
             uimg.write(await resp.read())
             uimg = Image.open(uimg)
-        background = Image.open(f"assets/{template}")
+        background = Image.open(f"assets/ping/{template}")
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
         background.save(f"{ctx.message.author.name}.jpg")
         with open(f"{ctx.message.author.name}.jpg", "rb") as f:
