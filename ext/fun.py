@@ -10,7 +10,7 @@ import asyncio
 from PIL import Image, ImageFont, ImageDraw
 
 ping_formats = {
-    "table_tennis_1.jpg": {"rq_size" : "64", "x" : 250, "y" : 150}
+    "table_tennis_1.jpg": {"rq_size" : 64, "x" : 250, "y" : 150}
 }
 
 class fun:
