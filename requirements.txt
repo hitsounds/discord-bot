@@ -21,7 +21,6 @@ multidict==4.3.1
 opuslib==3.0.1
 pefile==2017.11.5
 Pillow==5.2.0
-pipenv==2018.7.1
 praw==6.0.0
 prawcore==1.0.0
 psycopg2==2.7.5
@@ -30,10 +29,7 @@ pycparser==2.18
 Pygments==2.2.0
 pylint==2.1.1
 PyNaCl==1.1.2
-pypiwin32==223
 pytube==9.2.2
-pywin32==223
-pywin32-ctypes==0.2.0
 requests==2.19.1
 six==1.11.0
 typed-ast==1.1.0
