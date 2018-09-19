@@ -111,14 +111,9 @@ class fun:
             await ctx.trigger_typing()
             async with aiohttp.ClientSession() as session:
                 if len(args) == 0:
-                    #conn = await database.load()
-                    #cur = conn.cursor()
-                    #cur.execute(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
                     arg = await database.query(f"SELECT osu_id FROM users WHERE user_id={ctx.message.author.id}")
                     arg = arg[0]
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = arg[0]))
-                    cur.close()
-                    conn.close()
                 else:
                     dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[0]))
             dtls = await dtls.json()
@@ -149,7 +144,9 @@ class fun:
         template = random.choice(list(ping_formats))
         tempdDetails = ping_formats[template]
         async with aiohttp.ClientSession() as session:
-            uimg = Image.open(await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"])))
+            resp = await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
+            resp = await resp.read()
+            uimg = Image.open(resp)
         background = Image.open(f"assets/{template}")
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
         background.save(f"{ctx.message.author.name}.jpg")
