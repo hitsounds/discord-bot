@@ -146,7 +146,7 @@ class fun:
 
     @commands.command()
     async def ping(self, ctx):
-        template = random.choice(ping_formats.keys())
+        template = list(ping_formats)
         tempdDetails = ping_formats[template]
         async with aiohttp.ClientSession() as session:
             uimg = Image.open(await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"])))
