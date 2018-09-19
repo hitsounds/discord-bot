@@ -7,6 +7,11 @@ import aiohttp
 import psycopg2
 from ext.database import database
 import asyncio
+import PIL
+
+ping_formats = {
+    "table_tennis_1.jpg": {"rq_size" : "64", "x" : 250, "y" : 150}
+}
 
 class fun:
     def __init__(self, client):
@@ -141,7 +146,20 @@ class fun:
 
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send("Pong!")
+        template = random.choice(ping_formats.keys())
+        tempdDetails = ping_formats[template]
+        async with aiohttp.ClientSession() as session:
+            uimg = Image.open(await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"])))
+        background = Image.open(f"assets/{template}")
+        background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
+        background.save(f"{ctx.message.author.name}.jpg")
+        with open(f"{ctx.message.author.name}.jpg", "rb") as f:
+            await database.sendFile(self, ctx, f)
+        os.remove(f"{ctx.message.author.name}.jpg")
+
+
+
+
 
 
 

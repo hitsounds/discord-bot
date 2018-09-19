@@ -14,8 +14,6 @@ class tools:
                 C = ctx.message.channel
             else:
                 C = self.client.get_channel(int(chan))
-                if C is None:
-                    C = self.client.get_user(int(chan))
             with open(f"{C.id}.txt", "w") as output:
                 async for msg in C.history(limit=None, reverse=True):
                     output.write(f"{msg.author.name} ||| {msg.content} \n")
