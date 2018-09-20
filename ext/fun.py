@@ -152,7 +152,7 @@ class fun:
         background = Image.open(f"assets/ping/{template}")
         mask = Image.new('L', size, 0)
         ImageDraw.Draw(mask).ellipse((0, 0) + size, fill=255)
-        uimg.putalpha(mask)
+        background.putalpha(mask)
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
         background.save(f"ping_out_{ctx.message.author.name}.png")
         with open(f"ping_out_{ctx.message.author.name}.png", "rb") as f:
