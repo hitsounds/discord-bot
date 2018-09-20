@@ -9,7 +9,7 @@ from ext.database import database
 from libs.lib import ImageProcessing
 import asyncio
 import io
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageOps
 
 ping_formats = {
     "table_tennis_1.jpg": {"rq_size" : 64, "x" : 250, "y" : 150},
@@ -147,13 +147,17 @@ class fun:
     async def ping_(self, ctx):
         template = random.choice(list(ping_formats))
         tempdDetails = ping_formats[template]
-        uimg = await ImageProcessing.PIL_image_from_url(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
+        size = (tempdDetails["rq_size"], tempdDetails["rq_size"])
+        uimg = await ImageProcessing.PIL_image_from_url(ctx.message.author.avatar_url_as(static_format="png", size=tempdDetails["rq_size"]))
         background = Image.open(f"assets/ping/{template}")
+        mask = Image.new('L', size, 0)
+        ImageDraw.Draw(mask).ellipse((0, 0) + size, fill=255)
+        uimg.putalpha(mask)
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
-        background.save(f"{ctx.message.author.name}.jpg")
-        with open(f"{ctx.message.author.name}.jpg", "rb") as f:
+        background.save(f"{ctx.message.author.name}.png")
+        with open(f"exports/ping_out_{ctx.message.author.name}.png", "rb") as f:
             await database.sendFile(self, ctx, f)
-        os.remove(f"{ctx.message.author.name}.jpg")
+        os.remove(f"exports/ping_out_{ctx.message.author.name}.png")
 
 
 
