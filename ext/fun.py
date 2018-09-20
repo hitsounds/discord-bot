@@ -154,10 +154,10 @@ class fun:
         ImageDraw.Draw(mask).ellipse((0, 0) + size, fill=255)
         uimg.putalpha(mask)
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
-        background.save(f"exports/ping_out_{ctx.message.author.name}.png")
-        with open(f"exports/ping_out_{ctx.message.author.name}.png", "rb") as f:
+        background.save(f"ping_out_{ctx.message.author.name}.png")
+        with open(f"ping_out_{ctx.message.author.name}.png", "rb") as f:
             await database.sendFile(self, ctx, f)
-        os.remove(f"exports/ping_out_{ctx.message.author.name}.png")
+        os.remove(f"ping_out_{ctx.message.author.name}.png")
 
 
 
