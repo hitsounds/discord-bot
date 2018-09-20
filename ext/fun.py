@@ -6,6 +6,7 @@ import os
 import aiohttp
 import psycopg2
 from ext.database import database
+from libs.lib import ImageProcessing
 import asyncio
 import io
 from PIL import Image, ImageFont, ImageDraw
@@ -23,7 +24,7 @@ class fun:
         self.osuAPIkey = os.environ.get('OSU_KEY')
         
     @commands.command(name='anime', aliases=['manga'])
-    async def anime_(self, ctx, *, search: str):
+    async def kitsu_search(self, ctx, *, search: str):
         async with ctx.message.channel.typing():
             search = search.replace(" ","%20")
             async with aiohttp.ClientSession() as session:
@@ -142,15 +143,11 @@ class fun:
 
 
 
-    @commands.command()
-    async def ping(self, ctx):
+    @commands.command(name='ping', aliases=['pang',"pong"])
+    async def ping_(self, ctx):
         template = random.choice(list(ping_formats))
         tempdDetails = ping_formats[template]
-        async with aiohttp.ClientSession() as session:
-            resp = await session.get(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
-            uimg = io.BytesIO()
-            uimg.write(await resp.read())
-            uimg = Image.open(uimg)
+        uimg = await ImageProcessing.PIL_image_from_url(ctx.message.author.avatar_url_as(static_format="jpg", size=tempdDetails["rq_size"]))
         background = Image.open(f"assets/ping/{template}")
         background.paste(uimg, (tempdDetails["x"], tempdDetails["y"]))
         background.save(f"{ctx.message.author.name}.jpg")
