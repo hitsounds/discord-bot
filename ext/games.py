@@ -17,12 +17,12 @@ class osu:
     async def save_osuID(self, ctx, args):
         if len(args) < 2:
                 await ctx.send("Pass a osu! user name or id with the command.\n ```;osu set hitsounds```", delete_after=10.0)
-            else:
-                async with aiohttp.ClientSession() as session:
-                    dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
-                dtls = await dtls.json()
-                await database.query("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
-                await ctx.send("Osu! linked", delete_after=5.0)
+        else:
+            async with aiohttp.ClientSession() as session:
+                dtls = await session.get("https://osu.ppy.sh/api/get_user?k={key}&u={name}&m=0".format(key = self.osuAPIkey, name = args[1]))
+            dtls = await dtls.json()
+            await database.query("""UPDATE users SET osu_id='{osuid}' WHERE user_id={userID}""".format(userID = ctx.message.author.id, osuid = dtls[0]["user_id"]))
+            await ctx.send("Osu! linked", delete_after=5.0)
 
     async def send_osuStats(self, ctx, args):
         await ctx.trigger_typing()
