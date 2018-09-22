@@ -47,7 +47,7 @@ class osu:
 
     @commands.command()
     async def osu(self, ctx, *args):
-        if args[0] == "set":
+        if "set" in args:
             await self.save_osuID(ctx, args)
         else:
             await self.send_osuStats(ctx, args)
