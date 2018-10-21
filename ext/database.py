@@ -15,8 +15,7 @@ class database:
         self.conn = await self.load()
         self.cur = self.conn.cursor()
         for member in ctx.message.guild.members:
-            self.cur.execute("""INSERT INTO users (user_id, u_name) VALUES ('{userID}', '{name}')
-            ON CONFLICT DO UPDATE users SET u_name=E'{name}' WHERE user_id={userID};""".format(userID = member.id, name = re.escape(member.name)))
+            self.cur.execute("""INSERT INTO users (user_id, u_name) VALUES ('{userID}', '{name}') ON CONFLICT DO UPDATE users SET u_name=E'{name}' WHERE user_id={userID}""".format(userID = member.id, name = re.escape(member.name)))
             self.conn.commit()
         print("Members in {} registered on database".format(ctx.message.guild))
         await ctx.send("Members in {} registered on database".format(ctx.message.guild))
