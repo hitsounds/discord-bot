@@ -15,8 +15,9 @@ class tools:
             else:
                 C = self.client.get_channel(int(chan))
             with open(f"{C.id}.txt", "w") as output:
+                output.write("time | author name | author id | content | attachments | URL\n")
                 async for msg in C.history(limit=None, reverse=True):
-                    output.write(f"{msg.author.name} ||| {msg.content} \n")
+                    output.write(f"{msg.created_at} | {msg.author.name} | {msg.author.id} | {msg.clean_content} | {msg.attachments} | {msg.jump_url}\n")
             with open(f"{C.id}.txt", "rb") as output:
                 await database.sendFile(self, ctx, output)
             os.remove(f"{C.id}.txt")
