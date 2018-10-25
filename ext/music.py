@@ -7,6 +7,8 @@ import traceback
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
+import json
+from ext.database import database
 
 
 ytdlopts = {
@@ -260,6 +262,13 @@ class Music:
         player = self.players[ctx.guild.id]
         player.loop = not player.loop
         await ctx.send(f"Loop : {player.loop}")
+
+    @commands.command(name='m.save')
+    async def db_Save_music(self, ctx):
+        player = self.players[ctx.guild.id]
+        await database.query(f"UPDATE users SET s_playlist = '{json.dumps(player.queue._queue)}' WHERE user_id={ctx.message.author.id} ")
+
+
 
 
     @commands.command(name='play', aliases=['sing','p'])
