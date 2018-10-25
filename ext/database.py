@@ -27,7 +27,10 @@ class database:
         conn = await cls.load()
         cur = conn.cursor()
         cur.execute(query)
-        resp = cur.fetchall()
+        try:
+            resp = cur.fetchall()
+        except psycopg2.ProgrammingError:
+            pass
         conn.commit()
         cur.close()
         conn.close()
