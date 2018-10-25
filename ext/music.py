@@ -101,7 +101,7 @@ class MusicPlayer:
     When the bot disconnects from the Voice it's instance will be destroyed.
     """
 
-    __slots__ = ('bot', '_guild', '_channel', '_cog', 'queue', 'next', 'current', 'np', 'volume')
+    __slots__ = ('bot', '_guild', '_channel', '_cog', 'queue', 'next', 'current', 'np', 'volume', 'loop')
 
     def __init__(self, ctx):
         self.bot = ctx.bot
@@ -115,6 +115,7 @@ class MusicPlayer:
         self.np = None  # Now playing message
         self.volume = .5
         self.current = None
+        self.loop = False
 
         ctx.bot.loop.create_task(self.player_loop())
 
@@ -131,6 +132,9 @@ class MusicPlayer:
                     source = await self.queue.get()
             except asyncio.TimeoutError:
                 return self.destroy(self._guild)
+            
+            if self.loop:
+                await self.queue.put(source)
 
             if not isinstance(source, YTDLSource):
                 # Source was probably a stream (not downloaded)
@@ -250,7 +254,15 @@ class Music:
 
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
-    @commands.command(name='play', aliases=['sing'])
+
+    @commands.command(name='loop')
+    async def loop_(self, ctx):
+        player = self.players[ctx.guild.id]
+        player.loop = not player.loop
+        await ctx.send(f"Loop : {player.loop}")
+
+
+    @commands.command(name='play', aliases=['sing','p'])
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
 
