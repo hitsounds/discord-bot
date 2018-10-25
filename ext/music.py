@@ -266,7 +266,7 @@ class Music:
     @commands.command(name='m.save')
     async def db_Save_music(self, ctx):
         player = self.players[ctx.guild.id]
-        await database.query(f"UPDATE users SET s_playlist = '{json.dumps(player.queue._queue)}' WHERE user_id={ctx.message.author.id} ")
+        await database.query(f"UPDATE users SET s_playlist = '{json.dumps(list(player.queue._queue))}' WHERE user_id={ctx.message.author.id} ")
 
 
 
