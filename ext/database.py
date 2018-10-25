@@ -30,6 +30,7 @@ class database:
         try:
             resp = cur.fetchall()
         except psycopg2.ProgrammingError:
+            resp = None
             pass
         conn.commit()
         cur.close()
