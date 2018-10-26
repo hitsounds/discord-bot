@@ -187,6 +187,7 @@ class Music:
             pass
 
         try:
+            self.players[guild.id].loop = False
             del self.players[guild.id]
         except KeyError:
             pass
