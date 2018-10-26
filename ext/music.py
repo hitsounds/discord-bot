@@ -268,6 +268,16 @@ class Music:
         player = self.players[ctx.guild.id]
         await database.query(f"UPDATE users SET s_playlist = '{json.dumps(list(player.queue._queue))}' WHERE user_id={ctx.message.author.id} ")
 
+    @commands.command(name='m.load')
+    async def db_Load_music_(self, ctx):
+        await ctx.trigger_typing()
+        if not ctx.voice_client:
+            await ctx.invoke(self.connect_)
+        player = self.get_player(ctx)
+        plist = json.loads(await database.query(f"SELECT s_playlist FROM users WHERE user_id={ctx.message.author.id}")[0])
+        for m in plist:
+            player.queue.put(m)
+
 
 
 
