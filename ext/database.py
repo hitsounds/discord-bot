@@ -47,7 +47,8 @@ class database:
         else:
             async with aiohttp.ClientSession() as session:
                 resp = await session.post('http://0x0.st', data={'file': file})
-            return await ctx.send(await resp.text())
+            return await ctx.send(await resp.text()
+                                "`CTRL-S to download`")
 
 
 
