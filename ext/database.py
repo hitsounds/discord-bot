@@ -46,9 +46,9 @@ class database:
             return await ctx.send(file=discord.File(file))
         else:
             async with aiohttp.ClientSession() as session:
-                resp = await session.post('http://0x0.st', data={'file': file})
-            return await ctx.send(await resp.text()
-                                "`CTRL-S to download`")
+                resp = await session.post('https://file.io/?expires=1d', data={'file': file})
+                resp = await resp.json()
+            return await ctx.send(resp["link"])
 
 
 
