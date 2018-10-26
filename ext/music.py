@@ -274,7 +274,8 @@ class Music:
         if not ctx.voice_client:
             await ctx.invoke(self.connect_)
         player = self.get_player(ctx)
-        plist = json.loads(await database.query(f"SELECT s_playlist FROM users WHERE user_id={ctx.message.author.id}")[0])
+        plist = await database.query(f"SELECT s_playlist FROM users WHERE user_id={ctx.message.author.id}")
+        plist = json.loads(plist[0])
         for m in plist:
             player.queue.put(m)
 
