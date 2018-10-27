@@ -42,13 +42,12 @@ class database:
             return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
 
     async def sendFile(self, ctx ,file):
-        if os.fstat(file.fileno()).st_size/1048576 < 7:
+        if os.fstat(file.fileno()).st_size/1048576. < 7.9:
             return await ctx.send(file=discord.File(file))
         else:
             async with aiohttp.ClientSession() as session:
-                resp = await session.post('https://file.io', data={'file': file})
-                resp = await resp.json()
-            return await ctx.send("`{}`".format(resp["link"]))
+                resp = await session.post('http://0x0.st', data={'file': file})
+            return await ctx.send(await resp.text())
 
 
 
