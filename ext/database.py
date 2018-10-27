@@ -48,7 +48,7 @@ class database:
             async with aiohttp.ClientSession() as session:
                 resp = await session.post('https://file.io', data={'file': file})
                 resp = await resp.json()
-            return await ctx.send(f"<{resp["link"]}>")
+            return await ctx.send("<{}>".format(resp["link"]))
 
 
 
