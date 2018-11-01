@@ -74,13 +74,12 @@ class fun:
 
     @commands.command()
     async def banter(self, ctx):
-        if ctx.invoked_subcommand is None:
-            async with aiohttp.ClientSession() as session:
-                resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
-            lol = await resp.text()
-            embed=discord.Embed(title="OwO", description=random.choice(lol.split("\n")), color=0x0a94e7)
-            embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
-            await ctx.send(embed=embed)       
+        async with aiohttp.ClientSession() as session:
+            resp = await session.get("https://docs.google.com/document/export?format=txt&id=1nzdBhs6K1aWP5VpQlcCOX7do-9ZxoCoCPMSWCtXG6m4")
+        lol = await resp.text()
+        embed=discord.Embed(title="OwO", description=random.choice(lol.split("\n")), color=0x0a94e7)
+        embed.set_footer(text = "Credit to George's dead banter bot", icon_url = "https://cdn.discordapp.com/avatars/478220076068241408/8560a1bedb1432d1cdf8dcf634ac3a4d.png")
+        await ctx.send(embed=embed)       
 
 
     @commands.command(name='ping', aliases=['pang',"pong","pung"])
