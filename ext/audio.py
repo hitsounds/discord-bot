@@ -19,7 +19,7 @@ class voice:
         embed = discord.Embed(title="Nep is getting your file")
         embed.set_image(url="https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         embed.set_footer(text=url)
-        msg = await ctx.send(embed)
+        msg = await ctx.send(embed=embed)
         name = random.getrandbits(64)
         if Cext == "mp4":
             Cext = "mp4"
