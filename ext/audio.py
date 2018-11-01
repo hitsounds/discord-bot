@@ -17,7 +17,7 @@ class voice:
     @commands.command()
     async def ytdl(self, ctx, url, Cext="mp3"):
         embed = discord.Embed(title="Nep is getting your file")
-        embed.set_image("https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
+        embed.set_image(url="https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         embed.set_footer(text=url)
         msg = await ctx.send(embed)
         name = random.getrandbits(64)
