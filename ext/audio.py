@@ -16,7 +16,10 @@ class voice:
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
     async def ytdl(self, ctx, url, Cext="mp3"):
-        msg = await ctx.send("Nep is trying her hardest to get your file. https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
+        with discord.Embed(title="Nep is getting your file") as embed:
+            embed.set_image("https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
+            embed.set_footer(text=url)
+            msg = await ctx.send(embed)
         name = random.getrandbits(64)
         if Cext == "mp4":
             Cext = "mp4"
