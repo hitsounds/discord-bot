@@ -13,11 +13,12 @@ class tools:
         async with ctx.message.channel.typing():
             if chan is None:
                 C = ctx.message.channel
+                chan = C.id
             else:
                 C = self.client.get_channel(int(chan))
                 if C is None and ctx.message.author.id == 130025130100391936:
                     c= self.client.get_user(int(chan))
-            with open(f"{C.id}.txt", "w") as output:
+            with open(f"{chan}.txt", "w") as output:
                 output.write("time | author name | author id | content | attachments | URL\n")
                 async for msg in C.history(limit=None):
                     output.write(f"{msg.created_at} | {msg.author.name} | {msg.author.id} | \"{msg.clean_content}\" |")
