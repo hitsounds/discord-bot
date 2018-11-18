@@ -21,7 +21,7 @@ class voice:
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
     @commands.command()
     async def ytdl(self, ctx, *, url: str):
-        Cext = mp3
+        Cext = "mp3"
         name = random.getrandbits(64)
         modifiers = re.findall('--[a-zA-Z0-9_]*\s[a-zA-Z0-9_]*', url)
         for mod in modifiers:
