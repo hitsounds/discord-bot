@@ -26,7 +26,7 @@ class voice:
         modifiers = re.findall('--[a-zA-Z0-9_]*\s[a-zA-Z0-9_]*', url)
         for mod in modifiers:
             mod = mod.split(" ")
-            if mod[0] == "--f" and mod[1] in self.args.keys:
+            if mod[0] == "--f" and mod[1] in self.args.keys():
                 Cext = mod[1]
             elif mod[0] == "--n":
                 name = mod[1]
