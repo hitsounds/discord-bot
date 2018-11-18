@@ -15,7 +15,7 @@ class voice:
         self.client = client
         self.args = {
             "mp3" : "youtube-dl --no-playlist --default-search \"auto\" --audio-quality 0 --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata -o ",
-            "mp4" : "youtube-dl --no-playlist --default-search \"auto\" --merge-output-format mp4 --add-metadata -o "
+            "mp4" : "youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o "
         }
         
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
