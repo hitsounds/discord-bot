@@ -24,14 +24,14 @@ class voice:
     async def ytdl(self, ctx, *, url: str):
         Cext = "mp3"
         name = random.getrandbits(64)
-        modifiers = re.findall('--[a-zA-Z0-9_]*\s[a-zA-Z0-9_]*', url)
+        modifiers = re.findall('--\w*\s[^ ]*', url)
         for mod in modifiers:
             mod = mod.split(" ")
             if mod[0] == "--f" and mod[1] in self.args.keys():
                 Cext = mod[1]
             elif mod[0] == "--n":
                 name = mod[1]
-        url = re.sub('--[a-zA-Z0-9_]*\s[a-zA-Z0-9_]*', '', url)
+        url = re.sub('--\w*\s[^ ]*', '', url)
         to_run = self.args[Cext] + f"\"{name}.%(ext)s\" " + f"\"{url}\""
         embed = discord.Embed(title="Nep is getting your file")
         embed.set_image(url="https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
