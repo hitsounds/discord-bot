@@ -15,7 +15,8 @@ class voice:
         self.client = client
         self.args = {
             "mp3" : "youtube-dl --no-playlist --default-search \"auto\" --audio-quality 0 --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata -o ",
-            "mp4" : "youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o "
+            "mp4" : "youtube-dl --no-playlist --default-search \"auto\" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --add-metadata -o ",
+            "mkv" : "youtube-dl --no-playlist --default-search \"auto\" --merge-output-format mkv --add-metadata -o "
         }
         
 #---------------------------------------------YOUTUBE---------------------------------------------------------------------------------
@@ -36,12 +37,8 @@ class voice:
         embed.set_image(url="https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
         embed.set_footer(text=url)
         msg = await ctx.send(embed=embed)
-        if Cext == "mp4":
-            process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE)
-            await process.communicate()
-        elif Cext == "mp3":
-            process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE)
-            await process.communicate()
+        process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE)
+        await process.communicate()
         with open(f"{name}.{Cext}", "rb") as f:
             await database.sendFile(self, ctx, f)
         os.remove(f"{name}.{Cext}")
