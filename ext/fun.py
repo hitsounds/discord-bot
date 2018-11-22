@@ -68,7 +68,7 @@ class fun:
         await ctx.message.delete()
         async with aiohttp.ClientSession() as session:
             resp = await session.get("http://api.yomomma.info/")
-        data = await resp.json()
+            data = await resp.json()
         await ctx.send(data["joke"])
 
 

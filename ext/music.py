@@ -22,7 +22,7 @@ ytdlopts = {
     'quiet': True,
     'no_warnings': True,
     'default_search': 'auto',
-    'source_address': '0.0.0.0'  # ipv6 addresses cause issues sometimes
+    'source_address': '0.0.0.0'
 }
 
 ffmpegopts = {
@@ -49,9 +49,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
         self.title = data.get('title')
         self.web_url = data.get('webpage_url')
-
-        # YTDL info dicts (data) have other useful information you might want
-        # https://github.com/rg3/youtube-dl/blob/master/README.md
 
     def __getitem__(self, item: str):
         """Allows us to access attributes similar to a dict.
@@ -114,7 +111,7 @@ class MusicPlayer:
         self.queue = asyncio.Queue()
         self.next = asyncio.Event()
 
-        self.np = None  # Now playing message
+        self.np = None
         self.volume = .5
         self.current = None
         self.loop = False
@@ -129,8 +126,7 @@ class MusicPlayer:
             self.next.clear()
 
             try:
-                # Wait for the next song. If we timeout cancel the player and disconnect...
-                async with timeout(300):  # 5 minutes...
+                async with timeout(300): 
                     source = await self.queue.get()
             except asyncio.TimeoutError:
                 return self.destroy(self._guild)
@@ -139,8 +135,6 @@ class MusicPlayer:
                 await self.queue.put(source)
 
             if not isinstance(source, YTDLSource):
-                # Source was probably a stream (not downloaded)
-                # So we should regather to prevent stream expiration
                 try:
                     source = await YTDLSource.regather_stream(source, loop=self.bot.loop)
                 except Exception as e:
@@ -156,12 +150,10 @@ class MusicPlayer:
                                                f'`{source.requester}`')
             await self.next.wait()
 
-            # Make sure the FFmpeg process is cleaned up.
             source.cleanup()
             self.current = None
 
             try:
-                # We are no longer playing this song...
                 await self.np.delete()
             except discord.HTTPException:
                 pass
@@ -224,16 +216,6 @@ class Music:
 
     @commands.command(name='connect', aliases=['join'])
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        """Connect to voice.
-
-        Parameters
-        ------------
-        channel: discord.VoiceChannel [Optional]
-            The channel to connect to. If a channel is not specified, an attempt to join the voice channel you are in
-            will be made.
-
-        This command also handles moving the bot to different channels.
-        """
         if not channel:
             try:
                 channel = ctx.author.voice.channel
@@ -285,16 +267,6 @@ class Music:
 
     @commands.command(name='play', aliases=['sing','p'])
     async def play_(self, ctx, *, search: str):
-        """Request a song and add it to the queue.
-
-        This command attempts to join a valid voice channel if the bot is not already in one.
-        Uses YTDL to automatically search and retrieve a song.
-
-        Parameters
-        ------------
-        search: str [Required]
-            The song to search and retrieve using YTDL. This could be a simple search, an ID or URL.
-        """
         await ctx.trigger_typing()
 
         vc = ctx.voice_client
@@ -395,13 +367,6 @@ class Music:
 
     @commands.command(name='volume', aliases=['vol'])
     async def change_volume(self, ctx, *, vol: float):
-        """Change the player volume.
-
-        Parameters
-        ------------
-        volume: float or int [Required]
-            The volume to set the player to in percentage. This must be between 1 and 100.
-        """
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
@@ -420,11 +385,6 @@ class Music:
 
     @commands.command(name='stop')
     async def stop_(self, ctx):
-        """Stop the currently playing song and destroy the player.
-
-        !Warning!
-            This will destroy the player assigned to your guild, also deleting any queued songs and settings.
-        """
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
