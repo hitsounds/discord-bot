@@ -9,6 +9,7 @@ from ext.database import database
 from libs.lib import ImageProcessing
 import asyncio
 import io
+import json
 from PIL import Image, ImageFont, ImageDraw, ImageOps
 
 ping_formats = {
@@ -65,10 +66,9 @@ class fun:
 
     @commands.command()
     async def yomama(self, ctx):
-        await ctx.message.delete()
         async with aiohttp.ClientSession() as session:
             resp = await session.get("http://api.yomomma.info/")
-            data = await resp.json()
+            data = await resp.json(content_type="application/json")
         await ctx.send(data["joke"])
 
 
