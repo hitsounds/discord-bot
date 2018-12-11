@@ -146,7 +146,8 @@ class MusicPlayer:
             source.volume = self.volume
             self.current = source
             with concurrent.futures.ProcessPoolExecutor() as pool:
-                await self.bot.loop.run_in_executor(pool, self._guild.voice_client.play(source))
+                to_run = partial(self._guild.voice_client.play, source)
+                await self.bot.loop.run_in_executor(pool, to_run)
             self.np = await self._channel.send(f'**Now Playing:** `{source.title}` requested by '
                                                f'`{source.requester}`')
             #await self.next.wait()
