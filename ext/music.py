@@ -9,7 +9,6 @@ from functools import partial
 from youtube_dl import YoutubeDL
 import json
 from ext.database import database
-import concurrent.futures
 
 
 ytdlopts = {
@@ -145,12 +144,10 @@ class MusicPlayer:
 
             source.volume = self.volume
             self.current = source
-            with concurrent.futures.ProcessPoolExecutor() as pool:
-                to_run = partial(self._guild.voice_client.play, source)
-                await self.bot.loop.run_in_executor(pool, to_run)
+            self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
             self.np = await self._channel.send(f'**Now Playing:** `{source.title}` requested by '
                                                f'`{source.requester}`')
-            #await self.next.wait()
+            await self.next.wait()
 
             source.cleanup()
             self.current = None
