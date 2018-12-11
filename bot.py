@@ -3,13 +3,15 @@ from discord.ext import commands
 import os
 import asyncio
 import random
+import json
+from libs.lib import config
 
 
-TOKEN = os.environ.get('TOKEN')
+
+TOKEN = config.get("discord_token")
 cogs_dir = "ext"
 i_cogs = []
 status_messages = ["Tea Party with Abijith", ";help", "it slow"]
-
 client = commands.Bot(command_prefix = commands.when_mentioned_or(";"))
 client.remove_command("help")
 
@@ -31,7 +33,6 @@ async def me(ctx):
     
 @client.command()
 async def help(ctx):
-    await ctx.message.delete()
     await ctx.send("https://goo.gl/vya4Sp")
 
 async def status_msg():
