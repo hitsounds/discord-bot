@@ -1,6 +1,7 @@
 from PIL import Image, ImageFont, ImageDraw
 import io
 import aiohttp
+import json
 
 class ImageProcessing:
     async def PIL_image_from_url(url):
