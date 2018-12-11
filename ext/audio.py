@@ -48,7 +48,7 @@ class voice:
 
 
 def setup(client):
-    discord.opus.load_opus("vendor/lib/libopus.so.0")
+    discord.opus.load_opus("libopus.so.0")
     if discord.opus.is_loaded():
         print("Opus loaded!")
     client.add_cog(voice(client))
