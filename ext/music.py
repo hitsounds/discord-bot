@@ -137,7 +137,6 @@ class MusicPlayer:
 
             if not isinstance(source, YTDLSource):
                 try:
-
                     source = await YTDLSource.regather_stream(source, loop=self.bot.loop)
                 except Exception as e:
                     await self._channel.send(f'There was an error processing your song.\n'
@@ -147,7 +146,7 @@ class MusicPlayer:
             source.volume = self.volume
             self.current = source
             with concurrent.futures.ProcessPoolExecutor() as pool:
-                await loop.run_in_executor(pool, self._guild.voice_client.play(source))
+                await self.bot.loop.run_in_executor(pool, self._guild.voice_client.play(source))
             self.np = await self._channel.send(f'**Now Playing:** `{source.title}` requested by '
                                                f'`{source.requester}`')
             #await self.next.wait()
