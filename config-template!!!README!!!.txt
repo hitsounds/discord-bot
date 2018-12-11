@@ -1,3 +1,5 @@
+COPY THE FOLLOWING INTO CONFIG.TXT AND FILL IN
+
 {
     "token" : "",
     "reddit_id" : "",
