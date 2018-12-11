@@ -5,14 +5,14 @@ import os
 import aiohttp
 import psycopg2
 from ext.database import database
-from libs.lib import ImageProcessing
+from libs.lib import ImageProcessing, config
 import asyncio
 from PIL import Image, ImageFont, ImageDraw, ImageOps
 
 class osu:
     def __init__(self, client):
         self.client = client
-        self.osuAPIkey = os.environ.get('OSU_KEY')
+        self.osuAPIkey = config.get("osu_key")
 
     async def save_osuID(self, ctx, args):
         if len(args) < 2:

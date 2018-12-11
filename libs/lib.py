@@ -16,3 +16,9 @@ class ImageProcessing:
             uimg = io.BytesIO()
             uimg.write(await resp.read())
             return uimg
+
+class config:
+    def get(a):
+        with open("config.txt", "r") as f:
+            j = json.loads(f.read())
+            return j[a]

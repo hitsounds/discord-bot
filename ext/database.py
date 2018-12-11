@@ -4,11 +4,13 @@ import discord
 from discord.ext import commands
 import re
 import aiohttp
+from libs.lib import config
 
 
 class database:
     def __init__(self, client):
         self.client = client
+        db_url = config.get("db_url")
 
     @commands.command()
     async def scan(self, ctx):
@@ -39,7 +41,7 @@ class database:
         
     @staticmethod
     async def load():
-            return psycopg2.connect(os.environ["DATABASE_URL"], sslmode="require")
+            return psycopg2.connect(db_url, sslmode="require")
 
     async def sendFile(self, ctx ,file):
         if os.fstat(file.fileno()).st_size/1048576. < 7.9:

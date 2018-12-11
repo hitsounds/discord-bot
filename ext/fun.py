@@ -6,7 +6,7 @@ import os
 import aiohttp
 import psycopg2
 from ext.database import database
-from libs.lib import ImageProcessing
+from libs.lib import ImageProcessing, config
 import asyncio
 import io
 import json
@@ -21,7 +21,7 @@ ping_formats = {
 class fun:
     def __init__(self, client):
         self.client = client
-        self.reddit = praw.Reddit(client_id=os.environ.get('C_ID'), client_secret=os.environ.get('C_S'), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
+        self.reddit = praw.Reddit(client_id=config.get("reddit_id"), client_secret=config.get("reddit_s"), user_agent='bot.py A discord bot | https://github.com/Hitsounds/discord-bot')
 
 
     @commands.command(name='anime', aliases=['manga'])

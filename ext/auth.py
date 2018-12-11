@@ -5,10 +5,13 @@ import asyncio
 import psycopg2
 from ext.database import database
 import os
+from libs.lib import config
 
 class discord_auth:
     def __init__(self, client):
         self.client = client
+        cs =config.get("discord_client_secret")
+        
     
     @commands.group()
     async def auth(self, ctx):
@@ -31,7 +34,7 @@ class discord_auth:
             print(code)
             data = {
                 'client_id': self.client.user.id,
-                'client_secret': os.environ["discord_client_secret"],
+                'client_secret': cs,
                 'grant_type': 'authorization_code',
                 'code': code,
                 'redirect_uri': "https://dicsordbot.herokuapp.com",
