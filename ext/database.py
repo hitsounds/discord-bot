@@ -47,7 +47,7 @@ class database:
             return await ctx.send(file=discord.File(file))
         else:
             async with aiohttp.ClientSession() as session:
-                resp = await session.post('http://0x0.st', data={'file': file})
+                resp = await session.post('https://transfer.sh', data={'file': file})
             return await ctx.send(await resp.text())
 
 
