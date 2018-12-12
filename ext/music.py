@@ -256,6 +256,7 @@ class Music:
         if not ctx.voice_client:
             await ctx.invoke(self.connect_)
         player = self.get_player(ctx)
+        player.loop = True
         plist = await database.query(f"SELECT s_playlist FROM users WHERE user_id={ctx.message.author.id}")
         plist = plist[0][0]
         for m in plist:
