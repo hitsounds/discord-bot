@@ -10,7 +10,7 @@ from libs.lib import config
 class discord_auth:
     def __init__(self, client):
         self.client = client
-        cs =config.get("discord_client_secret")
+        self.cs =config.get("discord_client_secret")
         
     
     @commands.group()
@@ -34,7 +34,7 @@ class discord_auth:
             print(code)
             data = {
                 'client_id': self.client.user.id,
-                'client_secret': cs,
+                'client_secret': self.cs,
                 'grant_type': 'authorization_code',
                 'code': code,
                 'redirect_uri': "https://dicsordbot.herokuapp.com",
