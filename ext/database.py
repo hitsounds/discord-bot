@@ -48,7 +48,7 @@ class database:
         else:
             async with aiohttp.ClientSession() as session:
                 resp = await session.post('https://transfer.sh', data={'file': file})
-            return await ctx.send(await resp.text())
+            return await resp.text()
 
 
 
