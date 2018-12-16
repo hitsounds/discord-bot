@@ -42,7 +42,7 @@ class voice:
         with open(f"{name}.{Cext}", "rb") as f:
             resp = await database.sendFile(self, ctx, f)
             if isinstance(resp, str):
-                await ctx.send(f"https://hitcircles.serveo.net/proxy/video#{resp}")
+                await ctx.send(f"https://hitcircles.serveo.net/static/proxyvideo.html#{resp}")
         os.remove(f"{name}.{Cext}")
         await msg.delete()
 
