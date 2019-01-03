@@ -38,7 +38,10 @@ class voice:
         embed.set_footer(text=url)
         msg = await ctx.send(embed=embed)
         process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE)
-        await process.communicate()
+        try:
+            out, err = await process.communicate()
+        except Exception as err:
+            await ctx.send(f"```Error: {err} ```")
         with open(f"{name}.{Cext}", "rb") as f:
             resp = await database.sendFile(self, ctx, f)
             if isinstance(resp, str):
