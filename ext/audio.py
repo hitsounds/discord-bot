@@ -33,20 +33,21 @@ class voice:
                 name = mod[1]
         url = re.sub('--\w*\s[^ ]*', '', url)
         to_run = self.args[Cext] + f"\"{name}.%(ext)s\" " + f"\"{url}\""
-        embed = discord.Embed(title="Nep is getting your file")
-        embed.set_image(url="https://i.kym-cdn.com/photos/images/original/001/283/141/58e.gif")
-        embed.set_footer(text=url)
+        embed = discord.Embed(title="Umaru-chan will find you file!")
+        embed.set_image(url="https://media.giphy.com/media/9w9Z2ZOxcbs1a/giphy.gif")
+        embed.set_footer(text=f"Query: {url}")
         msg = await ctx.send(embed=embed)
         process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
         out, err = await process.communicate()
         if err:
-            await ctx.send(f"```Error: {err.decode()} ```")
-        with open(f"{name}.{Cext}", "rb") as f:
-            resp = await database.sendFile(self, ctx, f)
-            if isinstance(resp, str):
-                await ctx.send(f"https://www.hitsounds.moe/static/proxyvideo.html#{resp}")
-        os.remove(f"{name}.{Cext}")
+            await ctx.send(f"```{err.decode()} ```")
+        else:    
+            with open(f"{name}.{Cext}", "rb") as f:
+                resp = await database.sendFile(self, ctx, f)
+                if isinstance(resp, str):
+                    await ctx.send(f"https://www.hitsounds.moe/static/proxyvideo.html#{resp}")
         await msg.delete()
+        os.remove(f"{name}.{Cext}")
 
  
 
