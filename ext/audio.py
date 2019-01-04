@@ -33,7 +33,7 @@ class voice:
                 name = mod[1]
         url = re.sub('--\w*\s[^ ]*', '', url)
         to_run = self.args[Cext] + f"\"{name}.%(ext)s\" " + f"\"{url}\""
-        embed = discord.Embed(title="Umaru-chan will find you file!")
+        embed = discord.Embed(title="Umaru-chan will find your file!")
         embed.set_image(url="https://media.giphy.com/media/9w9Z2ZOxcbs1a/giphy.gif")
         embed.set_footer(text=f"Query: {url}")
         msg = await ctx.send(embed=embed)
