@@ -40,7 +40,7 @@ class voice:
         process = await asyncio.create_subprocess_shell(to_run, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
         out, err = await process.communicate()
         if err:
-            await ctx.send(f"```{err.decode()} ```")
+            await ctx.send(f"```{err.decode()}```")
         else:    
             with open(f"{name}.{Cext}", "rb") as f:
                 resp = await database.sendFile(self, ctx, f)
