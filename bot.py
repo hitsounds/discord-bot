@@ -45,7 +45,7 @@ async def status_msg():
 async def update_youtube_dl():
     await client.wait_until_ready()
     while True:
-        process = await asyncio.create_subprocess_shell("sudo pip3 install -e git://github.com/rg3/youtube-dl@d7c3af7a72a1e6bd7f93321cce4daf2a13ebdf12#egg=youtube_dl --upgrade") 
+        process = await asyncio.create_subprocess_shell("sudo pip3 install -e git://github.com/rg3/youtube-dl.git#egg=youtube_dl --upgrade") 
         await process.communicate()
         await client.get_channel(426816759648092160).send("Ytdl updated")
         await asyncio.sleep(86400)
