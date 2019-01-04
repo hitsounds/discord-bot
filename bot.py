@@ -6,8 +6,7 @@ import random
 import json
 from libs.lib import config
 import time
-import pip
-import threading
+import subprocess
 
 
 
@@ -44,12 +43,12 @@ async def status_msg():
         await asyncio.sleep(900)
         await client.change_presence(activity=discord.Game(name=random.choice(status_messages)))
 
-def update_youtube_dl():
-    pip.main(['install', "-e git://github.com/rg3/youtube-dl@d7c3af7a72a1e6bd7f93321cce4daf2a13ebdf12#egg=youtube_dl" + ' --upgrade'])
-    time.sleep(86400)
-
-ytdl_update = threading.Thread(target=update_youtube_dl, daemon=True)
-ytdl_update.run()
+async def update_youtube_dl():
+    await client.wait_until_ready()
+    while True:
+        subprocess.run("sudo pip3 install -e git://github.com/rg3/youtube-dl@d7c3af7a72a1e6bd7f93321cce4daf2a13ebdf12#egg=youtube_dl --upgrade") 
+        await client.get_channel(426816759648092160).send("Ytdl updated")
+        await asyncio.sleep(86400)
 
 
 #loading the extensions from ext/ folder
@@ -62,5 +61,6 @@ for extension in [f.replace('.py', '') for f in os.listdir(cogs_dir) if os.path.
             print(f'Failed to load extension {extension}.') 
             print (e)
 
+client.loop.create_task(update_youtube_dl())
 client.loop.create_task(status_msg())
 client.run(TOKEN)
