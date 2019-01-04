@@ -45,7 +45,7 @@ async def status_msg():
         await client.change_presence(activity=discord.Game(name=random.choice(status_messages)))
 
 def update_youtube_dl():
-    pip._internal.main(['install', "-e git://github.com/rg3/youtube-dl@d7c3af7a72a1e6bd7f93321cce4daf2a13ebdf12#egg=youtube_dl" + ' --upgrade'])
+    pip.main(['install', "-e git://github.com/rg3/youtube-dl@d7c3af7a72a1e6bd7f93321cce4daf2a13ebdf12#egg=youtube_dl" + ' --upgrade'])
     time.sleep(86400)
 
 ytdl_update = threading.Thread(target=update_youtube_dl, daemon=True)
