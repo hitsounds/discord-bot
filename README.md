@@ -30,6 +30,7 @@ A help page because it's easier to do it this way. If u want to see me doing stu
  - ytdl {url or search query}
 	 - NOTE: Default format is mp3(audio only). Just add the following to download as an mp4(audio+video). 
 	 - "--f mp4"
+	 - "--f mkv" (mkv format allows high quality in some situations but will result in a larger file) 
  
  ***MUSIC***
 
