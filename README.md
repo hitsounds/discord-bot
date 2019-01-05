@@ -27,7 +27,9 @@ A help page because it's easier to do it this way. If u want to see me doing stu
 
 ***MISC***
 
- - ytdl {yt url} {format: mp3 or mp4}
+ - ytdl {url or search query}
+	 - NOTE: Default format is mp3(audio only). Just add the following to download as an mp4(audio+video). 
+	 - "--f mp4"
  
  ***MUSIC***
 
