@@ -12,7 +12,7 @@ import time
 TOKEN = config.get("discord_token")
 cogs_dir = "ext"
 i_cogs = []
-status_messages = ["Tea Party with Abijith", ";help", "it slow"]
+status_messages = ["Tea Party with Abijith", ";help", "it slow", "www.hitsounds.moe"]
 client = commands.Bot(command_prefix = commands.when_mentioned_or(";"))
 client.remove_command("help")
 
