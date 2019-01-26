@@ -4,7 +4,9 @@ COPY requirements.txt /
 
 RUN pip install -r /requirements.txt
 
-RUN apt-get install -y libopus0 opus-tools
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y ffmpeg libopus0
 
 COPY . /
 
