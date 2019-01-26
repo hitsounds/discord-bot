@@ -1,3 +1,4 @@
 .vscode/
 test.py
 config.txt
+env_file
