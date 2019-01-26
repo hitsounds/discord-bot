@@ -2,4 +2,4 @@ services:
   - docker
 script:
   - docker build -t temp_img .
-  - docker run -e discord_client_secret reddit_id reddit_s db_url osu_key temp_img
+  - docker run temp_img
