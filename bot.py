@@ -44,6 +44,9 @@ async def status_msg():
 
 async def update_youtube_dl():
     await client.wait_until_ready()
+    if client.user.id = 536301727821987870:
+        #obv not production
+        raise SystemExit
     while True:
         process = await asyncio.create_subprocess_shell("sudo pip3 install -e git://github.com/rg3/youtube-dl.git#egg=youtube_dl --upgrade") 
         await process.communicate()
