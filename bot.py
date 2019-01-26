@@ -44,7 +44,7 @@ async def status_msg():
 
 async def update_youtube_dl():
     await client.wait_until_ready()
-    if client.user.id = 536301727821987870:
+    if client.user.id == 536301727821987870:
         #obv not production
         raise SystemExit
     while True:
