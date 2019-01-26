@@ -1,4 +1,4 @@
 services:
   - docker
 script:
-  - docker run .
+  - docker build .
