@@ -1,5 +1,5 @@
 
-## Hitcircles BOT [![CodeFactor](https://www.codefactor.io/repository/github/hitsounds/discord-bot/badge)](https://www.codefactor.io/repository/github/hitsounds/discord-bot)
+## Hitcircles BOT [![CodeFactor](https://www.codefactor.io/repository/github/hitsounds/discord-bot/badge)](https://www.codefactor.io/repository/github/hitsounds/discord-bot)[![Build Status](https://travis-ci.org/Hitsounds/discord-bot.svg?branch=master)](https://travis-ci.org/Hitsounds/discord-bot)
 
 
 A help page because it's easier to do it this way. If u want to see me doing stuff with the bot: discord.gg/mpKTVCW
