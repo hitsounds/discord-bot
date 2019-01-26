@@ -2,6 +2,7 @@ from PIL import Image, ImageFont, ImageDraw
 import io
 import aiohttp
 import json
+import os
 
 class ImageProcessing:
     async def PIL_image_from_url(url):
@@ -20,6 +21,9 @@ class ImageProcessing:
 
 class config:
     def get(a):
-        with open("config.txt", "r") as f:
-            j = json.loads(f.read())
-            return j[a]
+        try:
+            return os.environ[a]
+        except IndexError:
+            with open("config.txt", "r") as f:
+                j = json.loads(f.read())
+                return j[a]
