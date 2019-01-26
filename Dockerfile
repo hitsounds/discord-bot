@@ -4,8 +4,7 @@ COPY requirements.txt /
 
 RUN pip install -r /requirements.txt
 
-RUN apt-get install -y libav-tools && \
-    apt-get install -y libopus0 opus-tools
+RUN apt-get install -y libopus0 opus-tools
 
 COPY . /
 
