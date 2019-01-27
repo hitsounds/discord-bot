@@ -23,7 +23,7 @@ class config:
     def get(a):
         try:
             return os.environ[a]
-        except IndexError:
+        except KeyError:
             with open("config.txt", "r") as f:
                 j = json.loads(f.read())
                 return j[a]
