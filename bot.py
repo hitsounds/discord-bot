@@ -8,7 +8,6 @@ from libs.lib import config
 import time
 
 
-
 TOKEN = config.get("discord_token")
 cogs_dir = "ext"
 i_cogs = []
@@ -48,10 +47,10 @@ async def update_youtube_dl():
         #obv not production
         raise SystemExit
     while True:
+        await asyncio.sleep(86400)
         process = await asyncio.create_subprocess_shell("sudo pip3 install -e git://github.com/rg3/youtube-dl.git#egg=youtube_dl --upgrade") 
         await process.communicate()
         await client.get_channel(426816759648092160).send("Ytdl updated")
-        await asyncio.sleep(86400)
 
 
 #loading the extensions from ext/ folder
