@@ -2,6 +2,6 @@ services:
   - docker
 script:
   - docker build -t hitsounds/dbot .
-  - docker login -u hitsounds -p $(docker_hub_p)
+  - docker login -u hitsounds -p $docker_hub_p
   - docker push hitsounds/dbot
   - docker run -e discord_client_secret -e reddit_id -e reddit_s -e db_url -e osu_key -e discord_token hitsounds/dbot
