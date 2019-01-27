@@ -2,3 +2,9 @@
 test.py
 config.txt
 env_file
+.git/
+.gitignore
+.travis.yml
+_config.yml
+configEXAMPLE.txt
+env_fileEXAMPLE
