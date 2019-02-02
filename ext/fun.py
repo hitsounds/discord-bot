@@ -33,7 +33,7 @@ class fun:
                 resp = await resp.json()
                 resp = resp["data"][0]["attributes"]
             embed=discord.Embed(title="Rating: {}%".format(resp["averageRating"]), description=resp["synopsis"], color=0x4d30d6)
-            embed.set_author(name="{} ({})".format(resp["canonicalTitle"],resp["subtype"]), url="https://kitsu.io/anime/{}".format(resp["slug"]))
+            embed.set_author(name="{} ({})".format(resp["canonicalTitle"],resp["subtype"]), url="https://kitsu.io/{}/{}".format(ctx.invoked_with, resp["slug"]))
             embed.set_thumbnail(url=resp["posterImage"]["original"])
             embed.add_field(name="Start", value=resp["startDate"], inline=True)
             embed.add_field(name="End", value=resp["endDate"], inline=True)
