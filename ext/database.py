@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import sqlite3
 import discord
 from discord.ext import commands
 import re

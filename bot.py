@@ -35,6 +35,10 @@ async def me(ctx):
 async def help(ctx):
     await ctx.send("https://goo.gl/vya4Sp")
 
+@client.check
+async def david_ban(ctx):
+    return ctx.message.author.id != 279988837843730432:
+
 async def status_msg():
     await client.wait_until_ready()
     while not client.is_closed():

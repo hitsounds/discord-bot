@@ -8,3 +8,4 @@ env_file
 _config.yml
 configEXAMPLE.txt
 env_fileEXAMPLE
+bot.db
