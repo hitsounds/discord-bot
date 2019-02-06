@@ -37,7 +37,7 @@ async def help(ctx):
 
 @client.check
 async def david_ban(ctx):
-    return ctx.message.author.id != 279988837843730432:
+    return ctx.message.author.id != 279988837843730432
 
 async def status_msg():
     await client.wait_until_ready()
