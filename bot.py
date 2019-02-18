@@ -6,8 +6,9 @@ import random
 import json
 from libs.lib import config
 import time
+import logging
 
-
+logging.basicConfig(level=logging.INFO)
 TOKEN = config.get("discord_token")
 cogs_dir = "ext"
 i_cogs = []
