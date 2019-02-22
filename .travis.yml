@@ -1,7 +1,0 @@
-language: generic
-services:
-  - docker
-script:
-  - docker build -t hitsounds/dbot:$TRAVIS_BRANCH .
-  - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot; fi
-  - docker run -e discord_client_secret -e reddit_id -e reddit_s -e db_url -e osu_key -e discord_token hitsounds/dbot:$TRAVIS_BRANCH
