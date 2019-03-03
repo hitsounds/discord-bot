@@ -9,9 +9,9 @@ async def file_from_url(url):
         return io.BytesIO(await resp.read())
 
 async def sendfile(fileobj, *, d_ctx=None, fliename=None, spoiler=False):
-    if os.fstat(file.fileno()).st_size/1048576. < 7.9 and d_ctx not None:
+    if os.fstat(file.fileno()).st_size/1048576. < 7.9 and d_ctx != None:
         return await ctx.send(file=discord.File(fileobj))
-    elif os.fstat(file.fileno()).st_size/1048576. < 510. and d_ctx is None:
+    elif os.fstat(file.fileno()).st_size/1048576. < 510.:
         async with aiohttp.ClientSession() as session:
             resp = await session.post("https://0x0.st", data={"file": fileobj})
         return resp.text()
@@ -19,4 +19,3 @@ async def sendfile(fileobj, *, d_ctx=None, fliename=None, spoiler=False):
         async with aiohttp.ClientSession() as session:
             resp = await session.post("https://transfer.sh", data={"file": fileobj})
         return resp.text() 
-
