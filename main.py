@@ -5,6 +5,7 @@ import config
 import asyncio
 import os
 import sqlalchemy
+import random
 from sqlalchemy.ext.declarative import declarative_base  
 from sqlalchemy.orm import sessionmaker
 
@@ -22,9 +23,9 @@ base = declarative_base()
 
 class users(base):
     __tablename__ = 'users'
-
-    discord_id = sqlalchemy.Column(sqlalchemy.BigInteger, primary_key=True)
-    osu_id = sqlalchemy.Column(sqlalchemy.BigInteger, nullable=True)
+    
+    discord_id = sqlalchemy.Column(sqlalchemy.String, nullable=False, primary_key=True)
+    osu_id = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     def __init__(self, id):
         self.discord_id = id
@@ -35,7 +36,8 @@ if config.DB_URL is None:
 else:
     db = sqlalchemy.create_engine(config.DB_URL)
 client.DATABASE_SESSIONMAKER = sessionmaker(db)
-base.metadata.create_all(db)
+base.metadata.create_all(db, checkfirst=True)
+client.DATABASE_BASE = base
 
 #Message on ready
 @client.event
@@ -44,7 +46,19 @@ async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    print('------')    
+    print('------')
+
+#Add people to database
+@client.command()
+async def scan(ctx):
+    session = client.DATABASE_SESSIONMAKER()
+    for i in ctx.message.guild.members:
+        test = session.query(users).filter(users.discord_id == str(i.id)).first()
+        if not test:
+            member = session.add(users(str(i.id)))
+    session.commit()
+    session.close()
+    await ctx.send("Scan success!")
 
 #Random discord rich presence
 async def update_status_msg():
@@ -61,7 +75,7 @@ for ext in [i.replace('.py', '') for i in os.listdir("ext") if os.path.isfile(os
         print(f"Error in loading {ext}\n{e}")
 
 #try to load the libopus
-discord.opus.load_opus("libopus.so.0")
+#discord.opus.load_opus("libopus.so.0")
 
 #Run client
 client.loop.create_task(update_status_msg())
