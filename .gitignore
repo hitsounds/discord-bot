@@ -1,2 +1,3 @@
 persist/
 *__pycache__
+config.py
