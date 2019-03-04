@@ -1,13 +1,20 @@
 import discord
 from discord.ext import commands
 import lib
-import config
 import asyncio
 import os
 import sqlalchemy
 import random
 from sqlalchemy.ext.declarative import declarative_base  
 from sqlalchemy.orm import sessionmaker
+from shutil import copyfile
+
+try:
+    import config
+except ImportError:
+    copyfile("config.py.template", "config.py")
+    print("config.py file created. If you are using enviromental variables you can ignore this otherwise make sure to check out the config if you are having trouble")
+    import config
 
 #Set-up persistent storage
 if not os.path.isdir("persist"):
@@ -23,18 +30,16 @@ base = declarative_base()
 
 class users(base):
     __tablename__ = 'users'
-    
     discord_id = sqlalchemy.Column(sqlalchemy.String, nullable=False, primary_key=True)
     osu_id = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-
     def __init__(self, id):
         self.discord_id = id
-
 
 if config.DB_URL is None:
     db = sqlalchemy.create_engine("sqlite:///persist/bot.db")
 else:
     db = sqlalchemy.create_engine(config.DB_URL)
+
 client.DATABASE_SESSIONMAKER = sessionmaker(db)
 base.metadata.create_all(db, checkfirst=True)
 client.DATABASE_BASE = base
