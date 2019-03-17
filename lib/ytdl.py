@@ -91,7 +91,7 @@ class ytdl_downloader():
 
 		elif self.is_playlist and self.playlist and not self.finished:
 			try:
-				os.remove(f"part_{str(self.part-1)}.zip")
+				os.remove(self.path + f"/part_{str(self.part-1)}.zip")
 			except Exception:
 				pass
 			while self.downloaded < len(self.info["entries"]):
