@@ -1,3 +1,5 @@
 persist/
 *__pycache__
 config.py
+temp/
+.vscode
