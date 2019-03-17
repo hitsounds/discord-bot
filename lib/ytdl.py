@@ -76,13 +76,13 @@ class ytdl_downloader():
 		
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([self.info["webpage_url"]])
-			os.rename(self.path + "/{}.{}".format(self.info["id"], self.format), self.path + "/{}.{}".format(self.info["title"], self.info))
-			return self.path + "/{}.{}".format(self.info["title"], self.info)
+			os.rename(self.path + "/{}.{}".format(self.info["id"], self.format), self.path + "/{}.{}".format(self.info["title"], self.format))
+			return self.path + "/{}.{}".format(self.info["title"], self.format)
 		
 		
 		elif self.is_playlist and not self.playlist:
 			to_dl = self.info["entries"][0]
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([to_dl["webpage_url"]])
-			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.info))
-			return self.path + "/{}.{}".format(to_dl["title"], to_dl)
+			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.format))
+			return self.path + "/{}.{}".format(to_dl["title"], self.format)
