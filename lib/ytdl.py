@@ -107,7 +107,7 @@ class ytdl_downloader():
 						os.remove(self.path + f"/{f}")
 					archive.close()
 					self.part = self.part + 1
-					return self.path + f"part_{str(self.part-1)}.zip"
+					return self.path + f"/part_{str(self.part-1)}.zip"
 
 			archive = zipfile.ZipFile(f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
 			for f in os.listdir(self.path):	
@@ -116,7 +116,7 @@ class ytdl_downloader():
 			archive.close()
 			self.part = self.part + 1
 			self.finished = True
-			return self.path + f"part_{str(self.part-1)}.zip"
+			return self.path + f"/part_{str(self.part-1)}.zip"
 				
 
 	def cleanup(self):
