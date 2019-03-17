@@ -63,7 +63,7 @@ class ytdl_downloader():
 			self.is_playlist = True
 		self.id = str(random.getrandbits(64))
 		self.path = f"temp/ytdl/{self.id}"
-		base["outtmpl"] = self.path + "/%(title)s.%(ext)s"
+		base["outtmpl"] = self.path + "/%(id)s.%(ext)s"
 		self.ytdlopts = base
 
 	def aio_initalise(self):
@@ -73,11 +73,16 @@ class ytdl_downloader():
 
 	def dl(self):
 		if not self.is_playlist:
+		
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([self.info["webpage_url"]])
-			return self.path + "/{}.{}".format(self.info["title"], self.format)
+			os.rename(self.path + "/{}.{}".format(self.info["id"], self.format), self.path + "/{}.{}".format(self.info["title"], self.info))
+			return self.path + "/{}.{}".format(self.info["title"], self.info)
+		
+		
 		elif self.is_playlist and not self.playlist:
 			to_dl = self.info["entries"][0]
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([to_dl["webpage_url"]])
-			return self.path + "/{}.{}".format(to_dl["title"], self.format)
+			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.info))
+			return self.path + "/{}.{}".format(to_dl["title"], to_dl)
