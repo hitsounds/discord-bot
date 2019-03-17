@@ -16,12 +16,12 @@ async def sendfile(fileobj, *, d_ctx=None, filename=None, spoiler=False):
 	elif os.fstat(fileobj.fileno()).st_size/1048576. < 99:
 		async with aiohttp.ClientSession() as session:
 			resp = await session.post("https://uguu.se/api.php?d=upload-tool", data={"file": fileobj})
-		return resp.text
+		return await resp.read()
 	elif os.fstat(fileobj.fileno()).st_size/1048576. < 510.:
 		async with aiohttp.ClientSession() as session:
 			resp = await session.post("https://0x0.st", data={"file": fileobj})
-		return resp.text
+		return await resp.read()
 	else:
 		async with aiohttp.ClientSession() as session:
 			resp = await session.post("https://transfer.sh", data={"file": fileobj})
-		return resp.text
+		return await resp.read()
