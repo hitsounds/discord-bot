@@ -99,24 +99,24 @@ class ytdl_downloader():
 				with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 					ydl.download([to_dl["webpage_url"]])
 				self.downloaded = self.downloaded + 1
-				
-				if sum(os.path.getsize(self.path + f) for f in os.listdir(self.path) if os.path.isfile(f)) < 500000000:
-					archive = zipfile.ZipFile(f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
+
+				if sum(os.path.getsize(self.path + f) for f in os.listdir(self.path) if os.path.isfile(f)) > 500000000:
+					archive = zipfile.ZipFile(self.path + f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
 					for f in os.listdir(self.path):
-						archive.write(self.path + f, f)
-						os.remove(self.path + f)
+						archive.write(self.path + f"/{f}", f)
+						os.remove(self.path + f"/{f}")
 					archive.close()
 					self.part = self.part + 1
-					return f"part_{str(self.part-1)}.zip"
+					return self.path + f"part_{str(self.part-1)}.zip"
 
 			archive = zipfile.ZipFile(f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
 			for f in os.listdir(self.path):	
-				archive.write(self.path + f, f)
-				os.remove(self.path + f)
+				archive.write(self.path + f"/{f}", f)
+				os.remove(self.path + f"/{f}")
 			archive.close()
 			self.part = self.part + 1
 			self.finished = True
-			return f"part_{str(self.part-1)}.zip"
+			return self.path + f"part_{str(self.part-1)}.zip"
 				
 
 	def cleanup(self):
