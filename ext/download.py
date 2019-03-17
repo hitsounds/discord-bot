@@ -17,11 +17,18 @@ class misc(commands.Cog):
 	async def ytdl_(self, ctx, *, url: str):
 		dlr = lib.ytdl.ytdl_downloader(url)
 		await self.client.loop.run_in_executor(None, dlr.aio_initalise)
+		while dlr.playlist and not dlr.finished:
+			file = await self.client.loop.run_in_executor(None, dlr.dl)
+			with open(file, "rb") as fl:
+				resp = await lib.sendfile(fl, d_ctx=ctx)
+			if isinstance(resp, str):
+				await ctx.send(resp)
 		file = await self.client.loop.run_in_executor(None, dlr.dl)
 		with open(file, "rb") as fl:
 			resp = await lib.sendfile(fl, d_ctx=ctx)
 		if isinstance(resp, str):
 			await ctx.send(resp)
+		dlr.cleanup()
 
 
 def setup(client):

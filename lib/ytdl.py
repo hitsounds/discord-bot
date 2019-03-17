@@ -4,6 +4,7 @@ import tarfile
 import re
 import random
 import os
+import shutil
 
 
 class ytdl_downloader():
@@ -40,6 +41,8 @@ class ytdl_downloader():
 		self.quality = "0"
 		self.format = "mp3"  # defaults
 		self.downloaded = 0
+		self.part = 0
+		self.finished = False
 
 	def extract_info_ytdl(self):
 		with youtube_dl.YoutubeDL({'default_search': 'auto'}) as ydl:
@@ -85,3 +88,36 @@ class ytdl_downloader():
 				ydl.download([to_dl["webpage_url"]])
 			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.format))
 			return self.path + "/{}.{}".format(to_dl["title"], self.format)
+
+		elif self.is_playlist and self.playlist:
+			try:
+				os.remove(f"part_{str(self.part-1)}.zip")
+			except Exception:
+				pass
+			while self.downloaded < len(self.info["entries"]):
+				to_dl = self.info["entries"][self.downloaded]
+				with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
+					ydl.download([to_dl["webpage_url"]])
+				self.downloaded = self.downloaded + 1
+				
+				if sum(os.path.getsize(self.path + f) for f in os.listdir(self.path) if os.path.isfile(f)) < 500000000:
+					archive = zipfile.ZipFile(f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
+					for f in os.listdir(self.path):
+						archive.write(self.path + f, f)
+						os.remove(self.path + f)
+					archive.close()
+					self.part = self.part + 1
+					return f"part_{str(self.part-1)}.zip"
+
+			archive = zipfile.ZipFile(f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
+			for f in os.listdir(self.path):	
+				archive.write(self.path + f, f)
+				os.remove(self.path + f)
+			archive.close()
+			self.part = self.part + 1
+			self.finished = True
+			return f"part_{str(self.part-1)}.zip"
+				
+
+	def cleanup(self):
+		shutil.rmtree(self.path)
