@@ -100,7 +100,7 @@ class ytdl_downloader():
 					ydl.download([to_dl["webpage_url"]])
 				self.downloaded = self.downloaded + 1
 
-				if sum(os.path.getsize(self.path + f"/{f}") for f in os.listdir(self.path) if os.path.isfile(f)) > 50000000:
+				if sum(os.path.getsize(self.path + f"/{f}") for f in os.listdir(self.path) > 50000000:
 					archive = zipfile.ZipFile(self.path + f"part_{str(self.part)}.zip", "w", zipfile.ZIP_DEFLATED)
 					for f in os.listdir(self.path):
 						if not f.endswith(".zip"):
