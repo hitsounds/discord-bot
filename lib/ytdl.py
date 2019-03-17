@@ -74,7 +74,7 @@ class ytdl_downloader():
 		self.compile_ytdl_options()
 
 	def dl(self):
-		if not self.is_playlist:
+		if not self.is_playlist and not self.finished:
 		
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([self.info["webpage_url"]])
@@ -82,14 +82,14 @@ class ytdl_downloader():
 			return self.path + "/{}.{}".format(self.info["title"], self.format)
 		
 		
-		elif self.is_playlist and not self.playlist:
+		elif self.is_playlist and not self.playlist and not self.finished:
 			to_dl = self.info["entries"][0]
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([to_dl["webpage_url"]])
 			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.format))
 			return self.path + "/{}.{}".format(to_dl["title"], self.format)
 
-		elif self.is_playlist and self.playlist:
+		elif self.is_playlist and self.playlist and not self.finished:
 			try:
 				os.remove(f"part_{str(self.part-1)}.zip")
 			except Exception:
