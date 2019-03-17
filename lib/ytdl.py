@@ -3,6 +3,7 @@ import zipfile
 import tarfile
 import re
 import random
+import os
 
 
 class ytdl_downloader():
@@ -10,6 +11,7 @@ class ytdl_downloader():
 		"mp3": {
 			'default_search': 'auto',
 			"verbose": True,
+			"format": "bestaudio/best",
 			"postprocessor_args": ["-movflags", "faststart"],
 			"writethumbnail": True,
 			"noplaylist": True,
@@ -18,17 +20,21 @@ class ytdl_downloader():
 					'key': 'FFmpegExtractAudio',
 					'preferredcodec': 'mp3',
 					'preferredquality': '0'
-					},
+				},
 				{
 					'key': 'EmbedThumbnail'
 				},
 				{
 					'key': "FFmpegMetadata"
 				}
-	]}}
+			]
+		}
+	}
+
 	def __init__(self, args):
 		self.raw = args
-		self.search = re.sub('(?<=\s)-\w*?\s[^ ]*|(?<=\s)--\w*', "", args) or "toaru masterpiece"
+		self.search = re.sub(
+			'(?<=\s)-\w*?\s[^ ]*|(?<=\s)--\w*', "", args) or "toaru masterpiece"
 		self.mods = re.findall('(?<=\s)-\w*?\s[^ ]*|(?<=\s)--\w*', args)
 		self.playlist = False
 		self.is_playlist = False
@@ -69,15 +75,9 @@ class ytdl_downloader():
 		if not self.is_playlist:
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([self.info["webpage_url"]])
-			return self.path + "/{}.{}".format(self.info["title"], self.format)
+			return os.path.join(self.path, "/{}.{}".format(self.info["title"], self.format))
 		elif self.is_playlist and not self.playlist:
 			to_dl = self.info["entries"][0]
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([to_dl["webpage_url"]])
-			return self.path + "/{}.{}".format(to_dl["title"], self.format)
-
-
-
-		
-		
-	
+			return os.path.join(self.path, "/{}.{}".format(to_dl["title"], self.format))
