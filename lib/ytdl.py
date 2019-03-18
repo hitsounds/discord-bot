@@ -12,6 +12,7 @@ class ytdl_downloader():
 		"mp3": {
 			'default_search': 'auto',
 			"verbose": True,
+			"format":"bestaudio/best",
 			"postprocessor_args": ["-movflags", "faststart"],
 			"writethumbnail": True,
 			"noplaylist": True,
