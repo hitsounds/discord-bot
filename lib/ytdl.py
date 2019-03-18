@@ -16,6 +16,7 @@ class ytdl_downloader():
 			"postprocessor_args": ["-movflags", "faststart"],
 			"writethumbnail": True,
 			"noplaylist": True,
+			"geo_bypass":True,
 			'postprocessors': [
 				{
 					'key': 'FFmpegExtractAudio',
@@ -46,7 +47,7 @@ class ytdl_downloader():
 		self.finished = False
 
 	def extract_info_ytdl(self):
-		with youtube_dl.YoutubeDL({'default_search': 'auto', "noplaylist": not self.playlist, "ignoreerrors": self.playlist}) as ydl:
+		with youtube_dl.YoutubeDL({'default_search': 'auto', "geo_bypass":True, "noplaylist": not self.playlist, "ignoreerrors": self.playlist}) as ydl:
 			self.info = ydl.extract_info(self.search, download=False)
 
 	def process_mods(self):
