@@ -45,7 +45,7 @@ class ytdl_downloader():
 		self.finished = False
 
 	def extract_info_ytdl(self):
-		with youtube_dl.YoutubeDL({'default_search': 'auto'}) as ydl:
+		with youtube_dl.YoutubeDL({'default_search': 'auto', "noplaylist": not playlist}) as ydl:
 			self.info = ydl.extract_info(self.search, download=False)
 
 	def process_mods(self):
@@ -54,7 +54,7 @@ class ytdl_downloader():
 				self.format = i.split(" ")[1]
 			elif i.startswith("-q") and 0 <= int(i.split(" ")[1]) <= 350:
 				self.quality = i.split(" ")[1]
-			elif i.startswith("--pl") and "entries" in self.info:
+			elif i.startswith("--pl"):
 				self.playlist = True
 
 	def compile_ytdl_options(self):
@@ -63,14 +63,15 @@ class ytdl_downloader():
 			base["postprocessors"][0]["preferredquality"] = self.quality
 		if "entries" in self.info:
 			self.is_playlist = True
+			base["ignoreerrors"] = True
 		self.id = str(random.getrandbits(64))
 		self.path = f"temp/ytdl/{self.id}"
 		base["outtmpl"] = self.path + "/%(id)s.%(ext)s"
 		self.ytdlopts = base
 
 	def aio_initalise(self):
-		self.extract_info_ytdl()
 		self.process_mods()
+		self.extract_info_ytdl()
 		self.compile_ytdl_options()
 
 	def dl(self):
