@@ -22,7 +22,7 @@ class misc(commands.Cog):
 		msg = await ctx.send(embed=embed)
 		await self.client.loop.run_in_executor(None, dlr.aio_initalise)
 		embed = discord.Embed(title="Downloading!", description=f"ID : {dlr.id}")
-		embed.set_image(url="https://media.giphy.com/media/PPxgdzGdl8BJm/giphy.gif")
+		embed.set_image(url="https://i.pinimg.com/originals/a6/4e/ff/a64eff819ce5a97596db56af45daba63.gif")
 		embed.set_footer(text=f"Args: {dlr.search}  Mods: {dlr.mods}")
 		await msg.edit(embed=embed)
 		while dlr.is_playlist and dlr.playlist and not dlr.finished:
