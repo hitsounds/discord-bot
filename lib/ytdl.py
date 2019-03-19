@@ -81,16 +81,16 @@ class ytdl_downloader():
 		
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([self.info["webpage_url"]])
-			os.rename(self.path + "/{}.{}".format(self.info["id"], self.format), self.path + "/{}.{}".format(self.info["title"], self.format))
-			return self.path + "/{}.{}".format(self.info["title"], self.format)
+			os.rename(self.path + "/{}.{}".format(self.info["id"], self.format), self.path + "/{}.{}".format(self.info["title"].replace("/",""), self.format))
+			return self.path + "/{}.{}".format(self.info["title"].replace("/",""), self.format)
 		
 		
 		elif self.is_playlist and not self.playlist and not self.finished:
 			to_dl = self.info["entries"][0]
 			with youtube_dl.YoutubeDL(self.ytdlopts) as ydl:
 				ydl.download([to_dl["webpage_url"]])
-			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"], self.format))
-			return self.path + "/{}.{}".format(to_dl["title"], self.format)
+			os.rename(self.path + "/{}.{}".format(to_dl["id"], self.format), self.path + "/{}.{}".format(to_dl["title"].replace("/",""), self.format))
+			return self.path + "/{}.{}".format(to_dl["title"].replace("/",""), self.format)
 
 		elif self.is_playlist and self.playlist and not self.finished:
 			try:
