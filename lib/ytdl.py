@@ -61,7 +61,7 @@ class ytdl_downloader():
 
 	def compile_ytdl_options(self):
 		base = self.formats[self.format]
-		if self.quality != "0" and self.format == "mp3":
+		if self.format == "mp3":
 			base["postprocessors"][0]["preferredquality"] = self.quality
 		if "entries" in self.info:
 			self.is_playlist = True
