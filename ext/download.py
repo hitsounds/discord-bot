@@ -16,15 +16,15 @@ class misc(commands.Cog):
 	@commands.command(name="ytdl", aliases=["dl"])
 	async def ytdl_(self, ctx, *, url: str):
 		dlr = lib.ytdl.ytdl_downloader(url)
-		with embed as discord.Embed(title="Processing the file!", description="Processing will take longer on playlist downloads."):
-			embed.set_image(url="https://media.giphy.com/media/PPxgdzGdl8BJm/giphy.gif")
-			embed.set_footer(text=f"Args: {dlr.search}  Mods: {dlr.mods}")
-			msg = await ctx.send(embed=embed)
+		embed = discord.Embed(title="Processing the file!", description="Processing will take longer on playlist downloads.")
+		embed.set_image(url="https://media.giphy.com/media/PPxgdzGdl8BJm/giphy.gif")
+		embed.set_footer(text=f"Args: {dlr.search}  Mods: {dlr.mods}")
+		msg = await ctx.send(embed=embed)
 		await self.client.loop.run_in_executor(None, dlr.aio_initalise)
-		with embed as discord.Embed(title="Downloading!", description=f"ID : {dlr.id}"):
-			embed.set_image(url="https://media.giphy.com/media/PPxgdzGdl8BJm/giphy.gif")
-			embed.set_footer(text=f"Args: {dlr.search}  Mods: {dlr.mods}")
-			await msg.edit(embed=embed)
+		embed = discord.Embed(title="Downloading!", description=f"ID : {dlr.id}")
+		embed.set_image(url="https://media.giphy.com/media/PPxgdzGdl8BJm/giphy.gif")
+		embed.set_footer(text=f"Args: {dlr.search}  Mods: {dlr.mods}")
+		await msg.edit(embed=embed)
 		while dlr.is_playlist and dlr.playlist and not dlr.finished:
 			file = await self.client.loop.run_in_executor(None, dlr.dl)
 			with open(file, "rb") as fl:
