@@ -1,5 +1,7 @@
 FROM arm32v7/python:3.7-stretch	
 
+COPY qemu-arm-static /usr/bin/
+
 WORKDIR /usr/src/app
 
 VOLUME ./persist
