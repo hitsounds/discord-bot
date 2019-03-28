@@ -2,5 +2,6 @@ language: generic
 services:
   - docker
 script:
-  - docker build -t hitsounds/dbot:$TRAVIS_BRANCH .
-  - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot; fi
+  - docker build -f dockerfile -t hitsounds/dbot:$TRAVIS_BRANCH_amd64 .
+  - docker build -f arm_dockerfile -t hitsounds/dbot:$TRAVIS_BRANCH_arm32 .
+  - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot_amd64; docker push hitsounds/dbot_arm32; fi
