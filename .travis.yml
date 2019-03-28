@@ -2,6 +2,7 @@ language: generic
 services:
   - docker
 script:
+  - docker run --rm --privileged multiarch/qemu-user-static:register
   - docker build -f dockerfile -t hitsounds/dbot:${TRAVIS_BRANCH}_amd64 .
   - docker build -f arm_dockerfile -t hitsounds/dbot:${TRAVIS_BRANCH}_arm32 .
   - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot; fi
