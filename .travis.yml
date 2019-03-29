@@ -5,18 +5,18 @@ matrix:
     services:
       - docker
     before_script:
-      - docker pull hitsounds/dbot || true
+      - docker pull hitsounds/dbot:${TRAVIS_BRANCH} || true
     script:
-      - docker build --pull --cache-from hitsounds/dbot -f dockerfile -t hitsounds/dbot:${TRAVIS_BRANCH}_amd64 -t hitsounds/dbot:${TRAVIS_BRANCH} .
+      - docker build --pull --cache-from hitsounds/dbot:${TRAVIS_BRANCH} -f dockerfile -t hitsounds/dbot:${TRAVIS_BRANCH}_amd64 -t hitsounds/dbot:${TRAVIS_BRANCH} .
       - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot; fi
 
   - language: generic
     services:
       - docker
     before_script:
-      - docker pull hitsounds/dbot || true
+      - docker pull hitsounds/dbot:${TRAVIS_BRANCH}_arm32 || true
     script:
       - docker run --rm --privileged multiarch/qemu-user-static:register
       - for target_arch in aarch64 arm; do wget -N https://github.com/multiarch/qemu-user-static/releases/download/v2.9.1-1/x86_64_qemu-${target_arch}-static.tar.gz; tar -xvf x86_64_qemu-${target_arch}-static.tar.gz; done
-      - docker build --pull --cache-from hitsounds/dbot -f dockerfile.arm -t hitsounds/dbot:${TRAVIS_BRANCH}_arm32 .
+      - docker build --pull --cache-from hitsounds/dbot:${TRAVIS_BRANCH}_arm32 -f dockerfile.arm -t hitsounds/dbot:${TRAVIS_BRANCH}_arm32 .
       - if $TRAVIS_PULL_REQUEST; then echo "Pull request"; else docker login -u hitsounds -p $docker_hub_p; docker push hitsounds/dbot; fi
