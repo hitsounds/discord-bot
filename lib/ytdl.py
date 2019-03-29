@@ -21,7 +21,7 @@ class ytdl_downloader():
 				{
 					'key': 'FFmpegExtractAudio',
 					'preferredcodec': 'mp3',
-					'preferredquality': '0'
+					'preferredquality': '4'
 				},
 				{
 					'key': 'EmbedThumbnail'
@@ -40,7 +40,7 @@ class ytdl_downloader():
 		self.mods = re.findall('(?<=\s)-\w*?\s[^ ]*|(?<=\s)--\w*', args)
 		self.playlist = False
 		self.is_playlist = False
-		self.quality = "0"
+		self.quality = "4"
 		self.format = "mp3"  # defaults
 		self.downloaded = 0
 		self.part = 0
