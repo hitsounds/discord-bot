@@ -244,7 +244,8 @@ class Music(commands.Cog):
         player.loop = not player.loop
         await ctx.send(f"Loop : {player.loop}")
 
-'''    @commands.command(name='m.save')
+"""
+    @commands.command(name='m.save')
     async def db_Save_music(self, ctx):
         player = self.players[ctx.guild.id]
         await database.query(f"UPDATE users SET s_playlist = '{json.dumps(list(player.queue._queue))}' WHERE user_id={ctx.message.author.id} ")
@@ -260,9 +261,7 @@ class Music(commands.Cog):
         plist = plist[0][0]
         for m in plist:
             await player.queue.put(m)
-'''
-
-
+"""
 
     @commands.command(name='play', aliases=['sing','p'])
     async def play_(self, ctx, *, search: str):
