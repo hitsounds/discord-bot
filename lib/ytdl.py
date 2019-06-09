@@ -54,8 +54,8 @@ class ytdl_downloader():
 		for i in self.mods:
 			if i.startswith("-f") and i.split(" ")[1] in self.formats.keys():
 				self.format = i.split(" ")[1]
-			elif i.startswith("-q"):
-				self.quality = re.findall(r"[0-9]+k|[0-9]+", i.split(" ")[1])
+			elif i.startswith("-q") and 0 <= int(i.split(" ")[1]) <= 350:
+				self.quality = i.split(" ")[1]
 			elif i.startswith("--pl"):
 				self.playlist = True
 
