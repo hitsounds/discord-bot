@@ -9,13 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: |
-        docker login docker.pkg.github.com -u hitsounds -p ${{ secrets.GITHUB_TOKEN }}
-        docker buildx create --use --name mybuild
-        docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 . --file Dockerfile -t docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
-        docker push docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
-      env:
-        DOCKER_CLI_EXPERIMENTAL: enabled
+      -
+        name: Checkout
+        uses: actions/checkout@v1
+      -
+        name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      -
+        name: Available platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
+      -
+        name: Run Buildx
+        run: |
+          docker buildx build \
+            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
+            -t docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest .
+      -
+         name: Push
+         run: docker push docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
+          
           
