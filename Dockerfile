@@ -1,4 +1,4 @@
-FROM python:3.7-stretch	
+FROM python:3.7-buster	
 
 WORKDIR /usr/src/app
 
@@ -6,7 +6,7 @@ VOLUME ./persist
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt --extra-index-url https://www.piwheels.org/simple
 
 RUN apt-get update && \	
     apt-get upgrade -y && \	
