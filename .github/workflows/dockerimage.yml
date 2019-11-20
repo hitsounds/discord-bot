@@ -15,7 +15,7 @@ jobs:
       -
         name: Set up Docker Buildx
         id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
+        uses: crazy-max/ghaction-docker-buildx@v1.0.4
         with:
           version: latest
       -
@@ -26,8 +26,8 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
-            -t docker.pkg.github.com/hitsounds/discord-bot/dbot:latest . \
-           --file Dockerfile .
+            -t docker.pkg.github.com/hitsounds/discord-bot/dbot:latest \
+            --output "type=image,push=false" .
       -
          name: Push
          run: docker push docker.pkg.github.com/hitsounds/discord-bot/dbot:latest
