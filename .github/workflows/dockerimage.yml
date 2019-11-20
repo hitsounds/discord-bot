@@ -13,7 +13,7 @@ jobs:
     - name: Build the Docker image
       run: |
         docker login docker.pkg.github.com -u hitsounds -p ${{ secrets.GITHUB_TOKEN }}
-        docker buildx --platform linux/amd64,linux/arm64,linux/arm/v7 . --file Dockerfile -t docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
+        docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 . --file Dockerfile -t docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
         docker push docker.pkg.github.com/Hitsounds/discord-bot/dBot:latest
       env:
         DOCKER_CLI_EXPERIMENTAL: enabled
