@@ -2,6 +2,6 @@ git+https://github.com/Rapptz/discord.py@master#egg=discord.py[voice]
 git+https://github.com/ytdl-org/youtube-dl@master#egg=youtube-dl
 sqlalchemy
 asyncio
-Pillow=>6.2.0
+Pillow>=6.2.0
 praw
 async-timeout
