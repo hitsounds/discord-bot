@@ -24,12 +24,12 @@ jobs:
       -
         name: Run Buildx
         run: |
-          docker login docker.pkg.github.com -u Hitsounds -p ${{ secrets.GITHUB_TOKEN }}
+          docker login docker.pkg.github.com -u hitsounds -p ${{ secrets.GITHUB_TOKEN }}
           docker buildx build \
             --platform linux/amd64,linux/arm/v7 \
-            -t docker.pkg.github.com/Hitsounds/discord-bot/latest:1.0.0 \
+            -t docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0 \
             --output "type=image,push=false" \
             --file ./Dockerfile .
-          docker push docker.pkg.github.com/Hitsounds/discord-bot/latest:1.0.0
+          docker push docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0
           
           
