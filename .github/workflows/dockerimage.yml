@@ -26,9 +26,10 @@ jobs:
         run: |
           docker login docker.pkg.github.com -u Hitsounds -p ${{ secrets.GITHUB_TOKEN }} |
           docker buildx build \
-            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 \
-            -t docker.pkg.github.com/hitsounds/discord-bot/dbot:latest \
-            --output "type=image,push=true" \
-            --file ./Dockerfile .
+            --platform linux/amd64,linux/arm/v7 \
+            -t docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0 \
+            --output "type=image,push=false" \
+            --file ./Dockerfile . |
+          docker push docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0
           
           
