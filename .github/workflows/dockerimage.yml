@@ -28,8 +28,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm/v7 \
             -t docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0 \
-            --output "type=image,push=false" \
+            --push \
             --file ./Dockerfile .
-          docker push docker.pkg.github.com/hitsounds/discord-bot/latest:1.0.0
           
           
