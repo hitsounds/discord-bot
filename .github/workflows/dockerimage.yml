@@ -24,8 +24,9 @@ jobs:
       -
         name: Run Buildx
         run: |
+          docker login docker.pkg.github.com -u Hitsounds -p ${{ secrets.GITHUB_TOKEN }} |
           docker buildx build \
-            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 \
+            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 \
             -t docker.pkg.github.com/hitsounds/discord-bot/dbot:latest \
             --output "type=image,push=true" \
             --file ./Dockerfile .
